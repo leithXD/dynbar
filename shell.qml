@@ -1,8 +1,10 @@
 import Quickshell
 import Quickshell.Wayland
 import qs.Core
-// import "modules/Background"
+import "modules/Bar"
+import "modules/Pill"
 
 ShellRoot {
-    // Background {}
+    Bar {}
+    Pill {}
 }
