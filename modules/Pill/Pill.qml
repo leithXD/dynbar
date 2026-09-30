@@ -3,10 +3,12 @@ import Quickshell
 import Quickshell.Wayland
 import qs.Core
 import "Clock"
+import "ClockPopout"
+import "Notification"
 
 PanelWindow {
     anchors.top: true
-    WlrLayershell.namespace: "Dashboard"
+    WlrLayershell.namespace: "dynbar"
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
     WlrLayershell.exclusiveZone: -1
     mask: Region {
@@ -18,13 +20,23 @@ PanelWindow {
     Rectangle {
         id: pillRect
         radius: 20
-        width: activated ? 400 : 230
-        height: activated ? 110 : 38
+        width: {
+            if (Shellstate.activeMode === "clock") return clock.width
+            if (Shellstate.activeMode === "notification") return notifs.width
+            return 230
+        }
+
+        height: {
+            if (Shellstate.activeMode === "clock") return clock.height
+            if (Shellstate.activeMode === "notification") return notifs.height
+            return 38
+        }
         scale: pillArea.pressed ?  1.04 : 1
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 6
-        color: Theme.surface
+        color: Theme.transparency(Theme.surface, 0.8)
+        clip: true
 
         property bool hovered: false
         property bool activated: false
@@ -45,13 +57,13 @@ PanelWindow {
         }
         Behavior on height{
             NumberAnimation{
-                duration: 200
+                duration: 300
                 easing: Easing.OutBack
             }
         }
         Behavior on width{
             NumberAnimation{
-                duration: 200
+                duration: 300
                 easing: Easing.OutBack
             }
         }
@@ -87,11 +99,65 @@ PanelWindow {
             onReleased: { t.x = 0; t.y = 0 }
 
             onClicked: function(mouse) {
-                if (mouse.button === Qt.RightButton)
-                    pillRect.activated = !pillRect.activated
+                if (mouse.button === Qt.RightButton) {
+                    Shellstate.toggleMode("notification")
+                }
+                if (mouse.button === Qt.LeftButton) {
+                    Shellstate.toggleMode("clock")
+                }
             }
         }
 
-        Clock{}
+        Clock{
+            opacity: Shellstate.activeMode === "none" ? 1 : 0
+            scale: Shellstate.activeMode === "none" ? 1 : 1.2
+            Behavior on opacity{
+                NumberAnimation{
+                    duration: 300
+                    easing: Easing.OutBack
+                }
+            }
+            Behavior on scale{
+                NumberAnimation{
+                    duration: 300
+                    easing: Easing.OutBack
+                }
+            }
+        }
+
+        ClockPopout{
+            id: clock
+            opacity: Shellstate.activeMode === "clock" ? 1 : 0
+            scale: Shellstate.activeMode === "clock" ? 3 : 1
+            Behavior on opacity{
+                NumberAnimation{
+                    duration: 400
+                    easing: Easing.OutBack
+                }
+            }
+            Behavior on scale{
+                NumberAnimation{
+                    duration: 400
+                    easing: Easing.OutBack
+                }
+            }
+        }
+        Notification{
+            id: notifs
+            scale: Shellstate.activeMode === "notification" ? 1 : 0.5
+            opacity: Shellstate.activeMode === "notification" ? 1 : 0
+            Behavior on scale{
+                NumberAnimation{
+                    duration: 400
+                    easing: Easing.OutBack
+                }
+            }
+            Behavior on opacity{
+                NumberAnimation{
+                    duration: 400
+                    easing: Easing.OutBack
+                }
+            }
+        }
     }
 }
