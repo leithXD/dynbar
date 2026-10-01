@@ -47,7 +47,9 @@ Variants {
                     if (Shellstate.activeMode === "notification") return notifs.height
                     return 38
                 }
-                scale: pillArea.pressed ?  1.04 : 1
+                scale: pillArea.pressed ? 1.05
+                     : pillRect.hovered ? 1.02
+                     : 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 6

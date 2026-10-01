@@ -28,13 +28,13 @@ Item {
             anchors.leftMargin: 10
             Text{
                 id: header
-                text: root.notifApp
+                text: root.notifSummary
                 color: Theme.textDark
                 font.family: "Rubik"
             }
             Text{
                 id: msg
-                width: 300
+                width: 270
                 text: root.notifBody
                 color: Theme.text
                 font.family: "Rubik"
