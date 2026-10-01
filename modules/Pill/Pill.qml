@@ -6,6 +6,7 @@ import qs.Core
 import "Clock"
 import "ClockPopout"
 import "Notification"
+import "Miniplayer"
 
 Variants {
   model: Quickshell.screens;
@@ -25,7 +26,6 @@ Variants {
             color: "transparent"
             implicitHeight: 600
             implicitWidth: 600
-
 
             HyprlandFocusGrab {
                 windows: root
@@ -118,17 +118,34 @@ Variants {
 
                     onClicked: function(mouse) {
                         if (mouse.button === Qt.RightButton) {
-                            Shellstate.toggleMode("notification")
+                            Shellstate.togglePill("media")
                         }
                         if (mouse.button === Qt.LeftButton) {
-                            Shellstate.toggleMode("clock")
+                            Shellstate.toggleMode(Shellstate.activePill)
                         }
                     }
                 }
 
                 Clock{
-                    opacity: Shellstate.activeMode === "none" ? 1 : 0
-                    scale: Shellstate.activeMode === "none" ? 1 : 1.2
+                    opacity: Shellstate.activeMode === "none" && Shellstate.activePill === "clock" ? 1 : 0
+                    scale: Shellstate.activeMode === "none" && Shellstate.activePill === "clock" ? 1 : 1.2
+                    Behavior on opacity{
+                        NumberAnimation{
+                            duration: 300
+                            easing: Easing.OutBack
+                        }
+                    }
+                    Behavior on scale{
+                        NumberAnimation{
+                            duration: 300
+                            easing: Easing.OutBack
+                        }
+                    }
+                }
+
+                Miniplayer {
+                    opacity: Shellstate.activeMode === "none" && Shellstate.activePill === "media" ? 1 : 0
+                    scale: Shellstate.activeMode === "none" && Shellstate.activePill === "media" ? 1 : 1.2
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 300

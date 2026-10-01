@@ -76,6 +76,7 @@ Item {
     }
 
     function newNotification() {
+        Shellstate.toggleMode("none")
         Shellstate.toggleMode("notification")
         dismissNotif.running = true
     }
