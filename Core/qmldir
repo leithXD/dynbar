@@ -1,3 +1,0 @@
-module qs.Core
-singleton Theme 1.0 Theme.qml
-singleton Shellstate 1.0 Shellstate.qml
