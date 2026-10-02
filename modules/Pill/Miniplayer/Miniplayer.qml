@@ -10,6 +10,15 @@ Item {
     anchors.fill: parent
     property var player: Mpris.players.values[0] ?? null
 
+    Equalizer {
+        anchors.top: parent.top
+        anchors.topMargin: root.height / 2
+        width: root.width
+        height: root.height
+        barCount: 40
+        opacity: 0.4
+    }
+
     Text {
         anchors.centerIn: parent
         text: root.player.trackTitle

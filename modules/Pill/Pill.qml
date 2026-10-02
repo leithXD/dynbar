@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import qs.Core
@@ -33,7 +34,7 @@ Variants {
                 onCleared: Shellstate.activeMode = "none"
             }
 
-            Rectangle {
+            ClippingRectangle {
                 id: pillRect
                 radius: 20
                 width: {
