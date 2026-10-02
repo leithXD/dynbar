@@ -3,18 +3,22 @@ import Quickshell
 import QtQuick
 
 Singleton {
-    property string activeMode: "none"
+    property bool maximized: false
+    property string oldPill: "clock"
     property string activePill: "clock"
 
-    function toggleMode(mode) {
-        if (activeMode === mode) {
-            activeMode = "none"
-        } else {
-            activeMode = mode
-        }
+    function toggleMaximized() {
+        maximized = !maximized
     }
 
     function togglePill(mode) {
-        activePill = mode
+        if (oldPill !== "notification") {
+            oldPill = activePill
+            activePill = mode
+        }
+    }
+
+    function rememberPill() {
+        oldPill = activePill
     }
 }

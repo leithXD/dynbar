@@ -7,12 +7,21 @@ import qs.Core
 
 Item {
     id: root
-    anchors.fill: parent
+    width: 350
+    height: 40
+    anchors.centerIn: parent
     property var player: Mpris.players.values[0] ?? null
+    property int realHeight: parent.height
 
     Equalizer {
-        anchors.top: parent.top
-        anchors.topMargin: root.height / 2
+        y: root.realHeight / 2 + 2
+        scale: Shellstate.maximized ? 1.5 : 1
+        Behavior on scale{
+            NumberAnimation{
+                duration: 200
+                easing: Easing.OutBack
+            }
+        }
         width: root.width
         height: root.height
         barCount: 40
@@ -28,13 +37,27 @@ Item {
     ClippingRectangle {
         width: 28
         height: 28
-        radius: 14
+        scale: Shellstate.maximized ? 3 : 1
+        Behavior on scale{
+            NumberAnimation{
+                duration: 200
+                easing: Easing.OutBack
+            }
+        }
+        radius: width / 2
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
         Image {
-            width: 28
-            height: 28
+            scale: Shellstate.maximized ? 3 : 1
+            Behavior on scale{
+                NumberAnimation{
+                    duration: 200
+                    easing: Easing.OutBack
+                }
+            }
+            width: Shellstate.maximized ? 64 : 28
+            height: Shellstate.maximized ? 64 : 28
             source: player?.trackArtUrl ?? ""
             fillMode: Image.PreserveAspectCrop
             asynchronous: true

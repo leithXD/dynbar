@@ -76,8 +76,8 @@ Item {
     }
 
     function newNotification() {
-        Shellstate.toggleMode("none")
-        Shellstate.toggleMode("notification")
+        Shellstate.rememberPill()
+        Shellstate.togglePill("notification")
         dismissNotif.running = true
     }
 
@@ -85,6 +85,6 @@ Item {
         id: dismissNotif
         interval: 2000
         repeat: false
-        onTriggered: Shellstate.toggleMode("none")
+        onTriggered: Shellstate.togglePill(Shellstate.oldPill)
     }
 }

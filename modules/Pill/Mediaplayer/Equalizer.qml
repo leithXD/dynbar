@@ -5,7 +5,7 @@ import qs.Core
 Item {
     id: root
     implicitWidth: 380
-    implicitHeight: 190
+    implicitHeight: 300
 
     property int barCount: 50
     property int barSpacing: 3
@@ -16,7 +16,6 @@ Item {
                        a.b + (b.b - a.b) * t, 1);
     }
 
-    // Audio-Daten via cava (raw ascii, 0-100)
     Process {
         running: true
         command: ["bash", "-c",

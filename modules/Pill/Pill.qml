@@ -5,9 +5,8 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import qs.Core
 import "Clock"
-import "ClockPopout"
 import "Notification"
-import "Miniplayer"
+import "Mediaplayer"
 
 Variants {
   model: Quickshell.screens;
@@ -25,29 +24,41 @@ Variants {
                 item: pillRect
             }
             color: "transparent"
-            implicitHeight: 600
-            implicitWidth: 600
+            implicitHeight: 1080
+            implicitWidth: 1920
 
             HyprlandFocusGrab {
                 windows: root
-                active: Shellstate.activeMode !== "none" && Shellstate.activeMode !== "notification"
-                onCleared: Shellstate.activeMode = "none"
+                active: Shellstate.maximized !== false && Shellstate.activePill !== "notification"
+                onCleared: Shellstate.maximized = false
             }
 
             ClippingRectangle {
                 id: pillRect
                 radius: 20
                 width: {
-                    if (Shellstate.activeMode === "clock") return clock.width
-                    if (Shellstate.activeMode === "notification") return notifs.width
-                    if (Shellstate.activeMode === "mediaplayer") return mediaPlayer.width
+                    if (Shellstate.maximized) {
+                        if (Shellstate.activePill === "clock") return clock.width
+                        if (Shellstate.activePill === "notification") return notifs.width
+                        if (Shellstate.activePill === "mediaplayer") return mediaPlayer.width
+                    } else {
+                        if (Shellstate.activePill === "clock") return minClock.width
+                        if (Shellstate.activePill === "notification") return notifs.width
+                        if (Shellstate.activePill === "mediaplayer") return miniplayer.width
+                    }
                     return 230
                 }
 
                 height: {
-                    if (Shellstate.activeMode === "clock") return clock.height
-                    if (Shellstate.activeMode === "notification") return notifs.height
-                    if (Shellstate.activeMode === "mediaplayer") return mediaPlayer.height
+                    if (Shellstate.maximized) {
+                        if (Shellstate.activePill === "clock") return clock.height
+                        if (Shellstate.activePill === "notification") return notifs.height
+                        if (Shellstate.activePill === "mediaplayer") return mediaPlayer.height
+                    } else {
+                        if (Shellstate.activePill === "clock") return minClock.height
+                        if (Shellstate.activePill === "notification") return notifs.height
+                        if (Shellstate.activePill === "mediaplayer") return miniplayer.height
+                    }
                     return 38
                 }
                 scale: pillArea.pressed ? 1.05
@@ -124,14 +135,15 @@ Variants {
                             Shellstate.togglePill("mediaplayer")
                         }
                         if (mouse.button === Qt.LeftButton) {
-                            Shellstate.toggleMode(Shellstate.activePill)
+                            Shellstate.toggleMaximized()
                         }
                     }
                 }
 
                 Clock{
-                    opacity: Shellstate.activeMode === "none" && Shellstate.activePill === "clock" ? 1 : 0
-                    scale: Shellstate.activeMode === "none" && Shellstate.activePill === "clock" ? 1 : 1.2
+                    id: minClock
+                    opacity: Shellstate.activePill === "clock" && !Shellstate.maximized ? 1 : 0
+                    scale: Shellstate.activePill === "clock" && !Shellstate.maximized ? 1 : 1.2
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 300
@@ -147,8 +159,9 @@ Variants {
                 }
 
                 Miniplayer {
-                    opacity: Shellstate.activeMode === "none" && Shellstate.activePill === "mediaplayer" ? 1 : 0
-                    scale: Shellstate.activeMode === "none" && Shellstate.activePill === "mediaplayer" ? 1 : 1.2
+                    id: miniplayer
+                    opacity: Shellstate.activePill === "mediaplayer" && !Shellstate.maximized ? 1 : 0
+                    scale: Shellstate.activePill === "mediaplayer" && !Shellstate.maximized ? 1 : 1.2
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 200
@@ -165,8 +178,8 @@ Variants {
 
                 ClockPopout{
                     id: clock
-                    opacity: Shellstate.activeMode === "clock" ? 1 : 0
-                    scale: Shellstate.activeMode === "clock" ? 3 : 1
+                    opacity: Shellstate.activePill === "clock" && Shellstate.maximized ? 1 : 0
+                    scale: Shellstate.activePill === "clock" && Shellstate.maximized ? 3 : 1
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 400
@@ -183,8 +196,8 @@ Variants {
 
                 MediaPlayer{
                     id: mediaPlayer
-                    opacity: Shellstate.activeMode === "mediaplayer" ? 1 : 0
-                    scale: Shellstate.activeMode === "mediaplayer" ? 1 : 0
+                    opacity: Shellstate.activePill === "mediaplayer" && Shellstate.maximized ? 1 : 0
+                    scale: Shellstate.activePill === "mediaplayer" && Shellstate.maximized ? 1 : 0
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 300
@@ -201,8 +214,8 @@ Variants {
 
                 Notification{
                     id: notifs
-                    scale: Shellstate.activeMode === "notification" ? 1 : 0.5
-                    opacity: Shellstate.activeMode === "notification" ? 1 : 0
+                    scale: Shellstate.activePill === "notification" ? 1 : 0.5
+                    opacity: Shellstate.activePill === "notification" ? 1 : 0
                     Behavior on scale{
                         NumberAnimation{
                             duration: 300
