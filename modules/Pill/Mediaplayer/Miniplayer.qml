@@ -35,34 +35,52 @@ Item {
     }
 
     ClippingRectangle {
-        width: 28
-        height: 28
-        scale: Shellstate.maximized ? 3 : 1
-        Behavior on scale{
+        id: cover
+        width: Shellstate.maximized ? 96 : 28
+        height: Shellstate.maximized ? 96 : 28
+        Behavior on width{
             NumberAnimation{
                 duration: 200
                 easing: Easing.OutBack
             }
         }
+        Behavior on height{
+            NumberAnimation{
+                duration: 200
+                easing: Easing.OutBack
+            }
+        }
+        NumberAnimation on rotation {
+            from: 0
+            to: 360
+            duration: 32000
+            loops: Animation.Infinite
+            running: player?.isPlaying ?? false
+        }
         radius: width / 2
         anchors.left: parent.left
-        anchors.leftMargin: 5
+        anchors.leftMargin: Shellstate.maximized ? -20 : 5
         anchors.verticalCenter: parent.verticalCenter
         Image {
-            scale: Shellstate.maximized ? 3 : 1
-            Behavior on scale{
+            width: Shellstate.maximized ? 96 : 28
+            height: Shellstate.maximized ? 96 : 28
+            Behavior on width{
                 NumberAnimation{
                     duration: 200
                     easing: Easing.OutBack
                 }
             }
-            width: Shellstate.maximized ? 64 : 28
-            height: Shellstate.maximized ? 64 : 28
+            Behavior on height{
+                NumberAnimation{
+                    duration: 200
+                    easing: Easing.OutBack
+                }
+            }
             source: player?.trackArtUrl ?? ""
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             cache: true
-            sourceSize: Qt.size(width * 2, height * 2)
+            sourceSize: Qt.size(128, 128)
             visible: status === Image.Ready
         }
     }

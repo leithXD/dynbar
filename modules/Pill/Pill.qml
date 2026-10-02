@@ -131,6 +131,7 @@ Variants {
                     onReleased: { t.x = 0; t.y = 0 }
 
                     onClicked: function(mouse) {
+                        // Let them do other stuff if maximized, i dont like it getting changed randomly
                         if (mouse.button === Qt.RightButton) {
                             Shellstate.togglePill("mediaplayer")
                         }
@@ -160,8 +161,8 @@ Variants {
 
                 Miniplayer {
                     id: miniplayer
-                    opacity: Shellstate.activePill === "mediaplayer" && !Shellstate.maximized ? 1 : 0
-                    scale: Shellstate.activePill === "mediaplayer" && !Shellstate.maximized ? 1 : 1.2
+                    opacity: Shellstate.activePill === "mediaplayer" ? 1 : 0
+                    scale: Shellstate.activePill === "mediaplayer" ? 1 : 1.2 //  && !Shellstate.maximized normally but ehh
                     Behavior on opacity{
                         NumberAnimation{
                             duration: 200
