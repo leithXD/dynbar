@@ -4,6 +4,7 @@ import Quickshell.Widgets
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import qs.Core
+import qs.Components
 import "Clock"
 import "Notification"
 import "Mediaplayer"
@@ -61,24 +62,9 @@ Variants {
                     Behavior on y { enabled: !pillArea.pressed; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
                 }
 
-                Behavior on scale{
-                    NumberAnimation{
-                        duration: 200
-                        easing: Easing.OutBack
-                    }
-                }
-                Behavior on height{
-                    NumberAnimation{
-                        duration: 300
-                        easing: Easing.OutBack
-                    }
-                }
-                Behavior on width{
-                    NumberAnimation{
-                        duration: 300
-                        easing: Easing.OutBack
-                    }
-                }
+                Spring on scale{duration: 200}
+                Spring on height{}
+                Spring on width{}
                 MouseArea {
                     id: pillArea
                     anchors.fill: parent

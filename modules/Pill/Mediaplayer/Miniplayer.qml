@@ -10,6 +10,10 @@ Item {
     implicitWidth: 350
     implicitHeight: 40
     property var player: Mpris.players.values[0] ?? null
+    scale: Shellstate.activePill !== "mediaplayer" ? 0.2 : 1
+    opacity: Shellstate.activePill !== "mediaplayer" ? 0 : 1
+    Spring on opacity {}
+    Spring on scale {}
 
     Equalizer {
         anchors.verticalCenter: parent.verticalCenter

@@ -9,6 +9,7 @@ Variants {
   delegate: Component {
         PanelWindow {
             id: root
+            required property var modelData
             WlrLayershell.namespace: "wallpaper"
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
             screen: modelData

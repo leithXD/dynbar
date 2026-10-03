@@ -24,7 +24,6 @@ Item {
         id: layer
         property bool shown: false
         property real hiddenScale: 1.2
-        property int duration: 300
         readonly property real w: item ? item.implicitWidth : 0
         readonly property real h: item ? item.implicitHeight : 0
 
@@ -32,8 +31,8 @@ Item {
         active: shown || opacity > 0
         opacity: shown ? 1 : 0
         scale: shown ? 1 : hiddenScale
-        Behavior on opacity { NumberAnimation { duration: layer.duration; easing.type: Easing.OutBack } }
-        Behavior on scale   { NumberAnimation { duration: layer.duration; easing.type: Easing.OutBack } }
+        Spring on opacity {}
+        Spring on scale {}
     }
 
     Layer { id: compactLayer;  shown: root.showCompact;  sourceComponent: root.compact }

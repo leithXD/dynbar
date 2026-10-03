@@ -1,15 +1,21 @@
 import QtQuick
 import Quickshell
 import qs.Core
+import qs.Components
 
 Item {
     id: root
     implicitWidth: 350
     implicitHeight: 80
+    scale: Shellstate.maximized ? 3 : 1
+    opacity: Shellstate.maximized ? 1 : 0
     SystemClock {
         id: clock
         precision: SystemClock.Minutes
     }
+
+    Spring on scale {}
+    Spring on opacity {}
 
     Row {
         anchors.centerIn: parent
