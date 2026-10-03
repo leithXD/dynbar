@@ -17,7 +17,10 @@ Variants {
                 }
                 implicitHeight: 40
                 color: "transparent"
-                WlrLayershell.layer: WlrLayer.Top
+                exclusionMode: ExclusionMode.Normal
+                exclusiveZone: 40
+
+                mask: Region {}
                 WlrLayershell.namespace: "Bar"
         }
     }
