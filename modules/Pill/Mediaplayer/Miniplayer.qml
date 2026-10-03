@@ -7,14 +7,12 @@ import qs.Core
 
 Item {
     id: root
-    width: 350
-    height: 40
-    anchors.centerIn: parent
+    implicitWidth: 350
+    implicitHeight: 40
     property var player: Mpris.players.values[0] ?? null
-    property int realHeight: parent.height
 
     Equalizer {
-        y: root.realHeight / 2 + 2
+        anchors.verticalCenter: parent.verticalCenter
         scale: Shellstate.maximized ? 1.5 : 1
         Behavior on scale{
             NumberAnimation{

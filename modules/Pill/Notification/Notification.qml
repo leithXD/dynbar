@@ -1,41 +1,35 @@
-import Quickshell
-import Quickshell.Widgets
 import QtQuick
+import Quickshell.Widgets
 import qs.Core
-import Quickshell.Services.Notifications
+import qs.Services
 
 Item {
     id: root
-    width: 400
-    height: 80
-    anchors.centerIn: parent
+    implicitWidth: 400
+    implicitHeight: 68 + msg.height
 
-    property string notifApp
-    property string notifSummary
-    property string notifBody
-    property string notifImage
-    property string notifAppIcon
     Rectangle {
-        width: 390 // -10
-        height: root.height - 12 // -2
+        width: root.width - 10
+        height: root.height - 12
         radius: 15
         anchors.centerIn: parent
         color: Theme.transparency(Theme.surfaceVariant, 0.3)
+
         Column {
             spacing: 8
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 10
-            Text{
+            Text {
                 id: header
-                text: root.notifSummary
+                text: NotificationService.summary
                 color: Theme.textDark
                 font.family: "Rubik"
             }
-            Text{
+            Text {
                 id: msg
                 width: 270
-                text: root.notifBody
+                text: NotificationService.body
                 color: Theme.text
                 font.family: "Rubik"
                 wrapMode: Text.Wrap
@@ -50,41 +44,10 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-
             Image {
-                anchors.centerIn: parent
-                width: 40
-                height: 40
-                source: root.notifImage
+                anchors.fill: parent
+                source: NotificationService.image
             }
         }
-    }
-
-    NotificationServer {
-        bodySupported: true
-        keepOnReload: false
-
-        onNotification: function(n) {
-            root.notifApp     = n.appName;
-            root.notifSummary = n.summary; // no use rn lol
-            root.notifBody    = n.body;
-            root.notifImage   = n.image;
-            root.notifAppIcon = n.appIcon;
-            root.height = 68 + msg.height
-            root.newNotification()
-        }
-    }
-
-    function newNotification() {
-        Shellstate.rememberPill()
-        Shellstate.togglePill("notification")
-        dismissNotif.running = true
-    }
-
-    Timer{
-        id: dismissNotif
-        interval: 2000
-        repeat: false
-        onTriggered: Shellstate.togglePill(Shellstate.oldPill)
     }
 }

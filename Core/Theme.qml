@@ -3,7 +3,6 @@ import Quickshell
 import QtQuick
 
 Singleton {
-    property string wallpaper: "/home/leithrice/.local/state/nova/current"
     property int componentRadius: 20
     property int componentRadiusSmall: componentRadius / 2
 

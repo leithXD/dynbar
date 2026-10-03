@@ -29,38 +29,17 @@ Variants {
 
             HyprlandFocusGrab {
                 windows: root
-                active: Shellstate.maximized !== false && Shellstate.activePill !== "notification"
+                active: Shellstate.maximized && !(pillRect.current?.standalone ?? false)
                 onCleared: Shellstate.maximized = false
             }
 
             ClippingRectangle {
                 id: pillRect
-                radius: 20
-                width: {
-                    if (Shellstate.maximized) {
-                        if (Shellstate.activePill === "clock") return clock.width
-                        if (Shellstate.activePill === "notification") return notifs.width
-                        if (Shellstate.activePill === "mediaplayer") return mediaPlayer.width
-                    } else {
-                        if (Shellstate.activePill === "clock") return minClock.width
-                        if (Shellstate.activePill === "notification") return notifs.width
-                        if (Shellstate.activePill === "mediaplayer") return miniplayer.width
-                    }
-                    return 230
-                }
+                readonly property var modules: [clockModule, mediaModule, notifModule]
+                readonly property var current: modules.find(m => m.name === Shellstate.activePill)
 
-                height: {
-                    if (Shellstate.maximized) {
-                        if (Shellstate.activePill === "clock") return clock.height
-                        if (Shellstate.activePill === "notification") return notifs.height
-                        if (Shellstate.activePill === "mediaplayer") return mediaPlayer.height
-                    } else {
-                        if (Shellstate.activePill === "clock") return minClock.height
-                        if (Shellstate.activePill === "notification") return notifs.height
-                        if (Shellstate.activePill === "mediaplayer") return miniplayer.height
-                    }
-                    return 38
-                }
+                width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
+                height: current && current.targetHeight > 0 ? current.targetHeight : 38
                 scale: pillArea.pressed ? 1.05
                      : pillRect.hovered ? 1.02
                      : 1
@@ -69,6 +48,7 @@ Variants {
                 anchors.topMargin: 6
                 color: Theme.transparency(Theme.surface, 0.8)
                 clip: true
+                radius: 20
 
                 property bool hovered: false
                 property bool activated: false
@@ -141,95 +121,9 @@ Variants {
                     }
                 }
 
-                Clock{
-                    id: minClock
-                    opacity: Shellstate.activePill === "clock" && !Shellstate.maximized ? 1 : 0
-                    scale: Shellstate.activePill === "clock" && !Shellstate.maximized ? 1 : 1.2
-                    Behavior on opacity{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                    Behavior on scale{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                }
-
-                Miniplayer {
-                    id: miniplayer
-                    opacity: Shellstate.activePill === "mediaplayer" ? 1 : 0
-                    scale: Shellstate.activePill === "mediaplayer" ? 1 : 1.2 //  && !Shellstate.maximized normally but ehh
-                    Behavior on opacity{
-                        NumberAnimation{
-                            duration: 200
-                            easing: Easing.OutBack
-                        }
-                    }
-                    Behavior on scale{
-                        NumberAnimation{
-                            duration: 200
-                            easing: Easing.OutBack
-                        }
-                    }
-                }
-
-                ClockPopout{
-                    id: clock
-                    opacity: Shellstate.activePill === "clock" && Shellstate.maximized ? 1 : 0
-                    scale: Shellstate.activePill === "clock" && Shellstate.maximized ? 3 : 1
-                    Behavior on opacity{
-                        NumberAnimation{
-                            duration: 400
-                            easing: Easing.OutBack
-                        }
-                    }
-                    Behavior on scale{
-                        NumberAnimation{
-                            duration: 400
-                            easing: Easing.OutBack
-                        }
-                    }
-                }
-
-                MediaPlayer{
-                    id: mediaPlayer
-                    opacity: Shellstate.activePill === "mediaplayer" && Shellstate.maximized ? 1 : 0
-                    scale: Shellstate.activePill === "mediaplayer" && Shellstate.maximized ? 1 : 0
-                    Behavior on opacity{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                    Behavior on scale{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                }
-
-                Notification{
-                    id: notifs
-                    scale: Shellstate.activePill === "notification" ? 1 : 0.5
-                    opacity: Shellstate.activePill === "notification" ? 1 : 0
-                    Behavior on scale{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                    Behavior on opacity{
-                        NumberAnimation{
-                            duration: 300
-                            easing: Easing.OutBack
-                        }
-                    }
-                }
+                ClockModule { id: clockModule }
+                MediaModule { id: mediaModule }
+                NotificationModule { id: notifModule }
             }
         }
     }

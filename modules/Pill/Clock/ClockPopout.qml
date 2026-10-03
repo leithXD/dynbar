@@ -4,9 +4,8 @@ import qs.Core
 
 Item {
     id: root
-    width: 350
-    height: 80
-    anchors.centerIn: parent
+    implicitWidth: 350
+    implicitHeight: 80
     SystemClock {
         id: clock
         precision: SystemClock.Minutes
