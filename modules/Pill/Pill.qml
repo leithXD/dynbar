@@ -9,108 +9,111 @@ import "Clock"
 import "Notification"
 import "Mediaplayer"
 
-Variants {
-  model: Quickshell.screens;
+Scope {
+    Variants {
+        id: pills
+        model: Quickshell.screens;
 
-  delegate: Component {
-        PanelWindow {
-            id: root
-            anchors.top: true
-            WlrLayershell.namespace: "dynbar"
-            WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-            WlrLayershell.exclusiveZone: -1
-            required property var modelData
-            screen: modelData
-            mask: Region {
-                item: pillRect
-            }
-            color: "transparent"
-            implicitHeight: 1080
-            implicitWidth: 1920
-
-            HyprlandFocusGrab {
-                windows: root
-                active: Shellstate.maximized && !(pillRect.current?.standalone ?? false)
-                onCleared: Shellstate.maximized = false
-            }
-
-            ClippingRectangle {
-                id: pillRect
-                readonly property var modules: [clockModule, mediaModule, notifModule]
-                readonly property var current: modules.find(m => m.name === Shellstate.activePill)
-
-                width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
-                height: current && current.targetHeight > 0 ? current.targetHeight : 38
-                scale: pillArea.pressed ? 1.05
-                     : pillRect.hovered ? 1.02
-                     : 1
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.topMargin: 6
-                color: Theme.transparency(Theme.surface, 0.8)
-                clip: true
-                radius: 20
-
-                property bool hovered: false
-                property bool activated: false
-                property real maxRadius: 4
-                property real resistance: 5
-
-                transform: Translate {
-                    id: t
-                    Behavior on x { enabled: !pillArea.pressed; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
-                    Behavior on y { enabled: !pillArea.pressed; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
-                }
-
-                Spring on scale{duration: 200}
-                Spring on height{}
-                Spring on width{}
-                MouseArea {
-                    id: pillArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onEntered: {
-                        pillRect.hovered = true
+        delegate: Component {
+                PanelWindow {
+                    id: root
+                    anchors.top: true
+                    WlrLayershell.namespace: "dynbar"
+                    WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+                    WlrLayershell.exclusiveZone: -1
+                    required property var modelData
+                    screen: modelData
+                    mask: Region {
+                        item: pillRect
                     }
-                    onExited: {
-                        pillRect.hovered = false
-                    }
+                    color: "transparent"
+                    implicitHeight: 1080
+                    implicitWidth: 1920
 
-                    property point start
+                    ClippingRectangle {
+                        id: pillRect
+                        readonly property var modules: [clockModule, mediaModule, notifModule]
+                        readonly property var current: modules.find(m => m.name === Shellstate.activePill)
 
-                    onPressed: (m) => start = mapToItem(null, m.x, m.y)
+                        width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
+                        height: current && current.targetHeight > 0 ? current.targetHeight : 38
+                        scale: pillArea.pressed ? 1.05
+                            : pillRect.hovered ? 1.02
+                            : 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 6
+                        color: Theme.transparency(Theme.surface, 0.8)
+                        clip: true
+                        radius: 20
 
-                    onPositionChanged: (m) => {
-                        if (!pressed) return
-                        const p  = mapToItem(null, m.x, m.y)
-                        const dx = p.x - start.x
-                        const dy = p.y - start.y
-                        const d  = Math.hypot(dx, dy)
-                        if (d === 0) return
+                        property bool hovered: false
+                        property bool activated: false
+                        property real maxRadius: 4
+                        property real resistance: 5
 
-                        const k = pillRect.maxRadius * Math.tanh(d / (pillRect.maxRadius * pillRect.resistance)) / d
-                        t.x = dx * k
-                        t.y = dy * k
-                    }
-
-                    onReleased: { t.x = 0; t.y = 0 }
-
-                    onClicked: function(mouse) {
-                        // Let them do other stuff if maximized, i dont like it getting changed randomly
-                        if (mouse.button === Qt.RightButton) {
-                            Shellstate.cyclePill()
+                        transform: Translate {
+                            id: t
+                            Behavior on x { enabled: !pillArea.pressed; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                            Behavior on y { enabled: !pillArea.pressed; NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
                         }
-                        if (mouse.button === Qt.LeftButton) {
-                            Shellstate.toggleMaximized()
+
+                        Spring on scale{duration: 200}
+                        Spring on height{}
+                        Spring on width{}
+                        MouseArea {
+                            id: pillArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onEntered: {
+                                pillRect.hovered = true
+                            }
+                            onExited: {
+                                pillRect.hovered = false
+                            }
+
+                            property point start
+
+                            onPressed: (m) => start = mapToItem(null, m.x, m.y)
+
+                            onPositionChanged: (m) => {
+                                if (!pressed) return
+                                const p  = mapToItem(null, m.x, m.y)
+                                const dx = p.x - start.x
+                                const dy = p.y - start.y
+                                const d  = Math.hypot(dx, dy)
+                                if (d === 0) return
+
+                                const k = pillRect.maxRadius * Math.tanh(d / (pillRect.maxRadius * pillRect.resistance)) / d
+                                t.x = dx * k
+                                t.y = dy * k
+                            }
+
+                            onReleased: { t.x = 0; t.y = 0 }
+
+                            onClicked: function(mouse) {
+                                // Let them do other stuff if maximized, i dont like it getting changed randomly
+                                if (mouse.button === Qt.RightButton) {
+                                    Shellstate.cyclePill()
+                                }
+                                if (mouse.button === Qt.LeftButton) {
+                                    Shellstate.toggleMaximized()
+                                }
+                            }
                         }
+
+                        ClockModule { id: clockModule }
+                        MediaModule { id: mediaModule }
+                        NotificationModule { id: notifModule }
                     }
                 }
-
-                ClockModule { id: clockModule }
-                MediaModule { id: mediaModule }
-                NotificationModule { id: notifModule }
             }
         }
+
+    HyprlandFocusGrab {
+        windows: pills.instances
+        active: Shellstate.maximized && Shellstate.returnPill === ""
+        onCleared: Shellstate.maximized = false
     }
 }
