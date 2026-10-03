@@ -133,7 +133,7 @@ Variants {
                     onClicked: function(mouse) {
                         // Let them do other stuff if maximized, i dont like it getting changed randomly
                         if (mouse.button === Qt.RightButton) {
-                            Shellstate.togglePill("mediaplayer")
+                            Shellstate.cyclePill()
                         }
                         if (mouse.button === Qt.LeftButton) {
                             Shellstate.toggleMaximized()
