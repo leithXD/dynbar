@@ -5,8 +5,12 @@ import qs.Services
 
 Item {
     id: root
-    implicitWidth: 400
-    implicitHeight: 68 + msg.height
+    implicitWidth: bigMessage ? 500 : 400
+    implicitHeight: bigMessage ? maxHeight + 75 : 68 + msg.height
+
+    property int maxHeight: 100
+    property bool bigMessage: msg.height > maxHeight
+    property int maxBodyLines: 6
 
     Rectangle {
         width: root.width - 10
@@ -17,9 +21,10 @@ Item {
 
         Column {
             spacing: 8
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
             anchors.left: parent.left
             anchors.leftMargin: 10
+            anchors.topMargin: 10
             Text {
                 id: header
                 text: NotificationService.summary
@@ -28,11 +33,14 @@ Item {
             }
             Text {
                 id: msg
-                width: 270
+                width: bigMessage ? 370 : 270
                 text: NotificationService.body
                 color: Theme.text
                 font.family: "Rubik"
                 wrapMode: Text.Wrap
+                elide: Text.ElideRight
+                maximumLineCount: root.maxBodyLines
+                textFormat: Text.PlainText
             }
         }
 
