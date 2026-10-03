@@ -12,7 +12,7 @@ Item {
     property var player: Mpris.players.values[0] ?? null
 
     Equalizer {
-        y: Shellstate.maximized ? 80 : root.implicitHeight / 2
+        y: Shellstate.maximized ? 80 : root.implicitHeight / 2 + 4
         scale: Shellstate.maximized ? 1.5 : 1
         Behavior on scale{
             NumberAnimation{
@@ -27,8 +27,15 @@ Item {
     }
 
     Text {
-        anchors.centerIn: parent
+        anchors.left: parent.left
+        anchors.leftMargin: 40
+        anchors.verticalCenter: parent.verticalCenter
+        font.weight: Font.DemiBold
+        width: 280
         text: Format.cleanTitle(root.player?.trackTitle, root.player?.trackArtist)
+        wrapMode: Text.Wrap
+        elide: Text.ElideRight
+        maximumLineCount: 1
         color: Theme.text
     }
 
