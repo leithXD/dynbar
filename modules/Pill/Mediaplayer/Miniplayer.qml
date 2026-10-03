@@ -12,7 +12,7 @@ Item {
     property var player: Mpris.players.values[0] ?? null
 
     Equalizer {
-        anchors.verticalCenter: parent.verticalCenter
+        y: Shellstate.maximized ? 80 : root.implicitHeight / 2
         scale: Shellstate.maximized ? 1.5 : 1
         Behavior on scale{
             NumberAnimation{
@@ -28,7 +28,7 @@ Item {
 
     Text {
         anchors.centerIn: parent
-        text: root.player.trackTitle
+        text: Format.cleanTitle(root.player?.trackTitle, root.player?.trackArtist)
         color: Theme.text
     }
 
@@ -48,18 +48,13 @@ Item {
                 easing: Easing.OutBack
             }
         }
-        NumberAnimation on rotation {
-            from: 0
-            to: 360
-            duration: 32000
-            loops: Animation.Infinite
-            running: player?.isPlaying ?? false
-        }
         radius: width / 2
         anchors.left: parent.left
         anchors.leftMargin: Shellstate.maximized ? -20 : 5
         anchors.verticalCenter: parent.verticalCenter
+        color: "transparent"
         Image {
+            id: coverImage
             width: Shellstate.maximized ? 96 : 28
             height: Shellstate.maximized ? 96 : 28
             Behavior on width{
@@ -78,8 +73,22 @@ Item {
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             cache: true
-            sourceSize: Qt.size(128, 128)
+            mipmap: true
+            sourceSize: Qt.size(192, 192)
+            antialiasing: true
             visible: status === Image.Ready
+            NumberAnimation on rotation {
+                from: 0
+                to: 360
+                duration: 32000
+                loops: Animation.Infinite
+                running: player?.isPlaying ?? false
+            }
+        }
+        MaterialLoading {
+            loading: coverImage.status !== Image.Ready
+            width: coverImage.width - 5
+            height: coverImage.height - 5
         }
     }
 

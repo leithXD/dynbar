@@ -29,7 +29,7 @@ Item {
         }
         Text {
             font.family: "Rubik"
-            color: Theme.secondary
+            color: Theme.primary
             text: Qt.locale("de_DE").toString(clock.date, "dd")
         }
         Text {

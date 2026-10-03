@@ -6,5 +6,4 @@ PillModule {
     name: "mediaplayer"
     compact: Miniplayer {}
     expanded: MediaPlayer {}
-    keepCompact: true
 }
