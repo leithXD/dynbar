@@ -7,11 +7,6 @@ Item {
     id: root
     implicitWidth: 230
     implicitHeight: 38
-    opacity: Shellstate.maximized ? 0 : 1
-    scale: Shellstate.maximized ? 2 : 1
-
-    Spring on scale{}
-    Spring on opacity{}
 
     SystemClock {
         id: clock

@@ -23,7 +23,7 @@ Item {
     component Layer: Loader {
         id: layer
         property bool shown: false
-        property real hiddenScale: 1.2
+        property real hiddenScale: 1.5
         readonly property real w: item ? item.implicitWidth : 0
         readonly property real h: item ? item.implicitHeight : 0
 
@@ -31,7 +31,7 @@ Item {
         active: shown || opacity > 0
         opacity: shown ? 1 : 0
         scale: shown ? 1 : hiddenScale
-        Spring on opacity {}
+        Spring on opacity {duration: 200}
         Spring on scale {}
     }
 
