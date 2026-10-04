@@ -27,11 +27,11 @@ Item {
 
     Text {
         anchors.left: parent.left
-        anchors.leftMargin: 40
         anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: MediaplayerService.activePlayer === null ? 100 : 40
         font.weight: Font.DemiBold
         width: 280
-        text: Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
+        text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle , MediaplayerService.trackArtist)
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
@@ -112,8 +112,9 @@ Item {
             }
             Spring on width {}
             MaterialIcon {
+                id: playButton
                 anchors.centerIn: parent
-                name: "play_arrow"
+                name: MediaplayerService.isPlaying ? "pause" : "play_arrow"
                 color: Theme.secondary
                 fill: 1
                 size: 21
@@ -123,6 +124,11 @@ Item {
                 hoverEnabled: true
                 anchors.fill: parent
                 onClicked: {
+                    if (playButton.name === "pause") {
+                        playButton.name = "play_arrow"
+                    } else {
+                        playButton.name = "pause"
+                    } // ill fix that later no one will spam click, this is just buggy on bad (slow) media players lowkey
                     MediaplayerService.togglePlaying()
                 }
                 onEntered: {

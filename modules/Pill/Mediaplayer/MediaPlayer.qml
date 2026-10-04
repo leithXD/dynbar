@@ -28,12 +28,12 @@ Item {
 
     Text {
         anchors.left: parent.left
-        anchors.leftMargin: 210
+        anchors.leftMargin: MediaplayerService.activePlayer === null ? 280 : 210
         anchors.top: parent.top
         anchors.topMargin: 40
         width: 320
         font.weight: Font.DemiBold
-        text: Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
+        text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
         color: Theme.text
         wrapMode: Text.Wrap
         elide: Text.ElideRight
@@ -63,17 +63,26 @@ Item {
             antialiasing: true
             visible: status === Image.Ready
         }
+        MaterialIcon {
+            anchors.centerIn: parent
+            name: "error"
+            size: 94
+            color: Theme.surfaceVariant
+            visible: MediaplayerService.activePlayer === null
+        }
         MaterialLoading {
             loading: coverImage.status !== Image.Ready
             width: coverImage.width - 5
             height: coverImage.height - 5
             spacing: 40
+            visible: !(MediaplayerService.activePlayer === null)
         }
     }
 
     Rectangle {
         anchors.fill: cover
         color: "transparent"
+        visible: !(MediaplayerService.activePlayer === null)
         Rectangle {
             id: circleBg
             width: 30
@@ -85,9 +94,9 @@ Item {
             property var entry: DesktopEntries.byId(MediaplayerService.desktopEntry)
             Image {
                 id: icon
-                scale: 0.6
                 anchors.fill: parent
                 source: Quickshell.iconPath(parent.entry?.icon, true)
+                mipmap: true
             }
         }
     }

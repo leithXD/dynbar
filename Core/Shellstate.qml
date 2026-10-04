@@ -1,6 +1,7 @@
 pragma Singleton
 import Quickshell
 import QtQuick
+import qs.Services
 
 Singleton {
     property bool maximized: false
@@ -31,5 +32,21 @@ Singleton {
         activePill = returnPill
         maximized = returnMaximized
         returnPill = ""
+    }
+
+    Connections {
+        target: MediaplayerService
+        function onIsPlayingChanged() {
+            if (MediaplayerService.isPlaying) {
+                Shellstate.oldPill = Shellstate.activePill
+                Shellstate.activePill = "mediaplayer"
+            }
+        }
+
+        function onActivePlayerChanged() {
+            if (MediaplayerService.activePlayer === null) {
+                Shellstate.activePill = "clock"
+            }
+        }
     }
 }
