@@ -1,19 +1,18 @@
 import QtQuick
 import Quickshell
 import Quickshell.Widgets
-import Quickshell.Services.Mpris
 import qs.Components
 import qs.Core
+import qs.Services
 
 Item {
     id: root
     implicitWidth: 350
     implicitHeight: 40
-    property var player: Mpris.players.values[0] ?? null
 
     Equalizer {
-        y: Shellstate.maximized ? 80 : root.implicitHeight / 2 + 4
-        scale: Shellstate.maximized ? 1.5 : 1
+        y: root.implicitHeight / 2 + 4
+        scale: 1
         Behavior on scale{
             NumberAnimation{
                 duration: 200
@@ -32,7 +31,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         font.weight: Font.DemiBold
         width: 280
-        text: Format.cleanTitle(root.player?.trackTitle, root.player?.trackArtist)
+        text: Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
@@ -41,8 +40,8 @@ Item {
 
     ClippingRectangle {
         id: cover
-        width: Shellstate.maximized ? 96 : 28
-        height: Shellstate.maximized ? 96 : 28
+        width: 28
+        height: 28
         Behavior on width{
             NumberAnimation{
                 duration: 200
@@ -57,26 +56,14 @@ Item {
         }
         radius: width / 2
         anchors.left: parent.left
-        anchors.leftMargin: Shellstate.maximized ? -20 : 5
+        anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
         color: "transparent"
         Image {
             id: coverImage
-            width: Shellstate.maximized ? 96 : 28
-            height: Shellstate.maximized ? 96 : 28
-            Behavior on width{
-                NumberAnimation{
-                    duration: 200
-                    easing: Easing.OutBack
-                }
-            }
-            Behavior on height{
-                NumberAnimation{
-                    duration: 200
-                    easing: Easing.OutBack
-                }
-            }
-            source: player?.trackArtUrl ?? ""
+            width: 28
+            height: 28
+            source: MediaplayerService.trackArtUrl
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             cache: true
@@ -89,20 +76,15 @@ Item {
                 to: 360
                 duration: 32000
                 loops: Animation.Infinite
-                running: player?.isPlaying ?? false
+                running: MediaplayerService.isPlaying
             }
         }
         MaterialLoading {
             loading: coverImage.status !== Image.Ready
             width: coverImage.width - 5
             height: coverImage.height - 5
+            opacity: MediaplayerService.hasPlayer ? 1 : 0
+            Spring on opacity{}
         }
-    }
-
-    Timer {
-        running: root.player && root.player.isPlaying
-        interval: 500
-        repeat: true
-        onTriggered: root.player.positionChanged()
     }
 }

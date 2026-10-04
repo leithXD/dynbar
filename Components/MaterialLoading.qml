@@ -10,7 +10,7 @@ ClippingRectangle {
     visible: loading
     property bool loading: false
     property int duration: 500
-    property int spacing: 10
+    property int spacing: root.width / 2
     property string primaryColor: Theme.primary
     property string primaryColorAlt: Theme.primaryAlt
     property int i: 0
