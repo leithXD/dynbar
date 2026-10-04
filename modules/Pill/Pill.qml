@@ -38,7 +38,7 @@ Scope {
                         width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
                         height: current && current.targetHeight > 0 ? current.targetHeight : 38
                         scale: pillArea.pressed ? 1.05
-                            : pillRect.hovered ? 1.02
+                            : pillRect.hovered || Shellstate.componentHover ? 1.02
                             : 1
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top

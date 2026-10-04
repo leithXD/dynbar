@@ -19,6 +19,7 @@ Singleton {
     readonly property real position: activePlayer?.position ?? 0
     readonly property real length: activePlayer?.length ?? 0
     readonly property real progress: length > 0 ? position / length : 0
+    readonly property string desktopEntry: activePlayer?.desktopEntry ?? ""
 
     function seekTo(fraction) { if (activePlayer?.canSeek && length > 0) activePlayer.position = Math.max(0, Math.min(1, fraction)) * length; }
     function togglePlaying() { if (activePlayer?.canTogglePlaying) activePlayer.togglePlaying(); }

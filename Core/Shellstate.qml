@@ -10,6 +10,7 @@ Singleton {
 
     property string returnPill: ""
     property bool returnMaximized: false
+    property bool componentHover: false
 
     function toggleMaximized() {
         maximized = !maximized

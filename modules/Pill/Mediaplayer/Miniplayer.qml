@@ -87,4 +87,94 @@ Item {
             Spring on opacity{}
         }
     }
+
+    Row {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        width: 70
+        height: 30
+        spacing: 5
+        Rectangle {
+            id: left
+            anchors.verticalCenter: parent.verticalCenter
+            width: leftButton.pressed ? 35
+                : rightButton.pressed ? 15
+                : 25
+            height: 25
+            radius: width / 3
+            color: hovered ? Qt.lighter(Theme.primary, 1.3) : Theme.primary
+            property bool hovered: false
+            Behavior on color{
+                ColorAnimation{
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Spring on width {}
+            MaterialIcon {
+                anchors.centerIn: parent
+                name: "play_arrow"
+                color: Theme.secondary
+                fill: 1
+                size: 21
+            }
+            MouseArea {
+                id: leftButton
+                hoverEnabled: true
+                anchors.fill: parent
+                onClicked: {
+                    MediaplayerService.togglePlaying()
+                }
+                onEntered: {
+                    Shellstate.componentHover = true
+                    left.hovered = true
+                }
+                onExited: {
+                    Shellstate.componentHover = false
+                    left.hovered = false
+                }
+            }
+        }
+        Rectangle {
+            id: right
+            anchors.verticalCenter: parent.verticalCenter
+            width: rightButton.pressed ? 35
+                : leftButton.pressed ? 15
+                : 25
+            height: 25
+            radius: width / 3
+            color: hovered ? Qt.lighter(Theme.secondary, 1.3) : Theme.secondary
+            property bool hovered: false
+            Spring on width {}
+            Behavior on color{
+                ColorAnimation{
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+            MaterialIcon {
+                anchors.centerIn: parent
+                name: "skip_next"
+                color: Theme.primary
+                fill: 1
+                size: 21
+            }
+            MouseArea {
+                id: rightButton
+                hoverEnabled: true
+                anchors.fill: parent
+                onClicked: {
+                    MediaplayerService.next()
+                }
+                onEntered: {
+                    Shellstate.componentHover = true
+                    right.hovered = true
+                }
+                onExited: {
+                    Shellstate.componentHover = false
+                    right.hovered = false
+                }
+            }
+        }
+    }
 }

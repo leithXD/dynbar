@@ -12,6 +12,8 @@ Text {
     color: iconColor !== "" ? "white" : iconColor
     font.family: family
     font.pixelSize: size
+    property real fill: 0
+    property int weight: 400
 
     width: size
     height: size
@@ -19,6 +21,7 @@ Text {
     verticalAlignment: Text.AlignVCenter
     renderType: Text.NativeRendering
     antialiasing: true
+    font.variableAxes: ({ "FILL": fill, "wght": weight })
 
     Behavior on color { ColorAnimation { duration: 150 } }
 }
