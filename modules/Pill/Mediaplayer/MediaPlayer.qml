@@ -75,6 +75,7 @@ Item {
         anchors.fill: cover
         color: "transparent"
         Rectangle {
+            id: circleBg
             width: 30
             height: 30
             radius: width / 2
@@ -83,6 +84,7 @@ Item {
             anchors.bottom: parent.bottom
             property var entry: DesktopEntries.byId(MediaplayerService.desktopEntry)
             Image {
+                id: icon
                 scale: 0.6
                 anchors.fill: parent
                 source: Quickshell.iconPath(parent.entry?.icon, true)
