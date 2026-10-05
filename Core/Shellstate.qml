@@ -34,6 +34,11 @@ Singleton {
         returnPill = ""
     }
 
+    function toggleLauncher() {
+        if (activePill === "launcher") dismissTransient()
+        else showTransient("launcher")
+    }
+
     Connections {
         target: MediaplayerService
         function onIsPlayingChanged() {

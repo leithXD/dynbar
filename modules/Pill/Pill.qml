@@ -8,6 +8,7 @@ import qs.Components
 import "Clock"
 import "Notification"
 import "Mediaplayer"
+import "Launcher"
 
 Scope {
     Variants {
@@ -32,7 +33,7 @@ Scope {
 
                     ClippingRectangle {
                         id: pillRect
-                        readonly property var modules: [clockModule, mediaModule, notifModule]
+                        readonly property var modules: [clockModule, mediaModule, notifModule, launcherModule]
                         readonly property var current: modules.find(m => m.name === Shellstate.activePill)
 
                         width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
@@ -42,10 +43,12 @@ Scope {
                             : 1
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
-                        anchors.topMargin: 6
+                        anchors.topMargin: Shellstate.activePill === "launcher" ? 150 : 6
                         color: Theme.transparency(Theme.surface, 0.8)
                         clip: true
                         radius: 20
+
+                        Spring on anchors.topMargin{}
 
                         property bool hovered: false
                         property bool activated: false
@@ -107,6 +110,7 @@ Scope {
                         ClockModule { id: clockModule }
                         MediaModule { id: mediaModule }
                         NotificationModule { id: notifModule }
+                        LauncherModule { id: launcherModule }
                     }
                 }
             }
