@@ -26,12 +26,15 @@ Item {
         property real hiddenScale: 1.5
         readonly property real w: item ? item.implicitWidth : 0
         readonly property real h: item ? item.implicitHeight : 0
+        readonly property bool isLauncher: Shellstate.activePill === "launcher"
 
         anchors.centerIn: parent
         active: shown || opacity > 0
         opacity: shown ? 1 : 0
         scale: shown ? 1 : hiddenScale
-        Spring on opacity {duration: 200}
+        Spring on opacity {
+            duration: 200
+        }
         Spring on scale {}
     }
 
