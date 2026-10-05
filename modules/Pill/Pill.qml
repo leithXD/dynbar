@@ -101,7 +101,7 @@ Scope {
                                     Shellstate.cyclePill()
                                 }
                                 if (mouse.button === Qt.LeftButton) {
-                                    console.log() // (debug) i use this for trying out whats inside a variable
+                                    Shellstate.debug() // (debug) i use this for trying out whats inside a variable
                                     Shellstate.toggleMaximized()
                                 }
                             }

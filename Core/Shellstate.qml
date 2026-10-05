@@ -13,6 +13,10 @@ Singleton {
     property bool returnMaximized: false
     property bool componentHover: false
 
+    function debug() {
+        console.log("Hey")
+    }
+
     function toggleMaximized() {
         maximized = !maximized
     }

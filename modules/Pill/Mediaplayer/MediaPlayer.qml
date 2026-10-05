@@ -75,7 +75,7 @@ Item {
             width: coverImage.width - 5
             height: coverImage.height - 5
             spacing: 40
-            visible: !(MediaplayerService.activePlayer === null)
+            visible: coverImage.status !== Image.Ready && !(MediaplayerService.activePlayer === null)
         }
     }
 
