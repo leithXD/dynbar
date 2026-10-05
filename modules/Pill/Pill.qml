@@ -20,7 +20,8 @@ Scope {
                     id: root
                     anchors.top: true
                     WlrLayershell.namespace: "dynbar"
-                    WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+                    WlrLayershell.keyboardFocus: needsFocus ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+                    readonly property bool needsFocus: Shellstate.activePill === "launcher"
                     WlrLayershell.exclusiveZone: -1
                     required property var modelData
                     screen: modelData

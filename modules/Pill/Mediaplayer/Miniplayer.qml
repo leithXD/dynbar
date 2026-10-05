@@ -83,7 +83,7 @@ Item {
             loading: coverImage.status !== Image.Ready
             width: coverImage.width - 5
             height: coverImage.height - 5
-            opacity: MediaplayerService.hasPlayer ? 1 : 0
+            opacity: MediaplayerService.hasPlayer && coverImage.status !== Image.Ready ? 1 : 0
             Spring on opacity{}
         }
     }

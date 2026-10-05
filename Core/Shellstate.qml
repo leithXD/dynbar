@@ -10,7 +10,7 @@ Singleton {
     property var allPills: ["clock", "mediaplayer"]
     property bool isLauncher: false
 
-    property string returnPill: ""
+    property string returnPill: "" // bc of this the launcher cant open when its not changed
     property bool returnMaximized: false
     property bool componentHover: false
 
