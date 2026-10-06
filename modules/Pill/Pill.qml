@@ -64,10 +64,10 @@ Scope {
 
                         Spring on scale{duration: 200}
                         Spring on height{
-                            easing: Shellstate.isLauncher ? Easing.InOutCubic : Easing.OutBack
+                            easing: Shellstate.outLauncher ? Easing.InOutCubic : Easing.OutBack
                         }
                         Spring on width{
-                            easing: Shellstate.isLauncher ? Easing.InOutCubic : Easing.OutBack
+                            easing: Shellstate.outLauncher ? Easing.InOutCubic : Easing.OutBack
                         }
 
                         MouseArea {

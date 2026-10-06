@@ -8,7 +8,7 @@ Singleton {
     property string activePill: "clock"
     property string currentWallpaper: "/home/leith/Pictures/Wallpapers/peak/BotanicGardenJapan.png" // hardcoded rn
     property var allPills: ["clock", "mediaplayer"]
-    property bool isLauncher: false
+    property bool outLauncher: false
 
     property string returnPill: "" // bc of this the launcher cant open when its not changed
     property bool returnMaximized: false
@@ -42,21 +42,20 @@ Singleton {
         id: dismissAnim
         interval: 300
         onTriggered: {
-            isLauncher = false
+            outLauncher = false
         }
         running: false
     }
 
     function toggleLauncher() {
-        // animation is a bit scuffed right now because isLauncher doesnt get changed to false correctly
-        //  because duration is static i think and doesnt react to the end of the animation
         if (activePill === "launcher") {
+            outLauncher = true
             dismissTransient()
             dismissAnim.running = false
             dismissAnim.running = true
         }
         else {
-            isLauncher = true
+            outLauncher = false
             showTransient("launcher")
         }
     }
