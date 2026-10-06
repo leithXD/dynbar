@@ -43,7 +43,7 @@ Item {
                 }
                 Keys.onDownPressed: list.incrementCurrentIndex()
                 Keys.onUpPressed: list.decrementCurrentIndex()
-                Keys.onEscapePressed: Shellstate.dismissTransient()
+                Keys.onEscapePressed: Shellstate.toggleLauncher()
                 onAccepted: root.activate()
             }
         }
@@ -107,6 +107,6 @@ Item {
             command: entry.command,
             workingDirectory: entry.workingDirectory,
         });
-        Shellstate.dismissTransient()
+        Shellstate.toggleLauncher()
     }
 }
