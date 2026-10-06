@@ -124,7 +124,7 @@ Scope {
 
     HyprlandFocusGrab {
         windows: pills.instances
-        active: Shellstate.maximized && Shellstate.returnPill === ""
+        active: Shellstate.maximized && Shellstate.returnPill === "" || Shellstate.activePill === "launcher"
         onCleared: Shellstate.maximized = false
     }
 }
