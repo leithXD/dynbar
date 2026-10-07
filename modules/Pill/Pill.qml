@@ -6,10 +6,12 @@ import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import qs.Core
 import qs.Components
+import qs.Services
 import "Clock"
 import "Notification"
 import "Mediaplayer"
 import "Launcher"
+import "VolumeSlider"
 
 Scope {
     Variants {
@@ -35,7 +37,7 @@ Scope {
 
                     ClippingRectangle {
                         id: pillRect
-                        readonly property var modules: [clockModule, mediaModule, notifModule, launcherModule]
+                        readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule]
                         readonly property var current: modules.find(m => m.name === Shellstate.activePill)
 
                         width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
@@ -112,16 +114,12 @@ Scope {
                                     Shellstate.toggleMaximized()
                                 }
                             }
-                            PwObjectTracker {
-                                objects: [Pipewire.defaultAudioSink]
-                            }
 
                             onWheel: (wheel) => {
-                                const sink = Pipewire.defaultAudioSink
-                                if (!sink?.ready || !sink.audio) return
+                                if (!AudioService.sink?.ready || !AudioService.sink.audio) return
 
                                 const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05
-                                sink.audio.volume = Math.max(0, Math.min(1.0, sink.audio.volume + step))
+                                AudioService.sink.audio.volume = Math.max(0, Math.min(1.0, AudioService.sink.audio.volume + step))
                                 wheel.accepted = true
                             }
                         }
@@ -129,6 +127,7 @@ Scope {
                         ClockModule { id: clockModule }
                         MediaModule { id: mediaModule }
                         NotificationModule { id: notifModule }
+                        VolumeSliderModule { id: volumeModule }
                         LauncherModule { id: launcherModule }
                     }
                 }
