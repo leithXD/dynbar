@@ -103,10 +103,7 @@ Item {
     function activate() {
         const entry = results.values[list.currentIndex]
         if (!entry) return
-        Quickshell.execDetached({
-            command: entry.command,
-            workingDirectory: entry.workingDirectory,
-        });
+        entry.execute()
         Shellstate.toggleLauncher()
     }
 }
