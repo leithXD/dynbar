@@ -14,7 +14,7 @@ PillModule {
     Connections {
         target: NotificationService
         function onReceived() {
-            if (Shellstate.canGrabAttantion) {
+            if (Shellstate.canGrabAttention) {
                 Shellstate.showTransient("notification")
             }
             dismiss.restart()
