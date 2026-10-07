@@ -12,6 +12,7 @@ import "Notification"
 import "Mediaplayer"
 import "Launcher"
 import "VolumeSlider"
+import "Performance"
 
 Scope {
     Variants {
@@ -37,7 +38,7 @@ Scope {
 
                     ClippingRectangle {
                         id: pillRect
-                        readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule]
+                        readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule, performanceModule]
                         readonly property var current: modules.find(m => m.name === Shellstate.activePill)
 
                         width:  current && current.targetWidth  > 0 ? current.targetWidth  : 230
@@ -129,6 +130,7 @@ Scope {
                         NotificationModule { id: notifModule }
                         VolumeSliderModule { id: volumeModule }
                         LauncherModule { id: launcherModule }
+                        PerformanceModule { id: performanceModule }
                     }
                 }
             }
