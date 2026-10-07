@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
 import Quickshell.Hyprland
+import Quickshell.Services.Pipewire
 import qs.Core
 import qs.Components
 import "Clock"
@@ -110,6 +111,18 @@ Scope {
                                     Shellstate.debug() // (debug) i use this for trying out whats inside a variable
                                     Shellstate.toggleMaximized()
                                 }
+                            }
+                            PwObjectTracker {
+                                objects: [Pipewire.defaultAudioSink]
+                            }
+
+                            onWheel: (wheel) => {
+                                const sink = Pipewire.defaultAudioSink
+                                if (!sink?.ready || !sink.audio) return
+
+                                const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05
+                                sink.audio.volume = Math.max(0, Math.min(1.0, sink.audio.volume + step))
+                                wheel.accepted = true
                             }
                         }
 
