@@ -10,6 +10,7 @@ Singleton {
     property string currentWallpaper: "/home/leith/Pictures/Wallpapers/peak/BotanicGardenJapan.png" // hardcoded rn
     property var allPills: ["clock", "mediaplayer"]
     property bool outLauncher: false
+    property bool canGrabAttention: activePill !== "launcher" && activePill !== "notification"
 
     property string returnPill: ""
     property bool returnMaximized: false
@@ -48,6 +49,7 @@ Singleton {
         maximized = returnMaximized
         returnPill = ""
     }
+
     Timer{
         id: dismissAnim
         interval: 300
@@ -73,13 +75,13 @@ Singleton {
     Connections {
         target: MediaplayerService
         function onIsPlayingChanged() {
-            if (MediaplayerService.isPlaying) {
+            if (MediaplayerService.isPlaying && canGrabAttention) {
                 togglePill("mediaplayer")
             }
         }
 
         function onActivePlayerChanged() {
-            if (MediaplayerService.activePlayer === null) {
+            if (MediaplayerService.activePlayer === null && canGrabAttention) {
                 togglePill("clock")
             }
         }
