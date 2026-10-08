@@ -67,12 +67,8 @@ Scope {
                         }
 
                         Spring on scale{duration: 200}
-                        Spring on height{
-                            easing: Shellstate.outLauncher ? Easing.InOutCubic : Easing.OutBack
-                        }
-                        Spring on width{
-                            easing: Shellstate.outLauncher ? Easing.InOutCubic : Easing.OutBack
-                        }
+                        Spring on height{}
+                        Spring on width{}
 
                         MouseArea {
                             id: pillArea

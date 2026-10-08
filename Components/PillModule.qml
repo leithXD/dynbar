@@ -34,7 +34,6 @@ Item {
         scale: shown ? 1 : hiddenScale
         Spring on opacity {
             duration: Shellstate.outLauncher ? 400 : 200
-            easing: Shellstate.outLauncher ? Easing.InOutCubic : Easing.OutBack
         }
         Spring on scale {}
     }
