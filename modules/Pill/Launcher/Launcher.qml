@@ -96,7 +96,7 @@ Item {
                     width: list.width
                     height: 70
                     radius: 15
-                    color: ListView.isCurrentItem ? Theme.surfaceVariant : Theme.subComponents
+                    color: ListView.isCurrentItem ? Theme.transparency(Theme.surfaceVariant, 0.7) : Theme.transparency(Theme.subComponents, 0.7)
                     clip: true
                     Behavior on color {
                         ColorAnimation {
