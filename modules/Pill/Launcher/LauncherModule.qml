@@ -7,5 +7,5 @@ import qs.Core
 PillModule {
     name: "launcher"
     standalone: true
-    expanded: Launcher {}
+    expanded: Launcher { id: launcher}
 }

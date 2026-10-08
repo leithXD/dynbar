@@ -9,15 +9,15 @@ PillModule {
     standalone: true
     expanded: Notification {}
 
-    Timer { id: dismiss; interval: 2000; onTriggered: Shellstate.dismissTransient() }
+    Timer { id: dismiss; interval: 2000; onTriggered: if (Shellstate.canGrabAttention) Shellstate.dismissTransient() }
 
     Connections {
         target: NotificationService
         function onReceived() {
             if (Shellstate.canGrabAttention) {
                 Shellstate.showTransient("notification")
+                dismiss.restart()
             }
-            dismiss.restart()
         }
     }
 }

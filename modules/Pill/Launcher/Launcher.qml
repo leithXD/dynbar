@@ -3,14 +3,25 @@ import Quickshell.Widgets
 import QtQuick.Controls
 import QtQuick
 import qs.Core
+import qs.Components
 
 Item {
     id: root
     implicitWidth: 600
-    implicitHeight: 650
+    implicitHeight: {
+        if (list.count < 8) {
+            if (list.count === 0) {
+                return 200
+            }
+            return list.count * 110
+        } else {
+            return 650
+        }
+    }
     ClippingRectangle {
         width: 580
-        height: 630
+        height: root.implicitHeight - 22
+        Spring on height{}
         radius: 10
         anchors.centerIn: parent
         color: Theme.transparency(Theme.surfaceVariant, 0.3)
@@ -63,6 +74,12 @@ Item {
                 height: parent.height
                 model: results.values
                 spacing: 1
+                Component.onCompleted: {
+                    Shellstate.launcherCount = 8
+                }
+                onCountChanged: {
+                    Shellstate.launcherCount = Math.min(list.count, 8)
+                }
                 delegate: Rectangle {
                     required property var modelData
                     width: list.width

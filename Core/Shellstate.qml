@@ -16,6 +16,8 @@ Singleton {
     property bool returnMaximized: false
     property bool componentHover: false
 
+    property int launcherCount
+
     function debug() {
         console.log(".")
     }

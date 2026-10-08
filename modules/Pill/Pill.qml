@@ -47,7 +47,7 @@ Scope {
                             : 1
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
-                        anchors.topMargin: Shellstate.activePill === "launcher" ? 150 : 6
+                        anchors.topMargin: Shellstate.activePill === "launcher" ? (root.height / 2) - 100 - Shellstate.launcherCount * 30 : 6
                         color: Theme.transparency(Theme.surface, 0.8)
                         clip: true
                         radius: 20
