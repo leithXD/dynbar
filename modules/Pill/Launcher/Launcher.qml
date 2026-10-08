@@ -90,7 +90,9 @@ Item {
                     Shellstate.launcherCount = Math.min(list.count, 8)
                 }
                 delegate: Rectangle {
+                    id: rect
                     required property var modelData
+                    readonly property string iconSrc: Quickshell.iconPath(modelData?.icon ?? "", true)
                     width: list.width
                     height: 70
                     radius: 15
@@ -101,6 +103,37 @@ Item {
                             duration: 100
                         }
                     }
+
+                    ClippingRectangle {
+                        anchors.topMargin: 15
+                        anchors.leftMargin: 20
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        width: 40
+                        height: 40
+                        color: Theme.surface
+                        Image {
+                            id: icon
+                            anchors.centerIn: parent
+                            width: parent.width
+                            height: parent.height
+                            source:  rect.iconSrc
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                            mipmap: true
+                            asynchronous: true
+                            visible: rect.iconSrc !== ""
+                        }
+                        MaterialIcon {
+                            anchors.centerIn: icon
+                            size: 32
+                            name: "error"
+                            color: Theme.surfaceVariant
+                            visible: rect.iconSrc === ""
+                        }
+                        radius: 20
+                    }
+
                     Text {
                         text: modelData.name
                         color: Theme.text
@@ -108,7 +141,7 @@ Item {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.topMargin: 10
-                        anchors.leftMargin: 20
+                        anchors.leftMargin: 80
                         Keys.onEnterPressed: {
                             root.activate()
                         }
@@ -119,7 +152,7 @@ Item {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.topMargin: 35
-                        anchors.leftMargin: 20
+                        anchors.leftMargin: 80
                     }
                     MouseArea {
                         anchors.fill: parent
