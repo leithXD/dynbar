@@ -24,7 +24,7 @@ Item {
         Spring on height{}
         radius: 10
         anchors.centerIn: parent
-        color: Theme.transparency(Theme.surfaceVariant, 0.3)
+        color: "transparent"
         ScriptModel {
             id: results
             values: {
@@ -49,7 +49,7 @@ Item {
                 background: Rectangle {
                     anchors.centerIn: parent
                     radius: 15
-                    color: Theme.surface
+                    color: Theme.subComponents
                     width: search.width + 80
                 }
                 Keys.onDownPressed: list.incrementCurrentIndex()
@@ -67,12 +67,21 @@ Item {
             height: parent.height - 93
             radius: 10
             color: "transparent"
+            Text {
+                anchors.centerIn: parent
+                text: "No results found"
+                font.family: "Rubik"
+                font.pointSize: 28
+                color: Theme.text
+                opacity: list.count === 0 ? 1 : 0
+                Spring on opacity{}
+            }
             ListView {
                 id: list
                 anchors.centerIn: parent
                 width: parent.width
                 height: parent.height
-                model: results.values
+                model: results
                 spacing: 1
                 Component.onCompleted: {
                     Shellstate.launcherCount = 8
@@ -85,8 +94,13 @@ Item {
                     width: list.width
                     height: 70
                     radius: 15
-                    color: ListView.isCurrentItem ? Qt.lighter(Theme.surface, 1.2) : Theme.surface
+                    color: ListView.isCurrentItem ? Theme.surfaceVariant : Theme.subComponents
                     clip: true
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
                     Text {
                         text: modelData.name
                         color: Theme.text
@@ -113,6 +127,27 @@ Item {
                             root.activate()
                         }
                     }
+                }
+                populate: Transition {
+                    SequentialAnimation {
+                        PauseAnimation { duration: ViewTransition.index * 25 }
+                        ParallelAnimation {
+                            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200 }
+                            NumberAnimation { property: "y"; from: ViewTransition.destination.y + 12; duration: 200; easing.type: Easing.OutCubic }
+                        }
+                    }
+                }
+                add: Transition {
+                    ParallelAnimation {
+                        NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 180 }
+                        NumberAnimation { property: "scale"; from: 0.92; to: 1; duration: 180; easing.type: Easing.OutCubic }
+                    }
+                }
+                remove: Transition {
+                    NumberAnimation { property: "opacity"; to: 0; duration: 120 }
+                }
+                displaced: Transition {
+                    NumberAnimation { properties: "x,y"; duration: 180; easing.type: Easing.OutCubic }
                 }
             }
         }
