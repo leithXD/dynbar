@@ -16,8 +16,8 @@ PillModule {
         function onReceived() {
             if (Shellstate.canGrabAttention) {
                 Shellstate.showTransient("notification")
-                dismiss.restart()
             }
+            dismiss.restart()
         }
     }
 }

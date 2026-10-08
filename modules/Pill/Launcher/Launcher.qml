@@ -13,7 +13,7 @@ Item {
             if (list.count === 0) {
                 return 200
             }
-            return list.count * 110
+            return list.count * 71 + 120
         } else {
             return 650
         }
