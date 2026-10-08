@@ -47,9 +47,16 @@ Item {
                 height: 40
                 Component.onCompleted: search.forceActiveFocus()
                 background: Rectangle {
+                    MaterialIcon {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 15
+                        name: "search"
+                        color: Theme.textDark
+                    }
                     anchors.centerIn: parent
                     radius: 15
-                    color: Theme.subComponents
+                    color: Theme.transparency(Theme.subComponents, 0.7)
                     width: search.width + 80
                 }
                 Keys.onDownPressed: list.incrementCurrentIndex()
