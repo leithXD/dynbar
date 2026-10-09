@@ -10,7 +10,7 @@ Singleton {
     property string currentWallpaper: "/home/leith/Pictures/Wallpapers/peak/BotanicGardenJapan.png" // hardcoded rn
     property var allPills: ["clock", "mediaplayer"]
     property bool outLauncher: false
-    property bool canGrabAttention: activePill !== "launcher" && !maximized // if pill isnt maximized or hight priority stuff like notifs and launcher is displayed you may do as you like
+    property bool canGrabAttention: activePill !== "launcher" && !maximized // if pill isnt maximized or hight priority stuff like (notifs and (removed that for now)) launcher is displayed you may do as you like
 
     property string returnPill: ""
     property bool returnMaximized: false

@@ -111,14 +111,13 @@ Item {
                         }
                     }
 
-                    ClippingRectangle {
+                    Item {
                         anchors.topMargin: 15
                         anchors.leftMargin: 20
                         anchors.left: parent.left
                         anchors.top: parent.top
                         width: 40
                         height: 40
-                        color: Theme.surface
                         Image {
                             id: icon
                             anchors.centerIn: parent
@@ -138,7 +137,6 @@ Item {
                             color: Theme.surfaceVariant
                             visible: rect.iconSrc === ""
                         }
-                        radius: 20
                     }
 
                     Text {
