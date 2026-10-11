@@ -1,7 +1,7 @@
-pragma Singleton
-import Quickshell
 import QtQuick
+import Quickshell
 import qs.Services
+pragma Singleton
 
 Singleton {
     property bool maximized: false
@@ -11,81 +11,86 @@ Singleton {
     property var allPills: ["clock", "mediaplayer"]
     property bool outLauncher: false
     property bool canGrabAttention: activePill !== "launcher" && !maximized // if pill isnt maximized or hight priority stuff like (notifs and (removed that for now)) launcher is displayed you may do as you like
-
     property string returnPill: ""
     property bool returnMaximized: false
     property bool componentHover: false
-
     property int launcherCount
 
     function debug() {
-        console.log(".")
+        console.log(".");
     }
 
     function toggleMaximized() {
-        maximized = !maximized
+        maximized = !maximized;
     }
 
     function togglePill(name) {
         if (Shellstate.activePill !== name) {
             if (allPills.includes(name)) {
-                Shellstate.oldPill = Shellstate.activePill
-                Shellstate.activePill = name
+                Shellstate.oldPill = Shellstate.activePill;
+                Shellstate.activePill = name;
             }
         }
     }
 
     function cyclePill() {
-        const i = allPills.indexOf(activePill)
-        togglePill(allPills[(i + 1) % allPills.length])
+        const i = allPills.indexOf(activePill);
+        togglePill(allPills[(i + 1) % allPills.length]);
     }
 
     function showTransient(name) {
-        if (returnPill === "") { returnPill = activePill; returnMaximized = maximized }
-        activePill = name
+        if (returnPill === "") {
+            returnPill = activePill;
+            returnMaximized = maximized;
+        }
+        activePill = name;
     }
 
     function dismissTransient() {
-        if (returnPill === "") return
-        activePill = returnPill
-        maximized = returnMaximized
-        returnPill = ""
-    }
+        if (returnPill === "")
+            return ;
 
-    Timer{
-        id: dismissAnim
-        interval: 300
-        onTriggered: {
-            outLauncher = false
-        }
-        running: false
+        activePill = returnPill;
+        maximized = returnMaximized;
+        returnPill = "";
     }
 
     function toggleLauncher() {
         if (activePill === "launcher") {
-            outLauncher = true
-            dismissTransient()
-            dismissAnim.running = false
-            dismissAnim.running = true
+            outLauncher = true;
+            dismissTransient();
+            dismissAnim.running = false;
+            dismissAnim.running = true;
+        } else {
+            outLauncher = false;
+            showTransient("launcher");
         }
-        else {
-            outLauncher = false
-            showTransient("launcher")
+    }
+
+    Timer {
+        id: dismissAnim
+
+        interval: 300
+        onTriggered: {
+            outLauncher = false;
         }
+        running: false
     }
 
     Connections {
-        target: MediaplayerService
         function onIsPlayingChanged() {
-            if (MediaplayerService.isPlaying && canGrabAttention) {
-                togglePill("mediaplayer")
-            }
+            if (MediaplayerService.isPlaying && canGrabAttention)
+                togglePill("mediaplayer");
+
         }
 
         function onActivePlayerChanged() {
-            if (MediaplayerService.activePlayer === null && canGrabAttention) {
-                togglePill("clock")
-            }
+            if (MediaplayerService.activePlayer === null && canGrabAttention)
+                togglePill("clock");
+
         }
+
+        target: MediaplayerService
     }
+
 }

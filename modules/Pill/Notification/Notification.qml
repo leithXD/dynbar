@@ -5,12 +5,13 @@ import qs.Services
 
 Item {
     id: root
-    implicitWidth: bigMessage ? 500 : 400
-    implicitHeight: bigMessage ? maxHeight + 75 : 68 + msg.height
 
     property int maxHeight: 100
     property bool bigMessage: msg.height > maxHeight
     property int maxBodyLines: 6
+
+    implicitWidth: bigMessage ? 500 : 400
+    implicitHeight: bigMessage ? maxHeight + 75 : 68 + msg.height
 
     Rectangle {
         width: root.width - 10
@@ -25,14 +26,18 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.topMargin: 10
+
             Text {
                 id: header
+
                 text: NotificationService.summary
                 color: Colors.md3.on_surface // change that
                 font.family: "Rubik"
             }
+
             Text {
                 id: msg
+
                 width: bigMessage ? 370 : 270
                 text: NotificationService.body
                 color: Colors.md3.on_surface
@@ -42,6 +47,7 @@ Item {
                 maximumLineCount: root.maxBodyLines
                 textFormat: Text.PlainText
             }
+
         }
 
         ClippingRectangle {
@@ -52,10 +58,14 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
+
             Image {
                 anchors.fill: parent
                 source: NotificationService.image
             }
+
         }
+
     }
+
 }

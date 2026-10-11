@@ -6,38 +6,18 @@ Item {
     id: root
 
     property real progress: 0.3
-
     property bool smoothProgress: true
     property real shownProgress: progress
-
-    Behavior on shownProgress {
-        enabled: root.smoothProgress
-        NumberAnimation { duration: 1000 }
-    }
     property bool animated: true
     property color color: Colors.md3.secondary
-
     property real thickness: 3
     property real amplitude: 2.5
-
     property real shownAmplitude: animated ? amplitude : 0
-
-    Behavior on shownAmplitude {
-        NumberAnimation {
-            duration: 400
-            easing.type: Easing.OutBack
-        }
-    }
     property real wavelength: 16
     property real gap: 6
-
     property real phase: 0
-
-    implicitWidth: 100
-    implicitHeight: 12
     readonly property real mid: height / 2
     readonly property real splitX: Math.max(thickness / 2, width * shownProgress)
-
     readonly property var wavePoints: {
         const points = [];
         for (let x = thickness / 2; x <= splitX; x += 1.5) {
@@ -48,6 +28,9 @@ Item {
         points.push(Qt.point(splitX, endY));
         return points;
     }
+
+    implicitWidth: 100
+    implicitHeight: 12
 
     Shape {
         anchors.fill: parent
@@ -60,7 +43,10 @@ Item {
             joinStyle: ShapePath.RoundJoin
             fillColor: "transparent"
 
-            PathPolyline { path: root.wavePoints }
+            PathPolyline {
+                path: root.wavePoints
+            }
+
         }
 
         ShapePath {
@@ -68,11 +54,33 @@ Item {
             strokeWidth: root.thickness
             capStyle: ShapePath.RoundCap
             fillColor: "transparent"
-
             startX: Math.min(root.splitX + root.gap, root.width - root.thickness / 2)
             startY: root.mid
-            PathLine { x: root.width - root.thickness / 2; y: root.mid }
+
+            PathLine {
+                x: root.width - root.thickness / 2
+                y: root.mid
+            }
+
         }
+
+    }
+
+    Behavior on shownProgress {
+        enabled: root.smoothProgress
+
+        NumberAnimation {
+            duration: 1000
+        }
+
+    }
+
+    Behavior on shownAmplitude {
+        NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutBack
+        }
+
     }
 
     NumberAnimation on phase {
@@ -82,4 +90,5 @@ Item {
         loops: Animation.Infinite
         running: root.animated
     }
+
 }
