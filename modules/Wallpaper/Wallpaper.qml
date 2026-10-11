@@ -4,29 +4,37 @@ import Quickshell.Wayland
 import qs.Core
 
 Variants {
-  model: Quickshell.screens;
+    model: Quickshell.screens
 
-  delegate: Component {
+    delegate: Component {
         PanelWindow {
             id: root
+
             required property var modelData
+
             WlrLayershell.namespace: "wallpaper"
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
             screen: modelData
             WlrLayershell.layer: WlrLayer.Background
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
-            anchors{
+
+            anchors {
                 top: true
                 bottom: true
                 right: true
                 left: true
             }
+
             Image {
                 id: wallpaper
-                source: Quickshell.env("HOME") + "/local/state/dynbar/wallpaper/current"
+
+                source: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
                 anchors.fill: parent
             }
+
         }
+
     }
+
 }
