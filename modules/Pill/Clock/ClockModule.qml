@@ -4,6 +4,11 @@ import qs.Components
 
 PillModule {
     name: "clock"
-    compact: Clock {}
-    expanded: ClockPopout {}
+
+    compact: Clock {
+    }
+
+    expanded: ClockPopout {
+    }
+
 }

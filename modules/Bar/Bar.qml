@@ -3,25 +3,32 @@ import Quickshell
 import Quickshell.Wayland
 
 Variants {
-  model: Quickshell.screens;
+    model: Quickshell.screens
 
-  delegate: Component {
+    delegate: Component {
         PanelWindow {
-                id: root
-                required property var modelData
-                screen: modelData
-                anchors {
-                    top: true
-                    right: true
-                    left: true
-                }
-                implicitHeight: 40
-                color: "transparent"
-                exclusionMode: ExclusionMode.Normal
-                exclusiveZone: 40
+            id: root
 
-                mask: Region {}
-                WlrLayershell.namespace: "Bar"
+            required property var modelData
+
+            screen: modelData
+            implicitHeight: 40
+            color: "transparent"
+            exclusionMode: ExclusionMode.Normal
+            exclusiveZone: 40
+            WlrLayershell.namespace: "Bar"
+
+            anchors {
+                top: true
+                right: true
+                left: true
+            }
+
+            mask: Region {
+            }
+
         }
+
     }
+
 }

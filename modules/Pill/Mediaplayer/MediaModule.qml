@@ -4,6 +4,11 @@ import qs.Components
 
 PillModule {
     name: "mediaplayer"
-    compact: Miniplayer {}
-    expanded: MediaPlayer {}
+
+    compact: Miniplayer {
+    }
+
+    expanded: MediaPlayer {
+    }
+
 }

@@ -1,23 +1,36 @@
 import QtQuick
 import Quickshell
 import qs.Components
-import qs.Services
 import qs.Core
+import qs.Services
 
 PillModule {
     name: "notification"
     standalone: true
-    expanded: Notification {}
 
-    Timer { id: dismiss; interval: 2000; onTriggered: if (Shellstate.canGrabAttention) Shellstate.dismissTransient() }
+    Timer {
+        id: dismiss
 
-    Connections {
-        target: NotificationService
-        function onReceived() {
+        interval: 2000
+        onTriggered: {
             if (Shellstate.canGrabAttention) {
-                Shellstate.showTransient("notification")
+                Shellstate.dismissTransient();
             }
-            dismiss.restart()
         }
     }
+
+    Connections {
+        function onReceived() {
+            if (Shellstate.canGrabAttention)
+                Shellstate.showTransient("notification");
+
+            dismiss.restart();
+        }
+
+        target: NotificationService
+    }
+
+    expanded: Notification {
+    }
+
 }

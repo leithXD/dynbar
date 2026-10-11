@@ -1,14 +1,17 @@
-pragma Singleton
+import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
 import qs.Core
-import QtQuick
+pragma Singleton
 
 Singleton {
     id: root
+
+    property var sink: Pipewire.defaultAudioSink
+    property var volume: sink.audio.volume
+
     PwObjectTracker {
         objects: [Pipewire.defaultAudioSink]
     }
-    property var sink: Pipewire.defaultAudioSink
-    property var volume: sink.audio.volume
+
 }

@@ -1,23 +1,32 @@
 import QtQuick
 import Quickshell
 import qs.Components
-import qs.Services
 import qs.Core
+import qs.Services
 
 PillModule {
     name: "volume"
     standalone: true
-    expanded: VolumeSlider {}
 
-    Timer { id: dismiss; interval: 1000; onTriggered: Shellstate.dismissTransient() }
+    Timer {
+        id: dismiss
+
+        interval: 1000
+        onTriggered: Shellstate.dismissTransient()
+    }
 
     Connections {
-        target: AudioService
         function onVolumeChanged() {
-            if (Shellstate.canGrabAttention) {
-                Shellstate.showTransient("volume")
-            }
-            dismiss.restart()
+            if (Shellstate.canGrabAttention)
+                Shellstate.showTransient("volume");
+
+            dismiss.restart();
         }
+
+        target: AudioService
     }
+
+    expanded: VolumeSlider {
+    }
+
 }

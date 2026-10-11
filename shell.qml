@@ -1,14 +1,22 @@
 import Quickshell
 import Quickshell.Wayland
-import qs.Core
-import qs.Services
 import "modules/Bar"
 import "modules/Pill"
 import "modules/Wallpaper"
+import qs.Core
+import qs.Services
 
 ShellRoot {
-    Wallpaper {}
-    Bar {}
-    Pill {}
-    IpcHandlers {}
+    Wallpaper {
+    }
+
+    Bar {
+    }
+
+    Pill {
+    }
+
+    IpcHandlers {
+    }
+
 }
