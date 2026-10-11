@@ -16,14 +16,14 @@ Item {
         height: 30
         width: (root.implicitWidth - 30) * AudioService.volume
         radius: 10
-        color: Theme.transparency(Theme.text, 0.3)
+        color: Colors.transparency(Colors.md3.on_surface, 0.3)
         Smooth on width{}
         Rectangle {
             anchors.right: parent.right
             width: 30
             height: 30
             radius: 10
-            color: Theme.transparency(Qt.lighter(Theme.text, 1.3), 0.3)
+            color: Colors.transparency(Qt.lighter(Colors.md3.on_surface, 1.3), 0.3)
         }
     }
 }

@@ -15,7 +15,7 @@ Item {
         NumberAnimation { duration: 1000 }
     }
     property bool animated: true
-    property color color: Theme.secondary
+    property color color: Colors.md3.secondary
 
     property real thickness: 3
     property real amplitude: 2.5

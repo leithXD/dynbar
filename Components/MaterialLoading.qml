@@ -11,8 +11,8 @@ ClippingRectangle {
     property bool loading: false
     property int duration: 500
     property int spacing: root.width / 2
-    property string primaryColor: Theme.primary
-    property string primaryColorAlt: Theme.primaryAlt
+    property string primaryColor: Colors.md3.primary
+    property string primaryColorAlt: Colors.md3.on_primary
     property int i: 0
     property var shapes: [
         MaterialShape.Circle,

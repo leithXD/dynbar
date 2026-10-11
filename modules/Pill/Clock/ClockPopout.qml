@@ -23,18 +23,18 @@ Item {
         // evt bald "Google Sans Flex" als font?
         Text {
             font.family: "Rubik"
-            color: Theme.text
+            color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "ddd").replace(".", "")
             // Qt.formatDateTime(clock.date, "ddd") aber bin deutscher
         }
         Text {
             font.family: "Rubik"
-            color: Theme.primary
+            color: Colors.md3.primary
             text: Qt.locale("de_DE").toString(clock.date, "dd")
         }
         Text {
             font.family: "Rubik"
-            color: Theme.text
+            color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "hh:mm")
         }
     }

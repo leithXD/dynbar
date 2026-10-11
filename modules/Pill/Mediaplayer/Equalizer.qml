@@ -11,7 +11,9 @@ Item {
     property int barSpacing: 3
     property var levels: []
 
-    function mix(a, b, t) {
+    function mix(colorA, colorB, t) {
+        const a = Qt.color(colorA)
+        const b = Qt.color(colorB)
         return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t,
                        a.b + (b.b - a.b) * t, 1);
     }
@@ -47,7 +49,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 radius: width / 2
                 opacity: 0.55 + 0.45 * level
-                color: root.mix(Theme.primary, Theme.tertiary,
+                color: root.mix(Colors.md3.primary, Colors.md3.tertiary,
                                 index / (root.barCount - 1))
 
                 Behavior on height {

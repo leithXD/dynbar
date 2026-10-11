@@ -17,7 +17,7 @@ Item {
         height: root.height - 12
         radius: 15
         anchors.centerIn: parent
-        color: Theme.transparency(Theme.surfaceVariant, 0.3)
+        color: Colors.transparency(Colors.md3.surface_variant, 0.1)
 
         Column {
             spacing: 8
@@ -28,14 +28,14 @@ Item {
             Text {
                 id: header
                 text: NotificationService.summary
-                color: Theme.textDark
+                color: Colors.md3.on_surface // change that
                 font.family: "Rubik"
             }
             Text {
                 id: msg
                 width: bigMessage ? 370 : 270
                 text: NotificationService.body
-                color: Theme.text
+                color: Colors.md3.on_surface
                 font.family: "Rubik"
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight

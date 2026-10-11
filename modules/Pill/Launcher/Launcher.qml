@@ -52,11 +52,11 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 15
                         name: "search"
-                        color: Theme.textDark
+                        color: Colors.md3.inverse_on_surface
                     }
                     anchors.centerIn: parent
                     radius: 15
-                    color: Theme.transparency(Theme.subComponents, 0.7)
+                    color: Colors.transparency(Colors.md3.surface_variant, 0.3)
                     width: search.width + 80
                 }
                 Keys.onDownPressed: list.incrementCurrentIndex()
@@ -79,7 +79,7 @@ Item {
                 text: "No results found"
                 font.family: "Rubik"
                 font.pointSize: 28
-                color: Theme.text
+                color: Colors.md3.on_surface
                 opacity: list.count === 0 ? 1 : 0
                 Spring on opacity{}
             }
@@ -103,7 +103,7 @@ Item {
                     width: list.width
                     height: 70
                     radius: 15
-                    color: ListView.isCurrentItem ? Theme.transparency(Theme.surfaceVariant, 0.7) : Theme.transparency(Theme.subComponents, 0.7)
+                    color: ListView.isCurrentItem ? Colors.transparency(Colors.md3.secondary, 0.5) : Colors.transparency(Colors.md3.surface_variant, 0.3)
                     clip: true
                     Behavior on color {
                         ColorAnimation {
@@ -134,14 +134,14 @@ Item {
                             anchors.centerIn: icon
                             size: 32
                             name: "error"
-                            color: Theme.surfaceVariant
+                            color: Colors.md3.surface_variant
                             visible: rect.iconSrc === ""
                         }
                     }
 
                     Text {
                         text: modelData.name
-                        color: Theme.text
+                        color: Colors.md3.on_surface
                         font.bold: true
                         anchors.left: parent.left
                         anchors.top: parent.top
@@ -153,7 +153,7 @@ Item {
                     }
                     Text {
                         text: modelData.comment
-                        color: Theme.text
+                        color: Colors.md3.on_surface
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.topMargin: 35

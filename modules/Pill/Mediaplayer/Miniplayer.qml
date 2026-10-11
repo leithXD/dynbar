@@ -35,7 +35,7 @@ Item {
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
-        color: Theme.text
+        color: Colors.md3.on_surface
     }
 
     ClippingRectangle {
@@ -102,7 +102,7 @@ Item {
                 : 25
             height: 25
             radius: width / 3
-            color: hovered ? Qt.lighter(Theme.primary, 1.3) : Theme.primary
+            color: hovered ? Qt.lighter(Colors.md3.primary, 1.3) : Colors.md3.primary
             property bool hovered: false
             Behavior on color{
                 ColorAnimation{
@@ -115,7 +115,7 @@ Item {
                 id: playButton
                 anchors.centerIn: parent
                 name: MediaplayerService.isPlaying ? "pause" : "play_arrow"
-                color: Theme.secondary
+                color: Colors.md3.on_primary
                 fill: 1
                 size: 21
             }
@@ -149,7 +149,7 @@ Item {
                 : 25
             height: 25
             radius: width / 3
-            color: hovered ? Qt.lighter(Theme.secondary, 1.3) : Theme.secondary
+            color: hovered ? Qt.lighter(Colors.md3.secondary, 1.3) : Colors.md3.secondary
             property bool hovered: false
             Spring on width {}
             Behavior on color{
@@ -161,7 +161,7 @@ Item {
             MaterialIcon {
                 anchors.centerIn: parent
                 name: "skip_next"
-                color: Theme.primary
+                color: Colors.md3.on_secondary
                 fill: 1
                 size: 21
             }

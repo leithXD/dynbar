@@ -34,7 +34,7 @@ Item {
         width: 320
         font.weight: Font.DemiBold
         text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
-        color: Theme.text
+        color: Colors.md3.on_surface
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
@@ -67,7 +67,7 @@ Item {
             anchors.centerIn: parent
             name: "error"
             size: 94
-            color: Theme.surfaceVariant
+            color: Colors.md3.surface_variant
             visible: MediaplayerService.activePlayer === null
         }
         MaterialLoading {
@@ -76,28 +76,6 @@ Item {
             height: coverImage.height - 5
             spacing: 40
             visible: coverImage.status !== Image.Ready && !(MediaplayerService.activePlayer === null)
-        }
-    }
-
-    Rectangle {
-        anchors.fill: cover
-        color: "transparent"
-        visible: !(MediaplayerService.activePlayer === null)
-        Rectangle {
-            id: circleBg
-            width: 30
-            height: 30
-            radius: width / 2
-            color: Theme.transparency(Theme.secondaryAlt, 0.9)
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            property var entry: DesktopEntries.byId(MediaplayerService.desktopEntry)
-            Image {
-                id: icon
-                anchors.fill: parent
-                source: Quickshell.iconPath(parent.entry?.icon, true)
-                mipmap: true
-            }
         }
     }
 
@@ -150,7 +128,7 @@ Item {
                 : 50
             height: 50
             radius: width / 3
-            color: hovered ? Qt.lighter(Theme.primary, 1.3) : Theme.primary
+            color: hovered ? Qt.lighter(Colors.md3.primary, 1.3) : Colors.md3.primary
             property bool hovered: false
             Behavior on color{
                 ColorAnimation{
@@ -162,7 +140,7 @@ Item {
             MaterialIcon {
                 anchors.centerIn: parent
                 name: "play_arrow"
-                color: Theme.secondary
+                color: Colors.md3.on_secondary
                 fill: 1
                 size: 42
             }
@@ -190,7 +168,7 @@ Item {
                 : 50
             height: 50
             radius: width / 3
-            color: hovered ? Qt.lighter(Theme.primary, 1.3) : Theme.primary
+            color: hovered ? Qt.lighter(Colors.md3.primary, 1.3) : Colors.md3.primary
             property bool hovered: false
             Behavior on color{
                 ColorAnimation{
@@ -202,7 +180,7 @@ Item {
             MaterialIcon {
                 anchors.centerIn: parent
                 name: "play_arrow"
-                color: Theme.secondary
+                color: Colors.md3.on_primary
                 fill: 1
                 size: 42
             }
@@ -230,7 +208,7 @@ Item {
                 : 50
             height: 50
             radius: width / 3
-            color: hovered ? Qt.lighter(Theme.secondary, 1.3) : Theme.secondary
+            color: hovered ? Qt.lighter(Colors.md3.secondary, 1.3) : Colors.md3.secondary
             property bool hovered: false
             Spring on width {}
             Behavior on color{
@@ -242,7 +220,7 @@ Item {
             MaterialIcon {
                 anchors.centerIn: parent
                 name: "skip_next"
-                color: Theme.primary
+                color: Colors.md3.on_secondary
                 fill: 1
                 size: 42
             }

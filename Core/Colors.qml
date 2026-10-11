@@ -9,6 +9,11 @@ Singleton {
 	property alias base16: jsonAdapter.base16
 	property alias palette: jsonAdapter.palette
 
+	function transparency(hexColor, alpha) {
+        const c = Qt.color(hexColor)
+        return Qt.rgba(c.r, c.g, c.b, alpha)
+    }
+
 	FileView {
 		path: Quickshell.env("HOME") + "/.local/state/dynbar/colors.json"
 		watchChanges: true
