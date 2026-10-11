@@ -24,7 +24,7 @@ Variants {
             }
             Image {
                 id: wallpaper
-                source: Shellstate.currentWallpaper
+                source: Quickshell.env("HOME") + "/local/state/dynbar/wallpaper/current"
                 anchors.fill: parent
             }
         }
