@@ -43,6 +43,7 @@ Item {
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
+        font.pointSize: 12
         scale: 1.3
     }
 

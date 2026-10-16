@@ -30,6 +30,7 @@ Item {
     }
 
     Text {
+        font.pointSize: 12
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: MediaplayerService.activePlayer === null ? 100 : 40

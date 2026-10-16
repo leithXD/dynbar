@@ -28,18 +28,21 @@ Item {
             font.family: "Rubik"
             color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "ddd").replace(".", "")
+            font.pointSize: 12
         }
 
         Text {
             font.family: "Rubik"
             color: Colors.md3.primary
             text: Qt.locale("de_DE").toString(clock.date, "dd")
+            font.pointSize: 12
         }
 
         Text {
             font.family: "Rubik"
             color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "hh:mm")
+            font.pointSize: 12
         }
 
     }
