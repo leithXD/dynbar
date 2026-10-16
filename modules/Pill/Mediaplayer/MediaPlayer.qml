@@ -136,7 +136,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 110
         anchors.right: parent.right
-        anchors.rightMargin: 50
+        anchors.rightMargin: 5
         width: 150
         height: 60
         spacing: 5
@@ -147,15 +147,17 @@ Item {
             property bool hovered: false
 
             anchors.verticalCenter: parent.verticalCenter
-            width: leftButton.pressed ? 70 : rightButton.pressed ? 30 : middleButton.pressed ? 30 : 50
+            width: leftButton.pressed ? 70 : rightButton.pressed ? 30 : 50
             height: 50
             radius: width / 3
             color: hovered ? Qt.lighter(Colors.md3.primary, 1.3) : Colors.md3.primary
 
             MaterialIcon {
+                id: playButton
+
                 anchors.centerIn: parent
-                name: "play_arrow"
-                color: Colors.md3.on_secondary
+                name: MediaplayerService.isPlaying ? "pause" : "play_arrow"
+                color: Colors.md3.on_primary
                 fill: 1
                 size: 42
             }
@@ -166,61 +168,19 @@ Item {
                 hoverEnabled: true
                 anchors.fill: parent
                 onClicked: {
+                    if (playButton.name === "pause")
+                        playButton.name = "play_arrow";
+                    else
+                        playButton.name = "pause"; // ill fix that later no one will spam click, this is just buggy on bad (slow) media players lowkey
                     MediaplayerService.togglePlaying();
                 }
                 onEntered: {
+                    Shellstate.componentHover = true;
                     left.hovered = true;
                 }
                 onExited: {
+                    Shellstate.componentHover = false;
                     left.hovered = false;
-                }
-            }
-
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                    easing.type: Easing.OutCubic
-                }
-
-            }
-
-            Spring on width {
-            }
-
-        }
-
-        Rectangle {
-            id: middle
-
-            property bool hovered: false
-
-            anchors.verticalCenter: parent.verticalCenter
-            width: middleButton.pressed ? 70 : rightButton.pressed ? 30 : leftButton.pressed ? 30 : 50
-            height: 50
-            radius: width / 3
-            color: hovered ? Qt.lighter(Colors.md3.primary, 1.3) : Colors.md3.primary
-
-            MaterialIcon {
-                anchors.centerIn: parent
-                name: "play_arrow"
-                color: Colors.md3.on_primary
-                fill: 1
-                size: 42
-            }
-
-            MouseArea {
-                id: middleButton
-
-                hoverEnabled: true
-                anchors.fill: parent
-                onClicked: {
-                    MediaplayerService.togglePlaying();
-                }
-                onEntered: {
-                    middle.hovered = true;
-                }
-                onExited: {
-                    middle.hovered = false;
                 }
             }
 
@@ -243,7 +203,7 @@ Item {
             property bool hovered: false
 
             anchors.verticalCenter: parent.verticalCenter
-            width: rightButton.pressed ? 70 : leftButton.pressed ? 30 : middleButton.pressed ? 30 : 50
+            width: rightButton.pressed ? 70 : leftButton.pressed ? 30 : 50
             height: 50
             radius: width / 3
             color: hovered ? Qt.lighter(Colors.md3.secondary, 1.3) : Colors.md3.secondary
@@ -265,9 +225,11 @@ Item {
                     MediaplayerService.next();
                 }
                 onEntered: {
+                    Shellstate.componentHover = true;
                     right.hovered = true;
                 }
                 onExited: {
+                    Shellstate.componentHover = false;
                     right.hovered = false;
                 }
             }
