@@ -78,6 +78,14 @@ Item {
 
         }
 
+        MaterialIcon {
+            anchors.centerIn: parent
+            name: "error"
+            size: 24
+            color: Colors.md3.surface_variant
+            visible: MediaplayerService.activePlayer === null
+        }
+
         MaterialLoading {
             loading: coverImage.status !== Image.Ready
             width: coverImage.width - 5
