@@ -11,13 +11,17 @@ Singleton {
     property string body
     property string image
     property string appIcon
+    readonly property alias trackedNotifications: notif.trackedNotifications
 
     signal received()
 
     NotificationServer {
+        id: notif
+
         bodySupported: true
         keepOnReload: false
         onNotification: (n) => {
+            n.tracked = true;
             root.appName = n.appName;
             root.summary = n.summary;
             root.body = n.body;

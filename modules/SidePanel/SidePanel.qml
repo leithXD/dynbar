@@ -1,3 +1,4 @@
+import "Notifications"
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -17,7 +18,7 @@ Variants {
 
             screen: modelData
             implicitHeight: 1080
-            implicitWidth: 430
+            implicitWidth: 450
             color: "transparent"
             exclusionMode: ExclusionMode.Normal
             exclusiveZone: 50
@@ -68,7 +69,7 @@ Variants {
                 radius: 30
                 anchors.top: parent.top
                 anchors.topMargin: 10
-                x: root.opened ? 0 : 430
+                x: root.opened ? 20 : 450
                 color: Colors.transparency(Colors.md3.surface, 0.8)
 
                 MouseArea {
@@ -83,7 +84,11 @@ Variants {
                     width: 380
                     height: 400
                     radius: 20
-                    color: Colors.transparency(Colors.md3.surface_variant, 0.2)
+                    color: Colors.transparency(Colors.md3.surface_variant, 0)
+
+                    Notifications {
+                    }
+
                 }
 
                 Rectangle {
