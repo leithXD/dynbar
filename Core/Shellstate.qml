@@ -15,6 +15,7 @@ Singleton {
     property bool returnMaximized: false
     property bool componentHover: false
     property int launcherCount
+    property int sidePanelListHeight: 85
 
     function debug() {
         console.log(".");

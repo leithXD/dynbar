@@ -31,7 +31,7 @@ Item {
                 id: header
 
                 text: NotificationService.summary
-                color: Colors.md3.on_surface // change that
+                color: Colors.md3.primary
                 font.family: "Rubik"
             }
 

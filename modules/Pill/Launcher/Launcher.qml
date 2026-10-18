@@ -59,6 +59,7 @@ Item {
                     color: Colors.transparency(Colors.md3.surface_variant, 0.3)
                     width: search.width + 80
                 }
+                color: Colors.md3.on_surface
                 Keys.onDownPressed: list.incrementCurrentIndex()
                 Keys.onUpPressed: list.decrementCurrentIndex()
                 Keys.onEscapePressed: Shellstate.toggleLauncher()
