@@ -96,9 +96,14 @@ Variants {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 10
                     width: 380
-                    height: 580
+                    height: 990 - Shellstate.sidePanelListHeight
                     radius: 20
                     color: Colors.transparency(Colors.md3.surface_variant, 0.2)
+
+                    Spring on height {
+                        duration: 500
+                    }
+
                 }
 
                 Spring on x {
