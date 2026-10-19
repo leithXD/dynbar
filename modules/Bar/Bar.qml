@@ -1,5 +1,6 @@
 import "../Pill/Mediaplayer/"
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
@@ -56,6 +57,52 @@ Variants {
                     barCount: 80
 
                     Smooth on opacity {
+                    }
+
+                }
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 0
+
+                    Item {
+                        Layout.fillWidth: true
+
+                        Spring on Layout.preferredWidth {
+                        }
+
+                    }
+
+                    Loader {
+                        id: cpu
+
+                        active: true
+                        Layout.preferredHeight: 38
+                        Layout.preferredWidth: 40
+
+                        sourceComponent: Rectangle {
+                            color: "white"
+                        }
+
+                        Spring on Layout.preferredWidth {
+                        }
+
+                    }
+
+                    Loader {
+                        id: playButtons
+
+                        active: Shellstate.activePill !== "mediaplayer"
+                        Layout.preferredHeight: 38
+                        Layout.preferredWidth: active ? 90 : 0
+
+                        sourceComponent: Rectangle {
+                            color: "white"
+                        }
+
+                        Spring on Layout.preferredWidth {
+                        }
+
                     }
 
                 }

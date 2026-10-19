@@ -11,7 +11,9 @@ Item {
 
     anchors.fill: parent
 
-    Item {
+    ClippingRectangle {
+        radius: 20
+        color: "transparent"
         width: root.width - 10
         height: root.height
         anchors.centerIn: parent
