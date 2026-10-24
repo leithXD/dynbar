@@ -5,6 +5,8 @@ import qs.Core
 import qs.Services
 
 PillModule {
+    id: module
+
     name: "notification"
     standalone: true
 
@@ -13,16 +15,19 @@ PillModule {
 
         interval: 2000
         onTriggered: {
-            if (Shellstate.canGrabAttention) {
-                Shellstate.dismissTransient();
-            }
+            if (module.pill.canGrabAttention)
+                module.pill.dismissTransient();
+
         }
     }
 
     Connections {
         function onReceived() {
-            if (Shellstate.canGrabAttention)
-                Shellstate.showTransient("notification");
+            if (Shellstate.focused() !== module.pill)
+                return ;
+
+            if (module.pill.canGrabAttention)
+                module.pill.showTransient("notification");
 
             dismiss.restart();
         }
