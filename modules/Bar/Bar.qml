@@ -54,7 +54,7 @@ Variants {
                 color: Colors.transparency(Colors.md3.surface, 0.8)
 
                 Equalizer {
-                    opacity: Shellstate.activePill !== "mediaplayer" ? 0.4 : 0
+                    opacity: pill.activePill !== "mediaplayer" ? 0.4 : 0
                     y: 40 / 2 + 4 - 4
                     scale: 1
                     width: 530
@@ -86,7 +86,7 @@ Variants {
                         Layout.preferredWidth: 40
 
                         sourceComponent: Rectangle {
-                            color: "transparent"
+                            color: "white"
                         }
 
                         Spring on Layout.preferredWidth {
@@ -97,23 +97,25 @@ Variants {
                     Loader {
                         id: playButtons
 
-                        active: Shellstate.activePill !== "mediaplayer"
+                        readonly property bool wanted: root.pill?.activePill !== "mediaplayer"
+                        property real animWidth: wanted ? 70 : 0
+
+                        active: wanted || animWidth > 0.5
+                        
                         Layout.preferredHeight: 30
-                        Layout.preferredWidth: active ? 70 : 0
-
-                        Connections {
-                            function onActivePillChanged() {
-                                console.trace();
-                                console.log("activePill geändert zu:", Shellstate.activePill);
-                            }
-
-                            target: Shellstate
-                        }
-
+                        Layout.preferredWidth: Math.max(0, animWidth)
+ 
                         sourceComponent: PlaybackButtons {
+                            opacity: wanted ? 1 : 0
+                            scale: wanted ? 1 : 0.2
+                            Spring on scale {}
+
+                            Spring on opacity {}
+
+
                         }
 
-                        Spring on Layout.preferredWidth {
+                        Spring on animWidth {
                         }
 
                     }
