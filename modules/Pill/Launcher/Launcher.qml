@@ -7,6 +7,7 @@ import qs.Components
 
 Item {
     id: root
+    required property var pill
     implicitWidth: 600
     implicitHeight: {
         if (list.count < 8) {
@@ -62,7 +63,7 @@ Item {
                 color: Colors.md3.on_surface
                 Keys.onDownPressed: list.incrementCurrentIndex()
                 Keys.onUpPressed: list.decrementCurrentIndex()
-                Keys.onEscapePressed: Shellstate.toggleLauncher()
+                Keys.onEscapePressed: pill.toggleLauncher()
                 onAccepted: root.activate()
             }
         }
@@ -92,10 +93,10 @@ Item {
                 model: results
                 spacing: 1
                 Component.onCompleted: {
-                    Shellstate.launcherCount = 8
+                    pill.launcherCount = 8
                 }
                 onCountChanged: {
-                    Shellstate.launcherCount = Math.min(list.count, 8)
+                    pill.launcherCount = Math.min(list.count, 8)
                 }
                 delegate: Rectangle {
                     id: rect
@@ -195,6 +196,6 @@ Item {
         const entry = results.values[list.currentIndex]
         if (!entry) return
         entry.execute()
-        Shellstate.toggleLauncher()
+        pill.toggleLauncher()
     }
 }

@@ -15,6 +15,7 @@ Variants {
             id: root
 
             required property var modelData
+            readonly property var pill: Shellstate.stateFor(modelData.name)
 
             screen: modelData
             implicitHeight: 50
@@ -30,6 +31,8 @@ Variants {
             }
 
             ClippingRectangle {
+                id: leftPill
+
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 30
@@ -40,6 +43,8 @@ Variants {
             }
 
             ClippingRectangle {
+                id: rightPill
+
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 30
@@ -81,7 +86,7 @@ Variants {
                         Layout.preferredWidth: 40
 
                         sourceComponent: Rectangle {
-                            color: "white"
+                            color: "transparent"
                         }
 
                         Spring on Layout.preferredWidth {
@@ -93,11 +98,19 @@ Variants {
                         id: playButtons
 
                         active: Shellstate.activePill !== "mediaplayer"
-                        Layout.preferredHeight: 38
-                        Layout.preferredWidth: active ? 90 : 0
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: active ? 70 : 0
 
-                        sourceComponent: Rectangle {
-                            color: "white"
+                        Connections {
+                            function onActivePillChanged() {
+                                console.trace();
+                                console.log("activePill geändert zu:", Shellstate.activePill);
+                            }
+
+                            target: Shellstate
+                        }
+
+                        sourceComponent: PlaybackButtons {
                         }
 
                         Spring on Layout.preferredWidth {
@@ -110,6 +123,12 @@ Variants {
             }
 
             mask: Region {
+                item: leftPill
+
+                Region {
+                    item: rightPill
+                }
+
             }
 
         }

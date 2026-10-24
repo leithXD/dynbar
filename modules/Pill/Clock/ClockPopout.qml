@@ -6,10 +6,12 @@ import qs.Core
 Item {
     id: root
 
+    required property var pill
+
     implicitWidth: 350
     implicitHeight: 80
-    scale: Shellstate.maximized ? 3 : 1
-    opacity: Shellstate.maximized ? 1 : 0
+    scale: pill.maximized ? 3 : 1
+    opacity: pill.maximized ? 1 : 0
 
     SystemClock {
         id: clock

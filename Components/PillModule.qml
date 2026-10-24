@@ -4,14 +4,15 @@ import qs.Core
 Item {
     id: root
 
+    required property var pill
     required property string name
     property Component compact
     property Component expanded
     property bool keepCompact: false
     property bool standalone: false
-    readonly property bool active: Shellstate.activePill === name
-    readonly property bool showExpanded: active && expanded !== null && (standalone || Shellstate.maximized)
-    readonly property bool showCompact: active && compact !== null && !standalone && (!Shellstate.maximized || keepCompact || expanded === null)
+    readonly property bool active: pill.activePill === name
+    readonly property bool showExpanded: active && expanded !== null && (standalone || pill.maximized)
+    readonly property bool showCompact: active && compact !== null && !standalone && (!pill.maximized || keepCompact || expanded === null)
     readonly property real targetWidth: showExpanded ? expandedLayer.w : compactLayer.w
     readonly property real targetHeight: showExpanded ? expandedLayer.h : compactLayer.h
 
@@ -39,7 +40,7 @@ Item {
         property real hiddenScale: 1.5
         readonly property real w: item ? item.implicitWidth : 0
         readonly property real h: item ? item.implicitHeight : 0
-        readonly property bool isLauncher: Shellstate.activePill === "launcher"
+        readonly property bool isLauncher: pill.activePill === "launcher"
 
         anchors.centerIn: parent
         active: shown || opacity > 0
@@ -47,7 +48,7 @@ Item {
         scale: shown ? 1 : hiddenScale
 
         Spring on opacity {
-            duration: Shellstate.outLauncher ? 400 : 200
+            duration: pill.outLauncher ? 400 : 200
         }
 
         Spring on scale {

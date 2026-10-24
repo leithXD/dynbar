@@ -5,6 +5,8 @@ import qs.Core
 import qs.Services
 
 PillModule {
+    id: module
+
     name: "volume"
     standalone: true
 
@@ -12,13 +14,16 @@ PillModule {
         id: dismiss
 
         interval: 1000
-        onTriggered: Shellstate.dismissTransient()
+        onTriggered: module.pill.dismissTransient()
     }
 
     Connections {
         function onVolumeChanged() {
-            if (Shellstate.canGrabAttention)
-                Shellstate.showTransient("volume");
+            if (Shellstate.focused() !== module.pill)
+                return ;
+
+            if (module.pill.canGrabAttention)
+                module.pill.showTransient("volume");
 
             dismiss.restart();
         }

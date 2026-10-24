@@ -8,6 +8,8 @@ import qs.Services
 Item {
     id: root
 
+    required property var pill
+
     implicitWidth: 350
     implicitHeight: 40
 
@@ -156,11 +158,11 @@ Item {
                     MediaplayerService.togglePlaying();
                 }
                 onEntered: {
-                    Shellstate.componentHover = true;
+                    pill.componentHover = true;
                     left.hovered = true;
                 }
                 onExited: {
-                    Shellstate.componentHover = false;
+                    pill.componentHover = false;
                     left.hovered = false;
                 }
             }
@@ -206,11 +208,11 @@ Item {
                     MediaplayerService.next();
                 }
                 onEntered: {
-                    Shellstate.componentHover = true;
+                    pill.componentHover = true;
                     right.hovered = true;
                 }
                 onExited: {
-                    Shellstate.componentHover = false;
+                    pill.componentHover = false;
                     right.hovered = false;
                 }
             }

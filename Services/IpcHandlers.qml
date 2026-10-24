@@ -6,28 +6,31 @@ import qs.Core
 Scope {
     IpcHandler {
         target: "launcher"
-        function toggle(): void { Shellstate.toggleLauncher() }
+
+        function toggle(): void {
+            Shellstate.focused()?.toggleLauncher()
+        }
     }
 
     IpcHandler {
         target: "pill"
-        function cycle(): void { Shellstate.cyclePill() }
-        function maximize(): void { Shellstate.toggleMaximized() }
-        function show(name: string): void { Shellstate.activePill = name }
-        function peek(name: string): void {
-            Shellstate.togglePill(name)
-            delay.running = true
-        }
-    }
 
-    Timer {
-        id: delay
-        interval: 2000
-        onTriggered: {
-            let current = Shellstate.activePill
-            Shellstate.activePill = Shellstate.oldPill
-            Shellstate.oldPill = current
+        function cycle(): void {
+            Shellstate.focused()?.cyclePill()
         }
-        running: false
+
+        function maximize(): void {
+            Shellstate.focused()?.toggleMaximized()
+        }
+
+        function show(name: string): void {
+            const p = Shellstate.focused()
+            if (p)
+                p.activePill = name
+        }
+
+        function peek(name: string): void {
+            Shellstate.focused()?.peek(name)
+        }
     }
 }

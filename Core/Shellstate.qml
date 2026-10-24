@@ -1,97 +1,40 @@
 import QtQuick
 import Quickshell
-import qs.Services
+import Quickshell.Hyprland
 pragma Singleton
 
 Singleton {
-    property bool maximized: false
-    property string activePill: "clock"
-    property string oldPill: "clock"
+    id: root
+
     property string currentWallpaper: "/home/leith/Pictures/Wallpapers/peak/BotanicGardenJapan.png" // hardcoded rn
-    property var allPills: ["clock", "mediaplayer"]
-    property bool outLauncher: false
-    property bool canGrabAttention: activePill !== "launcher" && !maximized // if pill isnt maximized or hight priority stuff like (notifs and (removed that for now)) launcher is displayed you may do as you like
-    property string returnPill: ""
-    property bool returnMaximized: false
-    property bool componentHover: false
-    property int launcherCount
     property int sidePanelListHeight: 85
+    property var printStatement: ""
+
+    property var pills: []
+
+    function register(p) {
+        pills = pills.concat([p])
+    }
+
+    function unregister(p) {
+        pills = pills.filter(x => x !== p)
+    }
+
+    // state for a specific monitor
+    function stateFor(screenName) {
+        return pills.find(p => p.screenName === screenName) ?? null
+    }
+
+    // state for focused monitor
+    function focused() {
+        return stateFor(Hyprland.focusedMonitor?.name ?? "") ?? pills[0] ?? null
+    }
+
+    function closeAllWidgets() {
+        pills.forEach(p => p.maximized = false)
+    }
 
     function debug() {
-        console.log(".");
+        printStatement && console.log(printStatement);
     }
-
-    function toggleMaximized() {
-        maximized = !maximized;
-    }
-
-    function togglePill(name) {
-        if (Shellstate.activePill !== name) {
-            if (allPills.includes(name)) {
-                Shellstate.oldPill = Shellstate.activePill;
-                Shellstate.activePill = name;
-            }
-        }
-    }
-
-    function cyclePill() {
-        const i = allPills.indexOf(activePill);
-        togglePill(allPills[(i + 1) % allPills.length]);
-    }
-
-    function showTransient(name) {
-        if (returnPill === "") {
-            returnPill = activePill;
-            returnMaximized = maximized;
-        }
-        activePill = name;
-    }
-
-    function dismissTransient() {
-        if (returnPill === "")
-            return ;
-
-        activePill = returnPill;
-        maximized = returnMaximized;
-        returnPill = "";
-    }
-
-    function toggleLauncher() {
-        if (activePill === "launcher") {
-            outLauncher = true;
-            dismissTransient();
-            dismissAnim.running = false;
-            dismissAnim.running = true;
-        } else {
-            outLauncher = false;
-            showTransient("launcher");
-        }
-    }
-
-    Timer {
-        id: dismissAnim
-
-        interval: 300
-        onTriggered: {
-            outLauncher = false;
-        }
-        running: false
-    }
-
-    Connections {
-        function onIsPlayingChanged() {
-            if (MediaplayerService.isPlaying && canGrabAttention)
-                togglePill("mediaplayer");
-
-        }
-
-        function onActivePlayerChanged() {
-            if (MediaplayerService.activePlayer === null && canGrabAttention)
-                togglePill("clock");
-
-        }
-
-        target: MediaplayerService
-    }
-
 }
