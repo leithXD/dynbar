@@ -92,6 +92,7 @@ Item {
                 height: parent.height
                 model: results
                 spacing: 1
+                highlightMoveDuration: 100
                 Component.onCompleted: {
                     pill.launcherCount = 8
                 }
