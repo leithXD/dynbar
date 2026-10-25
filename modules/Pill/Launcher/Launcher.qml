@@ -81,7 +81,7 @@ Item {
                 text: "No results found"
                 font.family: "Rubik"
                 font.pointSize: 28
-                color: Colors.md3.on_surface
+                color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
                 opacity: list.count === 0 ? 1 : 0
                 Spring on opacity{}
             }
