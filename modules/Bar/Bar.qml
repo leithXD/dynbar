@@ -50,10 +50,13 @@ Variants {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 30
-                width: 400
+                width: row.implicitWidth
                 height: 38
                 radius: 30
                 color: Colors.transparency(Colors.md3.surface, 0.8)
+                Spring on width {
+                    duration: 100
+                }
 
                 Equalizer {
                     opacity: root.activePill !== "mediaplayer" ? 0.4 : 0
@@ -69,10 +72,9 @@ Variants {
                 }
 
                 RowLayout {
+                    id: row
                     anchors.fill: parent
-                    spacing: 0
-
-                    // i should fix this mf layout
+                    spacing: 5
 
                     Item {
                         Layout.fillWidth: true
@@ -88,7 +90,7 @@ Variants {
                         readonly property bool wanted: ConnectionService.bluetoothEnabled
                         active: wanted || slot > 0.5
 
-                        property real slot: wanted ? item.implicitWidth + 5 : 0
+                        property real slot: wanted ? item.implicitWidth : 0
                         
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: Math.max(0, slot)
@@ -127,7 +129,7 @@ Variants {
                         readonly property bool wanted: ConnectionService.wifiConnected
                         active: wanted || slot > 0.5
 
-                        property real slot: wanted ? item.implicitWidth + 5 : 0
+                        property real slot: wanted ? item.implicitWidth : 0
                         
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: Math.max(0, slot)
@@ -160,7 +162,7 @@ Variants {
                         Layout.preferredHeight: 38
                         Layout.preferredWidth: Math.max(0, slot)  
 
-                        property real slot: item ? item.implicitWidth + 5 : 0
+                        property real slot: item ? item.implicitWidth : 0
 
                         sourceComponent: StatChip {
                             icon: "memory_alt"
@@ -181,7 +183,7 @@ Variants {
                         Layout.preferredHeight: 38
                         Layout.preferredWidth: Math.max(0, slot)  
 
-                        property real slot: item ? item.implicitWidth + 5 : 0
+                        property real slot: item ? item.implicitWidth : 0
 
                         sourceComponent: StatChip {
                             icon: "memory"
@@ -198,7 +200,7 @@ Variants {
                         id: playButtons
 
                         readonly property bool wanted: root.activePill !== "mediaplayer"
-                        property real slot: wanted ? 62  : 0
+                        property real slot: wanted ? (item ? item.implicitWidth + 10 : 0) : 0
 
                         active: wanted || slot > 0.5
                         
@@ -218,10 +220,6 @@ Variants {
                         Spring on slot {
                         }
 
-                    }
-
-                    Item {
-                        Layout.preferredWidth: 5
                     }
 
                 }
