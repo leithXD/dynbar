@@ -6,7 +6,8 @@ pragma Singleton
 Singleton {
     id: root
 
-    property string currentWallpaper: "/home/leith/Pictures/Wallpapers/peak/BotanicGardenJapan.png" // hardcoded rn
+    property string wallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
+
     property int sidePanelListHeight: 85
     property var printStatement: ""
 
