@@ -107,75 +107,15 @@ Scope {
 
     WlSessionLock {
         id: sessionLock
-
-        WlSessionLockSurface {
+        LockSurface {
             id: surface
+            screenCopy: root.snapshots[surface.screen?.name]?.url ?? ""
 
-            color: "black"
-
-            Image {
-                id: bg
-
-                anchors.fill: parent
-                cache: false
-                fillMode: Image.PreserveAspectCrop
-                source: root.snapshots[surface.screen?.name]?.url ?? ""
-                visible: status === Image.Ready
-            }
-
-            MultiEffect {
-                anchors.fill: bg
-                source: bg
-                blurEnabled: true
-                blur: bg.status === Image.Ready ? 1.0 : 0
-                blurMax: 64
-                blurMultiplier: 1
-                autoPaddingEnabled: false
-
-                Behavior on blur{
-                    NumberAnimation {
-                        duration: 600
-                        easing.type: Easing.OutCubic
-                    }
-                }
-            }
-
-            Rectangle {
-                id: button
-
-                anchors.centerIn: parent
-                width: 180
-                height: 56
-                radius: height / 2
-                color: area.containsMouse ? Qt.lighter(Colors.md3.primary, 1.2) : Colors.md3.primary
-                scale: area.pressed ? 0.95 : 1
-
-                Behavior on color {
-                    ColorAnimation { duration: 150 }
-                }
-
-                Behavior on scale {
-                    NumberAnimation { duration: 120 }
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Entsperren"
-                    color: Colors.md3.on_primary
-                    font.family: "Rubik"
-                    font.pixelSize: 16
-                    font.weight: Font.DemiBold
-                }
-
-                MouseArea {
-                    id: area
-
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: sessionLock.locked = false
-                }
+            onUnlockRequested: {
+                sessionLock.locked = false
             }
         }
+
     }
 }
 
