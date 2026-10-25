@@ -70,7 +70,9 @@ Variants {
 
                 RowLayout {
                     anchors.fill: parent
-                    spacing: 5
+                    spacing: 0
+
+                    // i should fix this mf layout
 
                     Item {
                         Layout.fillWidth: true
@@ -81,13 +83,84 @@ Variants {
                     }
 
                     Loader {
+                        id: bluetooth
+
+                        readonly property bool wanted: ConnectionService.bluetoothEnabled
+                        active: wanted || slot > 0.5
+
+                        property real slot: wanted ? item.implicitWidth + 5 : 0
+                        
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: Math.max(0, slot)
+ 
+                        sourceComponent: IconChip {
+                            icon: ConnectionService.bluetoothConnected ? "bluetooth_connected" : "bluetooth"
+                            color: ConnectionService.bluetoothConnected ? Colors.md3.tertiary : Colors.md3.on_surface
+                            opacity: wanted ? 1 : 0
+                            scale: wanted ? 1 : 0.1
+
+                            onClicked: {
+                                ConnectionService.toggleBluetooth()
+                            }
+
+                            Spring on scale {}
+
+                            Spring on opacity {}
+
+                            Behavior on color{
+                                ColorAnimation{
+                                    duration: 200
+                                }
+                            }
+
+
+                        }
+
+                        Spring on slot {
+                        }
+
+                    }
+
+                    Loader {
+                        id: wifi
+
+                        readonly property bool wanted: ConnectionService.wifiConnected
+                        active: wanted || slot > 0.5
+
+                        property real slot: wanted ? item.implicitWidth + 5 : 0
+                        
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: Math.max(0, slot)
+ 
+                        sourceComponent: IconChip {
+                            icon: "wifi"
+                            color: Colors.md3.on_surface
+                            opacity: wanted ? 1 : 0
+                            scale: wanted ? 1 : 0.1
+                            Spring on scale {}
+
+                            Spring on opacity {}
+                            onClicked: {
+                                // ConnectionService.toggleWifi() kinda broken
+                            }
+
+
+                        }
+
+                        Spring on slot {
+                        }
+
+                    }
+
+
+                    Loader {
                         id: ram
 
                         active: true
                         Layout.preferredHeight: 38
                         Layout.preferredWidth: Math.max(0, slot)  
 
-                        property real slot: item ? item.implicitWidth : 0
+                        property real slot: item ? item.implicitWidth + 5 : 0
 
                         sourceComponent: StatChip {
                             icon: "memory_alt"
@@ -108,7 +181,7 @@ Variants {
                         Layout.preferredHeight: 38
                         Layout.preferredWidth: Math.max(0, slot)  
 
-                        property real slot: item ? item.implicitWidth : 0
+                        property real slot: item ? item.implicitWidth + 5 : 0
 
                         sourceComponent: StatChip {
                             icon: "memory"
@@ -125,7 +198,7 @@ Variants {
                         id: playButtons
 
                         readonly property bool wanted: root.activePill !== "mediaplayer"
-                        property real slot: wanted ? 62 : 0
+                        property real slot: wanted ? 62  : 0
 
                         active: wanted || slot > 0.5
                         
@@ -145,6 +218,10 @@ Variants {
                         Spring on slot {
                         }
 
+                    }
+
+                    Item {
+                        Layout.preferredWidth: 5
                     }
 
                 }

@@ -39,7 +39,7 @@ Item {
 
                 width: listView.width
                 height: 80
-                color: Colors.transparency(Colors.md3.surface_variant, 0.2)
+                color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
                 radius: 15
 
                 Text {

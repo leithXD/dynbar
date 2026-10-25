@@ -84,7 +84,7 @@ Variants {
                     width: 380
                     height: 400
                     radius: 20
-                    color: Colors.transparency(Colors.md3.surface_variant, 0)
+                    color: "transparent"
 
                     Notifications {
                     }
@@ -98,7 +98,7 @@ Variants {
                     width: 380
                     height: 990 - Shellstate.sidePanelListHeight
                     radius: 20
-                    color: Colors.transparency(Colors.md3.surface_variant, 0.2)
+                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
 
                     Spring on height {
                         duration: 500
