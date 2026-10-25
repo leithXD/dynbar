@@ -36,7 +36,6 @@ Scope {
             return
         timeout.stop()
         capturing = false
-        console.log("[lock] sperre nach", Date.now() - t0, "ms mit", Object.keys(snapshots).length, "Bild(ern)")
         sessionLock.locked = true
     }
 
@@ -88,7 +87,6 @@ Scope {
                 function grab() {
                     const start = Date.now()
                     shot.grabToImage(result => {
-                        console.log("[lock]", win.screen.name, "grabToImage:", Date.now() - start, "ms")
                         root.store(win.screen.name, result)
                     }, shot.sourceSize)
                 }
@@ -101,7 +99,6 @@ Scope {
                 onHasContentChanged: {
                     if (!hasContent)
                         return
-                    console.log("[lock]", win.screen.name, "hasContent nach", Date.now() - root.t0, "ms")
                     Qt.callLater(grab)
                 }
             }
