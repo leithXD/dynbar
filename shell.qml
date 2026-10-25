@@ -1,6 +1,8 @@
+import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "modules/Bar"
+import "modules/Lock"
 import "modules/Pill"
 import "modules/SidePanel"
 import "modules/Wallpaper"
@@ -18,6 +20,9 @@ ShellRoot {
     }
 
     SidePanel {
+    }
+
+    Lock {
     }
 
     IpcHandlers {
