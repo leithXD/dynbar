@@ -18,7 +18,7 @@ Item {
         height: root.height - 12
         radius: 15
         anchors.centerIn: parent
-        color: Colors.transparency(Colors.md3.surface_variant, 0.1)
+        color: Colors.transparency(Colors.md3.inverse_on_surface, 0.2)
 
         Column {
             spacing: 8

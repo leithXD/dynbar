@@ -20,7 +20,7 @@ Item {
         width: root.implicitWidth
         height: 30
         radius: 15
-        color: Colors.transparency(Colors.md3.surface_variant, 0.2)
+        color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
 
         Text {
             id: usage
