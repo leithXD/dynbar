@@ -2,6 +2,7 @@ import M3Shapes
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
+import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
 import qs.Components
@@ -12,6 +13,7 @@ WlSessionLockSurface {
 
     required property string screenCopy
     property bool bgReady: bg.status === Image.Ready
+    property string buffer
 
     signal unlockRequested()
 
@@ -81,42 +83,135 @@ WlSessionLockSurface {
                 radius: 30
                 color: Colors.transparency(Colors.md3.inverse_on_surface, 0)
 
-                Item {
+                ClippingRectangle {
+                    // MaterialShape {
+                    //    id: shape
+                    //  width: img.width
+                    //  height: img.height
+                    //  shape: MaterialShape.Cookie6Sided
+                    //  color: Colors.md3.primary
+                    //  layer.enabled: true
+                    // layer.smooth: true
+                    // }
+                    // MultiEffect {
+                    //  anchors.fill: img
+                    //  source: img
+                    //  maskEnabled: true
+                    //  maskSource: shape
+                    // } looks janky i need smth else
+
                     id: avatar
 
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.topMargin: 70
                     width: img.width
                     height: img.height
+                    radius: width / 2
+                    color: "transparent"
 
                     Image {
                         id: img
 
+                        anchors.centerIn: parent
                         source: Shellstate.avatar
-                        visible: false
                         width: 230
                         height: 230
                         fillMode: Image.PreserveAspectCrop
                         antialiasing: true
                         mipmap: true
                         // sourceSize: Qt.size(192, 192)
+                        opacity: 0.8
                         smooth: true
                     }
 
-                    MaterialShape {
-                        id: shape
+                }
 
-                        width: img.width
-                        height: img.height
-                        shape: MaterialShape.Cookie6Sided
-                        color: Colors.md3.primary
-                        layer.enabled: true
-                        layer.smooth: true
+                ClippingRectangle {
+                    width: surface.buffer === "" ? 60 : 300
+                    height: 40
+                    radius: 25
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 80
+                    focus: true
+                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.8)
+                    Keys.onPressed: (event) => {
+                        if (event.key === Qt.Key_Return) {
+                            console.log("Enter");
+                            event.accepted = true;
+                            return ;
+                        }
+                        surface.buffer += event.text;
+                        event.accepted = true;
                     }
 
-                    MultiEffect {
-                        anchors.fill: img
-                        source: img
-                        maskEnabled: true
-                        maskSource: shape
+                    ListView {
+                        id: passwordChars
+
+                        width: parent.width - 50
+                        height: 20
+                        orientation: ListView.Horizontal
+                        clip: true
+                        anchors.centerIn: parent
+
+                        model: ScriptModel {
+                            values: surface.buffer.split("")
+                        }
+
+                        delegate: MaterialShape {
+                            id: character
+
+                            shape: MaterialShape.Diamond
+                            width: 20
+                            height: 20
+                            color: Colors.md3.on_surface
+                            animationDuration: 600
+                            animationEasing.type: Easing.InOutCubic
+                            Component.onCompleted: {
+                                animTimer.running = true;
+                            }
+
+                            Timer {
+                                id: animTimer
+
+                                interval: 50
+                                running: false
+                                onTriggered: character.shape = MaterialShape.Circle
+                            }
+
+                        }
+
+                        add: Transition {
+                            NumberAnimation {
+                                property: "scale"
+                                from: 0.1
+                                to: 0.9
+                                duration: 500
+                                easing.type: Easing.OutBack
+                            }
+
+                            NumberAnimation {
+                                property: "opacity"
+                                from: 0
+                                to: 1
+                                duration: 300
+                                easing.type: Easing.InOutCubic
+                            }
+
+                            NumberAnimation {
+                                property: "x"
+                                from: surface.buffer.length * 20 - 50
+                                to: x
+                                duration: 300
+                                easing.type: Easing.OutBack
+                            }
+
+                        }
+
+                    }
+
+                    Spring on width {
                     }
 
                 }

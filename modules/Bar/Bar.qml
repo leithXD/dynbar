@@ -199,7 +199,7 @@ Variants {
                     Loader {
                         id: playButtons
 
-                        readonly property bool wanted: root.activePill !== "mediaplayer"
+                        readonly property bool wanted: root.activePill !== "mediaplayer" && MediaplayerService.activePlayer !== null
                         property real slot: wanted ? (item ? item.implicitWidth + 10 : 0) : 0
 
                         active: wanted || slot > 0.5
