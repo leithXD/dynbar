@@ -142,6 +142,13 @@ WlSessionLockSurface {
                             event.accepted = true;
                             return ;
                         }
+                        if (event.key === Qt.Key_Backspace) {
+                            if (surface.buffer.length > 0) {
+                                surface.buffer = surface.buffer.slice(0, -1);
+                                event.accepted = true;
+                                return ;
+                            }
+                        }
                         surface.buffer += event.text;
                         event.accepted = true;
                     }
@@ -154,7 +161,11 @@ WlSessionLockSurface {
                         orientation: ListView.Horizontal
                         clip: true
                         anchors.centerIn: parent
+                        highlightMoveDuration: 100
+                        onCountChanged: {
+                        }
 
+                        // i should animate contentX
                         model: ScriptModel {
                             values: surface.buffer.split("")
                         }
@@ -205,6 +216,25 @@ WlSessionLockSurface {
                                 to: x
                                 duration: 300
                                 easing.type: Easing.OutBack
+                            }
+
+                        }
+
+                        remove: Transition {
+                            NumberAnimation {
+                                property: "scale"
+                                from: 1
+                                to: 0.2
+                                duration: 100
+                                easing.type: Easing.InCubic
+                            }
+
+                            NumberAnimation {
+                                property: "opacity"
+                                from: 1
+                                to: 0
+                                duration: 100
+                                easing.type: Easing.InCubic
                             }
 
                         }
