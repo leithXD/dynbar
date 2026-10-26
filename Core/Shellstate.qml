@@ -7,6 +7,7 @@ Singleton {
     id: root
 
     property string wallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
+    property string avatar: Quickshell.env("HOME") + "/.face"
 
     property int sidePanelListHeight: 85
     property var printStatement: ""
