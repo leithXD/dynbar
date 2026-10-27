@@ -9,6 +9,7 @@ Scope {
     required property string screenName
     property bool maximized: false
     property string activePill: "clock"
+    property string activePillReal: "clock" // without special cases like transients
     property string oldPill: "clock"
     property var allPills: ["clock", "mediaplayer"]
     property bool outLauncher: false
@@ -27,6 +28,7 @@ Scope {
         if (activePill !== name && allPills.includes(name)) {
             oldPill = activePill;
             activePill = name;
+            activePillReal = name; // togglePill only get used when cycling and other stuff never by transients so this works
         }
     }
 

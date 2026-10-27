@@ -17,7 +17,7 @@ Variants {
 
             required property var modelData
             readonly property var pill: Shellstate.stateFor(modelData.name)
-            readonly property string activePill: pill?.activePill ?? ""
+            readonly property string activePill: pill?.activePillReal ?? ""
 
             screen: modelData
             implicitHeight: 50
@@ -90,7 +90,7 @@ Variants {
                         readonly property bool wanted: ConnectionService.bluetoothEnabled
                         active: wanted || slot > 0.5
 
-                        property real slot: wanted ? item.implicitWidth : 0
+                        property real slot: wanted && item ? item.implicitWidth : 0
                         
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: Math.max(0, slot)
@@ -129,7 +129,7 @@ Variants {
                         readonly property bool wanted: ConnectionService.wifiConnected
                         active: wanted || slot > 0.5
 
-                        property real slot: wanted ? item.implicitWidth : 0
+                        property real slot: wanted && item ? item.implicitWidth : 0
                         
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: Math.max(0, slot)
