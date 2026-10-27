@@ -14,9 +14,14 @@ WlSessionLockSurface {
     required property string screenCopy
     property bool bgReady: bg.status === Image.Ready
     property string buffer
+    required property LockContext context
 
     signal unlockRequested()
+    signal unlock()
 
+    onBufferChanged: {
+        context.currentText = buffer;
+    }
     color: "black"
 
     Image {
@@ -127,8 +132,66 @@ WlSessionLockSurface {
 
                 }
 
+                SequentialAnimation {
+                    id: shakeRotation
+
+                    running: context.showFailure
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: -6
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: 6
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: -4
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: 4
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: -2
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: 2
+                        duration: 50
+                    }
+
+                    NumberAnimation {
+                        target: passwdContainer
+                        property: "rotation"
+                        to: 0
+                        duration: 50
+                    }
+
+                }
+
                 ClippingRectangle {
-                    width: surface.buffer === "" ? 60 : 300
+                    id: passwdContainer
+
+                    width: surface.buffer === "" ? 150 : 300
                     height: 40
                     radius: 25
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -139,6 +202,13 @@ WlSessionLockSurface {
                     Keys.onPressed: (event) => {
                         if (event.key === Qt.Key_Return) {
                             console.log("Enter");
+                            context.tryUnlock();
+                            surface.buffer = "";
+                            event.accepted = true;
+                            return ;
+                        }
+                        if (event.key === Qt.Key_Escape) {
+                            surface.onUnlock();
                             event.accepted = true;
                             return ;
                         }
@@ -153,19 +223,47 @@ WlSessionLockSurface {
                         event.accepted = true;
                     }
 
+                    MaterialIcon {
+                        name: "lock"
+                        anchors.centerIn: parent
+                        color: Colors.md3.surface_variant
+                        opacity: surface.buffer === "" ? 1 : 0
+                        visible: opacity > 0.1
+
+                        Smooth on opacity {
+                        }
+
+                    }
+
                     ListView {
                         id: passwordChars
 
-                        width: parent.width - 50
+                        property var shapes: [MaterialShape.Square, MaterialShape.SemiCircle, MaterialShape.Oval, MaterialShape.Pill, MaterialShape.Triangle, MaterialShape.Diamond, MaterialShape.Pentagon, MaterialShape.Gem, MaterialShape.Sunny, MaterialShape.VerySunny, MaterialShape.Cookie4Sided, MaterialShape.Cookie6Sided, MaterialShape.Clover4Leaf, MaterialShape.SoftBurst, MaterialShape.Flower, MaterialShape.Puffy]
+                        property int currentShape: 0
+
+                        spacing: 3
+                        clip: true
+                        width: parent.width - 80
                         height: 20
                         orientation: ListView.Horizontal
-                        clip: true
                         anchors.centerIn: parent
                         highlightMoveDuration: 100
-                        onCountChanged: {
+                        onContentWidthChanged: {
+                            if (contentWidth > width) {
+                                contentXAnim.to = contentWidth - width;
+                                contentXAnim.restart();
+                            }
                         }
 
-                        // i should animate contentX
+                        NumberAnimation {
+                            id: contentXAnim
+
+                            target: passwordChars
+                            property: "contentX"
+                            duration: 200
+                            easing.type: Easing.OutCubic
+                        }
+
                         model: ScriptModel {
                             values: surface.buffer.split("")
                         }
@@ -173,13 +271,17 @@ WlSessionLockSurface {
                         delegate: MaterialShape {
                             id: character
 
-                            shape: MaterialShape.Diamond
+                            shape: passwordChars.shapes[index % passwordChars.shapes.length]
                             width: 20
                             height: 20
                             color: Colors.md3.on_surface
                             animationDuration: 600
                             animationEasing.type: Easing.InOutCubic
                             Component.onCompleted: {
+                                if (passwordChars.currentShape === passwordChars.shapes.length)
+                                    passwordChars.currentShape = 0 && console.log("currentShape reset");
+                                else
+                                    passwordChars.currentShape++ && console.log("currentShape +1");
                                 animTimer.running = true;
                             }
 
@@ -212,10 +314,10 @@ WlSessionLockSurface {
 
                             NumberAnimation {
                                 property: "x"
-                                from: surface.buffer.length * 20 - 50
+                                from: surface.buffer.length * 20 - 40
                                 to: x
                                 duration: 300
-                                easing.type: Easing.OutBack
+                                easing.type: Easing.OutCubic
                             }
 
                         }
@@ -295,6 +397,14 @@ WlSessionLockSurface {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: surface.unlockRequested()
+        }
+
+        Connections {
+            function onUnlocked() {
+                surface.unlock();
+            }
+
+            target: context
         }
 
         Behavior on color {

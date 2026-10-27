@@ -105,15 +105,20 @@ Scope {
         }
     }
 
+    LockContext {
+        id: lockContext
+    }
+
     WlSessionLock {
         id: sessionLock
         LockSurface {
             id: surface
             screenCopy: root.snapshots[surface.screen?.name]?.url ?? ""
 
-            onUnlockRequested: {
+            onUnlock: {
                 sessionLock.locked = false
             }
+            context: lockContext
         }
 
     }
