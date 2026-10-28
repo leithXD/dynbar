@@ -115,7 +115,15 @@ WlSessionLockSurface {
                     width: img.width
                     height: img.height
                     radius: width / 2
-                    color: "transparent"
+                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.8)
+
+                    MaterialIcon {
+                        name: "person"
+                        size: 172
+                        color: Colors.md3.surface
+                        anchors.centerIn: parent
+                        visible: img.status !== Image.Ready
+                    }
 
                     Image {
                         id: img
