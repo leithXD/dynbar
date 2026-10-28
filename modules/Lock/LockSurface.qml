@@ -35,6 +35,8 @@ WlSessionLockSurface {
     }
 
     MultiEffect {
+        id: blurredBg
+
         anchors.fill: bg
         source: bg
         blurEnabled: true
@@ -203,12 +205,11 @@ WlSessionLockSurface {
                         if (event.key === Qt.Key_Return) {
                             console.log("Enter");
                             context.tryUnlock();
-                            surface.buffer = "";
                             event.accepted = true;
                             return ;
                         }
                         if (event.key === Qt.Key_Escape) {
-                            surface.onUnlock();
+                            surface.unlock();
                             event.accepted = true;
                             return ;
                         }
@@ -218,9 +219,12 @@ WlSessionLockSurface {
                                 event.accepted = true;
                                 return ;
                             }
+                            return ;
                         }
-                        surface.buffer += event.text;
-                        event.accepted = true;
+                        if (event.text !== "") {
+                            surface.buffer += event.text;
+                            event.accepted = true;
+                        }
                     }
 
                     MaterialIcon {
@@ -279,9 +283,9 @@ WlSessionLockSurface {
                             animationEasing.type: Easing.InOutCubic
                             Component.onCompleted: {
                                 if (passwordChars.currentShape === passwordChars.shapes.length)
-                                    passwordChars.currentShape = 0 && console.log("currentShape reset");
+                                    passwordChars.currentShape = 0;
                                 else
-                                    passwordChars.currentShape++ && console.log("currentShape +1");
+                                    passwordChars.currentShape++;
                                 animTimer.running = true;
                             }
 
@@ -373,52 +377,57 @@ WlSessionLockSurface {
 
     }
 
-    Rectangle {
-        id: button
-
-        width: 180
-        height: 56
-        radius: height / 2
-        color: area.containsMouse ? Qt.lighter(Colors.md3.primary, 1.2) : Colors.md3.primary
-        scale: area.pressed ? 0.95 : 1
-
-        Text {
-            anchors.centerIn: parent
-            text: "Entsperren"
-            color: Colors.md3.on_primary
-            font.family: "Rubik"
-            font.pixelSize: 16
-            font.weight: Font.DemiBold
+    Connections {
+        function onUnlocked() {
+            unlockAnim.running = true;
         }
 
-        MouseArea {
-            id: area
-
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: surface.unlockRequested()
+        function onShowFailureChanged() {
+            if (context.showFailure) {
+                console.log("Failed");
+                surface.buffer = "";
+            }
         }
 
-        Connections {
-            function onUnlocked() {
+        target: context
+    }
+
+    SequentialAnimation {
+        id: unlockAnim
+
+        running: false
+
+        ParallelAnimation {
+            NumberAnimation {
+                target: mainCard
+                property: "opacity"
+                to: 0
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+
+            NumberAnimation {
+                target: mainCard
+                property: "scale"
+                to: 0.8
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+
+            NumberAnimation {
+                target: blurredBg
+                property: "blur"
+                to: 0
+                duration: 300
+                easing.type: Easing.InOutCubic
+            }
+
+        }
+
+        ScriptAction {
+            script: {
                 surface.unlock();
             }
-
-            target: context
-        }
-
-        Behavior on color {
-            ColorAnimation {
-                duration: 150
-            }
-
-        }
-
-        Behavior on scale {
-            NumberAnimation {
-                duration: 120
-            }
-
         }
 
     }
