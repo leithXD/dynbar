@@ -7,6 +7,8 @@ import Quickshell.Widgets
 import qs.Components
 import qs.Services
 import qs.Core
+import "RightPill"
+import "Workspaces"
 
 Variants {
     model: Quickshell.screens
@@ -38,10 +40,15 @@ Variants {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 30
-                width: 400
+                property int padding: 10
+                width: workspaces.implicitWidth + padding
                 height: 38
                 radius: 30
                 color: Colors.transparency(Colors.md3.surface, 0.8)
+                Workspaces {
+                    id: workspaces
+
+                }
             }
 
             ClippingRectangle {
@@ -71,159 +78,10 @@ Variants {
 
                 }
 
-                RowLayout {
+                RightPill {
                     id: row
-                    anchors.fill: parent
-                    spacing: 5
-
-                    Item {
-                        Layout.fillWidth: true
-
-                        Spring on Layout.preferredWidth {
-                        }
-
-                    }
-
-                    Loader {
-                        id: bluetooth
-
-                        readonly property bool wanted: ConnectionService.bluetoothEnabled
-                        active: wanted || slot > 0.5
-
-                        property real slot: wanted && item ? item.implicitWidth : 0
-                        
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: Math.max(0, slot)
- 
-                        sourceComponent: IconChip {
-                            icon: ConnectionService.bluetoothConnected ? "bluetooth_connected" : "bluetooth"
-                            color: ConnectionService.bluetoothConnected ? Colors.md3.tertiary : Colors.md3.on_surface
-                            opacity: wanted ? 1 : 0
-                            scale: wanted ? 1 : 0.1
-
-                            onClicked: {
-                                ConnectionService.toggleBluetooth()
-                            }
-
-                            Spring on scale {}
-
-                            Spring on opacity {}
-
-                            Behavior on color{
-                                ColorAnimation{
-                                    duration: 200
-                                }
-                            }
-
-
-                        }
-
-                        Spring on slot {
-                        }
-
-                    }
-
-                    Loader {
-                        id: wifi
-
-                        readonly property bool wanted: ConnectionService.wifiConnected
-                        active: wanted || slot > 0.5
-
-                        property real slot: wanted && item ? item.implicitWidth : 0
-                        
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: Math.max(0, slot)
- 
-                        sourceComponent: IconChip {
-                            icon: "wifi"
-                            color: Colors.md3.on_surface
-                            opacity: wanted ? 1 : 0
-                            scale: wanted ? 1 : 0.1
-                            Spring on scale {}
-
-                            Spring on opacity {}
-                            onClicked: {
-                                // ConnectionService.toggleWifi() kinda broken
-                            }
-
-
-                        }
-
-                        Spring on slot {
-                        }
-
-                    }
-
-
-                    Loader {
-                        id: ram
-
-                        active: true
-                        Layout.preferredHeight: 38
-                        Layout.preferredWidth: Math.max(0, slot)  
-
-                        property real slot: item ? item.implicitWidth : 0
-
-                        sourceComponent: StatChip {
-                            icon: "memory_alt"
-                            text: SysmonService.ramUsage
-                            color: Colors.md3.tertiary
-                            padding: 45
-                        }
-
-                        Spring on slot {
-                        }
-
-                    }
-
-                    Loader {
-                        id: cpu
-
-                        active: true
-                        Layout.preferredHeight: 38
-                        Layout.preferredWidth: Math.max(0, slot)  
-
-                        property real slot: item ? item.implicitWidth : 0
-
-                        sourceComponent: StatChip {
-                            icon: "memory"
-                            text: SysmonService.cpuUsage
-                            color: Colors.md3.tertiary
-                        }
-
-                        Spring on slot {
-                        }
-
-                    }
-
-                    Loader {
-                        id: playButtons
-
-                        readonly property bool wanted: root.activePill !== "mediaplayer" && MediaplayerService.activePlayer !== null
-                        property real slot: wanted ? (item ? item.implicitWidth + 10 : 0) : 0
-
-                        active: wanted || slot > 0.5
-                        
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: Math.max(0, slot)
- 
-                        sourceComponent: PlaybackButtons {
-                            opacity: wanted ? 1 : 0
-                            scale: wanted ? 1 : 0.1
-                            Spring on scale {}
-
-                            Spring on opacity {}
-
-
-                        }
-
-                        Spring on slot {
-                        }
-
-                    }
-
+                    activePill: root.activePill
                 }
-
             }
 
             mask: Region {
