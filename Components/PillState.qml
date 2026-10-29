@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import qs.Core
 import qs.Services
 
@@ -19,6 +20,8 @@ Scope {
     property int launcherCount: 0
     readonly property bool canGrabAttention: activePill !== "launcher" && !maximized
     readonly property bool wantsGrab: (maximized && returnPill === "") || activePill === "launcher"
+    readonly property var hyprMonitor: Hyprland.monitorFor(screen)
+    readonly property bool isFullscreen: hyprMonitor?.activeWorkspace?.hasFullscreen ?? false
 
     function toggleMaximized() {
         maximized = !maximized;
