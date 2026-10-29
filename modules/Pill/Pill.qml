@@ -63,7 +63,7 @@ Scope {
                     scale: pillArea.pressed ? 1.05 : pillRect.hovered || pillState.componentHover ? 1.02 : 1
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    anchors.topMargin: pillState.activePill === "launcher" ? (root.height / 2) - 100 - pillState.launcherCount * 30 : 6
+                    anchors.topMargin: pillState.isFullscreen ? -50 : (pillState.activePill === "launcher" ? (root.height / 2) - 100 - pillState.launcherCount * 30 : 6)
                     color: Colors.transparency(Colors.md3.surface, 0.8)
                     clip: true
                     radius: 20

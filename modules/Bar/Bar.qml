@@ -38,13 +38,15 @@ Variants {
                 id: leftPill
 
                 anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 30
+                y: root.pill.isFullscreen ? -50 : 6
+                anchors.leftMargin: root.pill.isFullscreen ? -20 : 30
                 property int padding: 10
                 width: workspaces.implicitWidth + padding
                 height: 38
                 radius: 30
                 color: Colors.transparency(Colors.md3.surface, 0.8)
+                Spring on y{}
+                Spring on anchors.leftMargin {}
                 Workspaces {
                     id: workspaces
 
@@ -55,8 +57,8 @@ Variants {
                 id: rightPill
 
                 anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 30
+                y: root.pill.isFullscreen ? -50 : 6
+                anchors.rightMargin:  root.pill.isFullscreen ? -20 : 30
                 width: row.implicitWidth
                 height: 38
                 radius: 30
@@ -64,6 +66,8 @@ Variants {
                 Spring on width {
                     duration: 100
                 }
+                Spring on y {}
+                Spring on anchors.rightMargin {}
 
                 Equalizer {
                     opacity: root.activePill !== "mediaplayer" ? 0.4 : 0
