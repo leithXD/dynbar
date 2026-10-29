@@ -8,7 +8,9 @@ Scope {
         target: "launcher"
 
         function toggle(): void {
-            Shellstate.focused()?.toggleLauncher()
+            if (!Shellstate.focused()?.isFullscreen) {
+                Shellstate.focused()?.toggleLauncher()
+            }
         }
     }
 
