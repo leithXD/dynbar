@@ -22,31 +22,13 @@ RowLayout {
     }
 
     Loader {
-        id: battery
-
-        property real slot: item ? item.implicitWidth : 0
-
-        active: true
-        Layout.preferredHeight: 38
-        Layout.preferredWidth: Math.max(0, slot)
-
-        sourceComponent: StatChip {
-            icon: "battery_android_full" // from _0 to _6 to _full
-            text: "bat"
-            color: Colors.md3.tertiary
-        }
-
-        Spring on slot {
-        }
-
-    }
-
-    Loader {
         id: ram
 
-        property real slot: item ? item.implicitWidth : 0
+        property real slot: wanted && item ? item.implicitWidth : 0
+        readonly property bool wanted: SysmonService.ramUsage > 75
 
-        active: true
+        active: wanted || slot > 0.5
+        visible: active
         Layout.preferredHeight: 38
         Layout.preferredWidth: Math.max(0, slot)
 
@@ -54,7 +36,16 @@ RowLayout {
             icon: "memory_alt"
             text: SysmonService.ramUsage
             color: Colors.md3.tertiary
-            padding: 45
+            padding: 20
+            opacity: ram.wanted ? 1 : 0
+            scale: ram.wanted ? 1 : 0.1
+
+            Spring on scale {
+            }
+
+            Spring on opacity {
+            }
+
         }
 
         Spring on slot {
@@ -68,6 +59,7 @@ RowLayout {
         property real slot: item ? item.implicitWidth : 0
 
         active: true
+        visible: active
         Layout.preferredHeight: 38
         Layout.preferredWidth: Math.max(0, slot)
 
@@ -83,12 +75,31 @@ RowLayout {
     }
 
     Loader {
+        id: battery
+
+        property real slot: item ? item.implicitWidth : 0
+
+        active: true
+        visible: active
+        Layout.preferredHeight: 38
+        Layout.preferredWidth: Math.max(0, slot)
+
+        sourceComponent: BatteryChip {
+        }
+
+        Spring on slot {
+        }
+
+    }
+
+    Loader {
         id: bluetooth
 
         readonly property bool wanted: ConnectionService.bluetoothEnabled
         property real slot: wanted && item ? item.implicitWidth : 0
 
         active: wanted || slot > 0.5
+        visible: active
         Layout.preferredHeight: 30
         Layout.preferredWidth: Math.max(0, slot)
 
@@ -130,6 +141,7 @@ RowLayout {
         property real slot: wanted && item ? item.implicitWidth : 0
 
         active: wanted || slot > 0.5
+        visible: active
         Layout.preferredHeight: 30
         Layout.preferredWidth: Math.max(0, slot)
 
@@ -161,6 +173,7 @@ RowLayout {
         property real slot: wanted ? (item ? item.implicitWidth + 10 : 0) : 0
 
         active: wanted || slot > 0.5
+        visible: active
         Layout.preferredHeight: 30
         Layout.preferredWidth: Math.max(0, slot)
 

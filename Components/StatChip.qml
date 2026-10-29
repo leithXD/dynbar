@@ -9,10 +9,11 @@ Item {
 
     required property string text
     required property string icon
+    property string rectColor: Colors.md3.inverse_on_surface
     property string color: "white"
-    property int padding: 40
+    property int padding: 20
 
-    implicitWidth: padding + usage.width
+    implicitWidth: padding + usage.width + materialIcon.width
     implicitHeight: 30
 
     Rectangle {
@@ -20,7 +21,7 @@ Item {
         width: root.implicitWidth
         height: 30
         radius: 15
-        color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+        color: Colors.transparency(root.rectColor, 0.5)
 
         Text {
             id: usage
@@ -34,6 +35,8 @@ Item {
         }
 
         MaterialIcon {
+            id: materialIcon
+
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 4
