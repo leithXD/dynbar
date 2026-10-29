@@ -22,6 +22,26 @@ RowLayout {
     }
 
     Loader {
+        id: battery
+
+        property real slot: item ? item.implicitWidth : 0
+
+        active: true
+        Layout.preferredHeight: 38
+        Layout.preferredWidth: Math.max(0, slot)
+
+        sourceComponent: StatChip {
+            icon: "battery_android_full" // from _0 to _6 to _full
+            text: "bat"
+            color: Colors.md3.tertiary
+        }
+
+        Spring on slot {
+        }
+
+    }
+
+    Loader {
         id: ram
 
         property real slot: item ? item.implicitWidth : 0
