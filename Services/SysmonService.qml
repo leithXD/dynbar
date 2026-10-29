@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.UPower
 pragma Singleton
 
 Singleton {
@@ -12,6 +13,9 @@ Singleton {
     property double usedRam: 0
     property double lastCpuIdle: 0
     property double lastCpuTotal: 0
+    property real percentage: UPower.displayDevice ? UPower.displayDevice.percentage * 100 : 0
+    property int state: UPower.displayDevice ? UPower.displayDevice.state : UPowerDeviceState.Unknown
+    property bool criticalPercentage: percentage < 15
 
     function parse(text) {
         const lines = text.trim().split("\n");
