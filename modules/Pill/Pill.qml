@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
@@ -28,6 +29,43 @@ Scope {
                 required property var modelData
                 readonly property bool needsFocus: pillState.activePill === "launcher"
                 readonly property bool wantsGrab: pillState.wantsGrab
+                readonly property bool blurActive: pillState.activePill === "launcher"
+
+                ScreencopyView {
+                    id: screenCopy
+                    anchors.fill: parent
+                    captureSource: (root.blurActive || blurredBg.opacity > 0) ? (Quickshell.screens.length > 0 ? Quickshell.screens[0] : null) : null
+                    visible: false
+                    
+                }
+
+                MultiEffect {
+                    id: blurredBg
+
+                    anchors.fill: screenCopy
+                    source: screenCopy
+                    blurEnabled: true
+                    blur: root.blurActive ? 1 : 0.2
+                    opacity: root.blurActive ? 1 : 0
+                    blurMax: 64
+                    blurMultiplier: 1
+                    autoPaddingEnabled: false
+                    visible: blur > 0.3
+
+                    Behavior on blur {
+                        NumberAnimation {
+                            duration: 600
+                            easing.type: Easing.OutCubic
+                        }
+
+                    }
+
+                    Smooth on opacity {
+                        duration: 200
+                    }
+
+                }
+
 
                 screen: modelData
                 anchors.top: true
