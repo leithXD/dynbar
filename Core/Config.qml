@@ -73,6 +73,7 @@ Singleton {
     }
 
     component Paths: JsonObject {
+        property string wallpaperPath: "/Pictures/Wallpapers"
     }
 
 }

@@ -15,6 +15,16 @@ Scope {
     }
 
     IpcHandler {
+        target: "wallpaperSelection"
+
+        function toggle(): void {
+            if (!Shellstate.focused()?.isFullscreen) {
+                Shellstate.focused()?.toggleWallpaper()
+            }
+        }
+    }
+
+    IpcHandler {
         target: "pill"
 
         function cycle(): void {

@@ -74,6 +74,14 @@ Scope {
         }
     }
 
+    function toggleWallpaper() {
+        if (activePill === "wallpaper") {
+            dismissTransient();
+        } else {
+            showTransient("wallpaper");
+        }
+    }
+
     Component.onCompleted: Shellstate.register(root)
     Component.onDestruction: Shellstate.unregister(root)
 
