@@ -25,7 +25,7 @@ RowLayout {
         id: ram
 
         property real slot: wanted && item ? item.implicitWidth : 0
-        readonly property bool wanted: SysmonService.ramUsage > 75
+        readonly property bool wanted: Config.bar.alwaysShowRam || SysmonService.ramUsage > 75
 
         active: wanted || slot > 0.5
         visible: active
@@ -170,7 +170,7 @@ RowLayout {
         id: playButtons
 
         readonly property bool wanted: root.activePill !== "mediaplayer" && MediaplayerService.activePlayer !== null
-        property real slot: wanted ? (item ? item.implicitWidth + 10 : 0) : 0
+        property real slot: wanted ? (item ? item.implicitWidth : 0) : 0
 
         active: wanted || slot > 0.5
         visible: active
