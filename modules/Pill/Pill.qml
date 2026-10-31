@@ -13,6 +13,7 @@ import "Notification"
 import "Mediaplayer"
 import "Launcher"
 import "VolumeSlider"
+import "Wallpaper"
 
 Scope {
     readonly property var grabWindows: pills.instances.filter(w => w.wantsGrab)
@@ -106,7 +107,7 @@ Scope {
                 ClippingRectangle {
                     id: pillRect
 
-                    readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule]
+                    readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule, wallpaperModule]
                     readonly property var current: modules.find(m => m.name === pillState.activePill)
                     property bool hovered: false
                     property bool activated: false
@@ -241,6 +242,12 @@ Scope {
 
                         pill: pillState
                     }
+                    WallpaperModule {
+                        id: wallpaperModule
+
+                        pill: pillState
+                    }
+
 
                 }
 
