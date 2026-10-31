@@ -18,7 +18,7 @@ Scope {
     property bool returnMaximized: false
     property bool componentHover: false
     property int launcherCount: 0
-    readonly property bool canGrabAttention: activePill !== "launcher" && !maximized
+    readonly property bool canGrabAttention: activePill !== "launcher" && activePill !== "wallpaper" && !maximized
     readonly property bool wantsGrab: (maximized && returnPill === "") || activePill === "launcher"
     readonly property var hyprMonitor: Hyprland.monitorFor(screen)
     readonly property bool isFullscreen: hyprMonitor?.activeWorkspace?.hasFullscreen ?? false

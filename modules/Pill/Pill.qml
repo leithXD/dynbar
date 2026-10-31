@@ -28,7 +28,7 @@ Scope {
                 id: root
 
                 required property var modelData
-                readonly property bool needsFocus: pillState.activePill === "launcher"
+                readonly property bool needsFocus: pillState.activePill === "launcher" || pillState.activePill === "wallpaper"
                 readonly property bool wantsGrab: pillState.wantsGrab
                 readonly property bool blurActive: pillState.activePill === "launcher"
                 readonly property int screenIndex: {
