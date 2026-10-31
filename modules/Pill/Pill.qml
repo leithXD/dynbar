@@ -30,38 +30,55 @@ Scope {
                 readonly property bool needsFocus: pillState.activePill === "launcher"
                 readonly property bool wantsGrab: pillState.wantsGrab
                 readonly property bool blurActive: pillState.activePill === "launcher"
-
-                ScreencopyView {
-                    id: screenCopy
-                    anchors.fill: parent
-                    captureSource: (root.blurActive || blurredBg.opacity > 0) ? (Quickshell.screens.length > 0 ? Quickshell.screens[0] : null) : null
-                    visible: false
-                    
+                readonly property int screenIndex: {
+                    for (let i = 0; i < Quickshell.screens.length; i++) {
+                        if (Quickshell.screens[i] === modelData) return i;
+                    }
+                    return 0;
                 }
 
-                MultiEffect {
-                    id: blurredBg
+                Loader {
+                    id: launcherBg
+                    anchors.fill: parent
+                    active: false // make configurable ig
+                    sourceComponent: Component {
+                        Item {
+                            anchors.fill: parent
+                            ScreencopyView {
+                                id: screenCopy
+                                anchors.fill: parent
+                                captureSource: (root.blurActive || blurredBg.opacity > 0) ? (Quickshell.screens.length > 0 ? Quickshell.screens[root.screenIndex] : null) : null
+                                visible: false
+                            }
 
-                    anchors.fill: screenCopy
-                    source: screenCopy
-                    blurEnabled: true
-                    blur: root.blurActive ? 1 : 0.2
-                    opacity: root.blurActive ? 1 : 0
-                    blurMax: 64
-                    blurMultiplier: 1
-                    autoPaddingEnabled: false
-                    visible: blur > 0.3
+                            MultiEffect {
+                                id: blurredBg
 
-                    Behavior on blur {
-                        NumberAnimation {
-                            duration: 600
-                            easing.type: Easing.OutCubic
+                                anchors.fill: screenCopy
+                                source: screenCopy
+                                blurEnabled: true
+                                blur: root.blurActive ? 1 : 0.2
+                                opacity: root.blurActive ? 1 : 0
+                                blurMax: 64
+                                blurMultiplier: 1
+                                autoPaddingEnabled: false
+                                visible: blur > 0.3
+
+                                Behavior on blur {
+                                    NumberAnimation {
+                                        duration: 600
+                                        easing.type: Easing.OutCubic
+                                    }
+
+                                }
+
+                                Smooth on opacity {
+                                    duration: 200
+                                }
+
+                            }
+
                         }
-
-                    }
-
-                    Smooth on opacity {
-                        duration: 200
                     }
 
                 }
