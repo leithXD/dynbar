@@ -17,7 +17,7 @@ Variants {
             screen: modelData
             WlrLayershell.layer: WlrLayer.Background
             exclusionMode: ExclusionMode.Ignore
-            color: "transparent"
+            color: "black"
 
             anchors {
                 top: true
@@ -26,11 +26,39 @@ Variants {
                 left: true
             }
 
-            Image {
-                id: wallpaper
-
-                source: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
+            Item {
                 anchors.fill: parent
+                clip: true
+
+                Image {
+                    id: wallpaperOld
+
+                    anchors.fill: parent
+                    source: Shellstate.wallpaperOld
+                    fillMode: Image.PreserveAspectCrop
+                    asynchronous: true
+                    cache: true
+                }
+
+                Image {
+                    id: wallpaper
+
+                    anchors.fill: parent
+                    source: Shellstate.wallpaper
+                    fillMode: Image.PreserveAspectCrop
+                    asynchronous: true
+                    cache: true
+                    opacity: status === Image.Ready ? 1 : 0
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 250
+                        }
+
+                    }
+
+                }
+
             }
 
         }
