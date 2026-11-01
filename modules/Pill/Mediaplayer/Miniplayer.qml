@@ -13,18 +13,23 @@ Item {
     implicitWidth: 350
     implicitHeight: 40
 
-    Equalizer {
-        y: root.implicitHeight / 2 + 4
-        scale: 1
-        width: root.width
-        height: root.height
-        barCount: 40
-        opacity: 0.4
+    Loader {
+        active: true
 
-        Behavior on scale {
-            NumberAnimation {
-                duration: 200
-                easing: Easing.OutBack
+        sourceComponent: Equalizer {
+            y: root.implicitHeight / 2 + 4
+            scale: 1
+            width: root.width
+            height: root.height
+            barCount: 40
+            opacity: 0.4
+
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 200
+                    easing: Easing.OutBack
+                }
+
             }
 
         }

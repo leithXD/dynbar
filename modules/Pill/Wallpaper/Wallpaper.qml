@@ -102,7 +102,7 @@ Item {
                 cache: true
                 fillMode: Image.PreserveAspectCrop
                 mipmap: true
-                source: container.modelData
+                source: WallpapersService.getCachedPath(container.modelData)
             }
 
             MaterialLoading {

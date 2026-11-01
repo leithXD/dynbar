@@ -16,6 +16,10 @@ Singleton {
         files = list;
     }
 
+    function getCachedPath(path) {
+        return Quickshell.env("HOME") + "/.cache/dynbar/wallpapers/" + path.substring(root.dir.length + 1).replace(/\.(png|jpeg|webp)$/i, ".jpg");
+    }
+
     FolderListModel {
         id: folder
 

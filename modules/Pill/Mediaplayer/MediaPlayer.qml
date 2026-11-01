@@ -16,17 +16,22 @@ Item {
     implicitWidth: 700
     implicitHeight: 190
 
-    Equalizer {
-        y: 105
-        width: root.width
-        height: root.height
-        barCount: 70
-        opacity: 0.2
+    Loader {
+        active: true
 
-        Behavior on scale {
-            NumberAnimation {
-                duration: 200
-                easing: Easing.OutBack
+        sourceComponent: Equalizer {
+            y: 105
+            width: root.width
+            height: root.height
+            barCount: 70
+            opacity: 0.2
+
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 200
+                    easing: Easing.OutBack
+                }
+
             }
 
         }
