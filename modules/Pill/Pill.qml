@@ -120,7 +120,7 @@ Scope {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
                     anchors.topMargin: pillState.isFullscreen ? -50 : (pillState.activePill === "launcher" ? (root.height / 2) - 100 - pillState.launcherCount * 30 : 6)
-                    color: Colors.transparency(Colors.md3.surface, 0.8)
+                    color: Colors.surface(Colors.md3.surface)
                     clip: true
                     radius: 20
 

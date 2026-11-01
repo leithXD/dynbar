@@ -58,7 +58,7 @@ WlSessionLockSurface {
     ClippingRectangle {
         id: mainCard
 
-        color: Colors.transparency(Colors.md3.surface, 0.8)
+        color: Colors.surface(Colors.md3.surface)
         x: (1920 - width) / 2
         y: (1080 - height) / 2
         opacity: surface.bgReady ? 1 : 0
@@ -88,7 +88,7 @@ WlSessionLockSurface {
                 Layout.preferredWidth: 470
                 Layout.fillHeight: true
                 radius: 30
-                color: Colors.transparency(Colors.md3.inverse_on_surface, 0)
+                color: "transparent"
 
                 ClippingRectangle {
                     // MaterialShape {
@@ -115,7 +115,7 @@ WlSessionLockSurface {
                     width: img.width
                     height: img.height
                     radius: width / 2
-                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.8)
+                    color: Colors.surface(Colors.md3.inverse_on_surface)
 
                     MaterialIcon {
                         name: "person"
@@ -208,7 +208,7 @@ WlSessionLockSurface {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 80
                     focus: true
-                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.8)
+                    color: Colors.surface(Colors.md3.inverse_on_surface)
                     Keys.onPressed: (event) => {
                         if (event.key === Qt.Key_Return) {
                             console.log("Enter");
@@ -368,7 +368,7 @@ WlSessionLockSurface {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 radius: 30
-                color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+                color: Colors.layer(Colors.md3.inverse_on_surface, 2)
             }
 
         }

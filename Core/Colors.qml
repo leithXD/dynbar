@@ -13,6 +13,22 @@ Singleton {
         return Qt.rgba(c.r, c.g, c.b, alpha);
     }
 
+    function surface(color) {
+        return transparency(color, Config.appearance.transparency ? Config.appearance.surfaceOpacity : 1);
+    }
+
+    function layer(color, level) {
+        if (!Config.appearance.transparency)
+            return transparency(color, 1);
+
+        if (level === 1)
+            return transparency(color, Config.appearance.layerOpacity);
+        else if (level === 2)
+            return transparency(color, Config.appearance.layerOpacity * 2);
+        else
+            return transparency(color, 1);
+    }
+
     FileView {
         path: Quickshell.env("HOME") + "/.local/state/dynbar/colors.json"
         watchChanges: true

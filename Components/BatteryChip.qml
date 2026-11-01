@@ -22,7 +22,7 @@ Item {
         width: 70
         height: 30
         radius: 15
-        color: criticalBattery ? Colors.transparency(Colors.md3.error_container, 0.5) : Colors.transparency(Colors.md3.primary_container, 0.5)
+        color: criticalBattery ? Colors.layer(Colors.md3.error_container, 2) : Colors.layer(Colors.md3.primary_container, 2)
 
         Rectangle {
             anchors.left: parent.left

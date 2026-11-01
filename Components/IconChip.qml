@@ -21,7 +21,7 @@ Item {
         width: root.implicitWidth
         height: 30
         radius: 15
-        color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+        color: Colors.layer(Colors.md3.inverse_on_surface, 2)
 
         MaterialIcon {
             id: materialIcon
