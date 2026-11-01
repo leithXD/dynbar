@@ -69,19 +69,24 @@ Variants {
                 Spring on y {}
                 Spring on anchors.rightMargin {}
 
-                Equalizer {
-                    opacity: root.activePill !== "mediaplayer" ? 0.4 : 0
-                    y: 40 / 2 + 4 - 4
-                    scale: 1
-                    width: 530
-                    height: 40
-                    barCount: 80
+                Loader {
+                    active: true
+                    sourceComponent: Equalizer {
+                        opacity: root.activePill !== "mediaplayer" ? 0.4 : 0
+                        y: 40 / 2 + 4 - 4
+                        scale: 1
+                        width: 530
+                        height: 40
+                        barCount: 80
 
-                    Smooth on opacity {
+                        Smooth on opacity {
+                        }
+
                     }
 
                 }
 
+                
                 RightPill {
                     id: row
                     activePill: root.activePill
