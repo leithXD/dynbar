@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Widgets
+import qs.Components
 import qs.Core
 
 Variants {
@@ -27,32 +29,115 @@ Variants {
             }
 
             Item {
+                id: wallpaperItem
+
+                property string currentWallpaper
+                property bool pendingAnimation: false
+
                 anchors.fill: parent
                 clip: true
+                Component.onCompleted: {
+                    currentWallpaper = Shellstate.wallpaper;
+                }
 
-                Image {
-                    id: wallpaperOld
+                Connections {
+                    function onWallpaperChanged() {
+                        wallpaperItem.pendingAnimation = true;
+                    }
 
-                    anchors.fill: parent
-                    source: Shellstate.wallpaperOld
-                    fillMode: Image.PreserveAspectCrop
-                    asynchronous: true
-                    cache: true
+                    target: Shellstate
                 }
 
                 Image {
                     id: wallpaper
 
                     anchors.fill: parent
-                    source: Shellstate.wallpaper
+                    source: parent.currentWallpaper
+                    sourceSize.width: width
+                    sourceSize.height: height
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
-                    cache: true
-                    opacity: status === Image.Ready ? 1 : 0
+                }
 
-                    Behavior on opacity {
+                ClippingRectangle {
+                    id: overlay
+
+                    anchors.centerIn: parent
+                    width: 100
+                    height: 100
+                    radius: 20
+                    color: "transparent"
+                    opacity: width === 100 ? 0 : 1
+
+                    Image {
+                        id: animationWallpaper
+
+                        anchors.centerIn: parent
+                        width: 1920
+                        height: 1080
+                        source: Shellstate.wallpaper
+                        sourceSize.width: width
+                        sourceSize.height: height
+                        asynchronous: true
+                        fillMode: Image.PreserveAspectCrop
+                        onStatusChanged: {
+                            if (status === Image.Ready && wallpaperItem.pendingAnimation) {
+                                animation.start();
+                                wallpaperItem.pendingAnimation = false;
+                            }
+                        }
+                    }
+
+                }
+
+                SequentialAnimation {
+                    id: animation
+
+                    ParallelAnimation {
                         NumberAnimation {
-                            duration: 250
+                            target: overlay
+                            properties: "width"
+                            to: 1920
+                            duration: 400
+                            easing.type: Easing.OutCubic
+                        }
+
+                        NumberAnimation {
+                            target: overlay
+                            properties: "height"
+                            to: 1080
+                            duration: 400
+                            easing.type: Easing.OutCubic
+                        }
+
+                    }
+
+                    ScriptAction {
+                        script: {
+                            wallpaperItem.currentWallpaper = Shellstate.wallpaper;
+                        }
+                    }
+
+                    NumberAnimation {
+                        target: overlay
+                        properties: "opacity"
+                        to: 0
+                        duration: 0
+                    }
+
+                    ParallelAnimation {
+                        NumberAnimation {
+                            target: overlay
+                            properties: "width"
+                            to: 100
+                            duration: 0
+                        }
+
+                        NumberAnimation {
+                            target: overlay
+                            properties: "height"
+                            to: 100
+                            duration: 0
                         }
 
                     }
