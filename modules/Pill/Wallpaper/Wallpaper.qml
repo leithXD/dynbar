@@ -38,6 +38,15 @@ Item {
                 wallpaperList.currentIndex = wallpaperList.count - 1;
         }
         Keys.onEscapePressed: pill.toggleWallpaper()
+        Keys.onReturnPressed: {
+            if (Shellstate.wallpaper !== WallpapersService.files[wallpaperList.currentIndex]) {
+                Shellstate.wallpaper = WallpapersService.files[wallpaperList.currentIndex];
+                var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
+                Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
+                Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath]);
+            }
+            pill.toggleWallpaper();
+        }
 
         background: Rectangle {
             anchors.centerIn: parent
@@ -71,10 +80,6 @@ Item {
         preferredHighlightEnd: width / 2 + 225
         highlightMoveDuration: 300
         currentIndex: Math.floor(wallpaperList.count / 2) // start roughly in the middle
-        onCurrentIndexChanged: {
-            Shellstate.wallpaperOld = Shellstate.wallpaper;
-            Shellstate.wallpaper = WallpapersService.files[currentIndex];
-        }
 
         delegate: ClippingRectangle {
             id: container
