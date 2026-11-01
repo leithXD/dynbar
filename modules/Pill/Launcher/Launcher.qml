@@ -57,7 +57,7 @@ Item {
                     }
                     anchors.centerIn: parent
                     radius: 15
-                    color: Colors.transparency(Colors.md3.surface_variant, 0.3)
+                    color: Colors.layer(Colors.md3.surface_variant, 1)
                     width: search.width + 80
                 }
                 color: Colors.md3.on_surface
@@ -81,7 +81,7 @@ Item {
                 text: "No results found"
                 font.family: "Rubik"
                 font.pointSize: 28
-                color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+                color: Colors.layer(Colors.md3.inverse_on_surface, 2)
                 opacity: list.count === 0 ? 1 : 0
                 Spring on opacity{}
             }
@@ -106,7 +106,7 @@ Item {
                     width: list.width
                     height: 70
                     radius: 15
-                    color: ListView.isCurrentItem ? Colors.transparency(Colors.md3.secondary, 0.5) : Colors.transparency(Colors.md3.surface_variant, 0.3)
+                    color: ListView.isCurrentItem ? Colors.layer(Colors.md3.secondary, 2) : Colors.layer(Colors.md3.surface_variant, 1)
                     clip: true
                     Behavior on color {
                         ColorAnimation {

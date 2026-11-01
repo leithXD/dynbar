@@ -21,7 +21,7 @@ Item {
         width: root.implicitWidth
         height: 30
         radius: 15
-        color: Colors.transparency(root.rectColor, 0.5)
+        color: Colors.layer(root.rectColor, 2)
 
         Text {
             id: usage

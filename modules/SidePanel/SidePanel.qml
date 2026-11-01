@@ -70,7 +70,7 @@ Variants {
                 anchors.top: parent.top
                 anchors.topMargin: 10
                 x: root.opened ? 20 : 450
-                color: Colors.transparency(Colors.md3.surface, 0.8)
+                color: Colors.surface(Colors.md3.surface)
 
                 MouseArea {
                     anchors.fill: parent
@@ -98,7 +98,7 @@ Variants {
                     width: 380
                     height: 990 - Shellstate.sidePanelListHeight
                     radius: 20
-                    color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+                    color: Colors.layer(Colors.md3.inverse_on_surface, 2)
 
                     Spring on height {
                         duration: 500

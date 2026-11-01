@@ -44,7 +44,7 @@ Variants {
                 width: workspaces.implicitWidth + padding
                 height: 38
                 radius: 30
-                color: Colors.transparency(Colors.md3.surface, 0.8)
+                color: Colors.surface(Colors.md3.surface)
                 Spring on y{}
                 Spring on anchors.leftMargin {}
                 Workspaces {
@@ -62,7 +62,7 @@ Variants {
                 width: row.implicitWidth
                 height: 38
                 radius: 30
-                color: Colors.transparency(Colors.md3.surface, 0.8)
+                color: Colors.surface(Colors.md3.surface)
                 Spring on width {
                     duration: 100
                 }

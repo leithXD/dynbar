@@ -42,7 +42,7 @@ Item {
         background: Rectangle {
             anchors.centerIn: parent
             radius: 15
-            color: Colors.transparency(Colors.md3.surface_variant, 0.3)
+            color: Colors.layer(Colors.md3.surface_variant, 1)
             width: search.width + 80
 
             MaterialIcon {
@@ -84,7 +84,7 @@ Item {
             width: 450
             height: width * 9 / 16
             scale: ListView.isCurrentItem ? 1 : 0.8
-            color: Colors.transparency(Colors.md3.inverse_on_surface, 0.5)
+            color: Colors.layer(Colors.md3.inverse_on_surface, 2)
             radius: 20
 
             Image {

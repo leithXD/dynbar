@@ -54,6 +54,9 @@ Singleton {
     }
 
     component Appearance: JsonObject {
+        property bool transparency: true
+        property real surfaceOpacity: 0.8
+        property real layerOpacity: 0.3
     }
 
     component Bar: JsonObject {
