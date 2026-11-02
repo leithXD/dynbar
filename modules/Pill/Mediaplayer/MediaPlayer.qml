@@ -38,20 +38,30 @@ Item {
 
     }
 
-    Text {
+    Column {
         anchors.left: parent.left
-        anchors.leftMargin: MediaplayerService.activePlayer === null ? 280 : 210
+        anchors.leftMargin: MediaplayerService.activePlayer === null ? 185 : 170
         anchors.top: parent.top
-        anchors.topMargin: 40
-        width: 320
-        font.weight: Font.DemiBold
-        text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
-        color: Colors.md3.on_surface
-        wrapMode: Text.Wrap
-        elide: Text.ElideRight
-        maximumLineCount: 1
-        font.pointSize: 12
-        scale: 1.3
+        anchors.topMargin: 35
+
+        Text {
+            width: 320
+            font.weight: Font.DemiBold
+            text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
+            color: Colors.md3.on_surface
+            wrapMode: Text.Wrap
+            elide: Text.ElideRight
+            maximumLineCount: 1
+            font.pointSize: 18
+        }
+
+        Text {
+            font.weight: Font.DemiBold
+            text: MediaplayerService.activePlayer === null ? "" : MediaplayerService.trackArtist
+            color: Colors.md3.inverse_on_surface
+            font.pointSize: 12
+        }
+
     }
 
     ClippingRectangle {
