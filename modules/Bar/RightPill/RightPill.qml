@@ -195,7 +195,7 @@ RowLayout {
     }
 
     Item {
-        Layout.preferredWidth: 1 // spacer bc i am dumb
+        Layout.preferredWidth: 0 // spacer bc i am dumb
     }
 
 }
