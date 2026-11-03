@@ -12,59 +12,32 @@ Item {
 
     required property var pill
 
-    implicitWidth: 900
-    implicitHeight: 400
-
-    TextField {
-        id: search // useless rn
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 15
-        width: 470
-        height: 40
-        Component.onCompleted: search.forceActiveFocus()
-        color: Colors.md3.on_surface
-        Keys.onRightPressed: {
-            if (wallpaperList.currentIndex < wallpaperList.count - 1)
-                wallpaperList.incrementCurrentIndex();
-            else
-                wallpaperList.currentIndex = 0;
-        }
-        Keys.onLeftPressed: {
-            if (wallpaperList.currentIndex > 0)
-                wallpaperList.decrementCurrentIndex();
-            else
-                wallpaperList.currentIndex = wallpaperList.count - 1;
-        }
-        Keys.onEscapePressed: pill.toggleWallpaper()
-        Keys.onReturnPressed: {
-            if (Shellstate.wallpaper !== WallpapersService.files[wallpaperList.currentIndex]) {
-                Shellstate.wallpaper = WallpapersService.files[wallpaperList.currentIndex];
-                var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
-                Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
-                Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath]);
-            }
-            pill.toggleWallpaper();
-        }
-
-        background: Rectangle {
-            anchors.centerIn: parent
-            radius: 15
-            color: Colors.layer(Colors.md3.surface_variant, 1)
-            width: search.width + 80
-
-            MaterialIcon {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 15
-                name: "search"
-                color: Colors.md3.inverse_on_surface
-            }
-
-        }
-
+    implicitWidth: 1200
+    implicitHeight: 330
+    Component.onCompleted: root.forceActiveFocus()
+    Keys.onRightPressed: {
+        if (wallpaperList.currentIndex < wallpaperList.count - 1)
+            wallpaperList.incrementCurrentIndex();
+        else
+            wallpaperList.currentIndex = 0;
     }
+    Keys.onLeftPressed: {
+        if (wallpaperList.currentIndex > 0)
+            wallpaperList.decrementCurrentIndex();
+        else
+            wallpaperList.currentIndex = wallpaperList.count - 1;
+    }
+    Keys.onEscapePressed: pill.toggleWallpaper()
+    Keys.onReturnPressed: {
+        if (Shellstate.wallpaper !== WallpapersService.files[wallpaperList.currentIndex]) {
+            Shellstate.wallpaper = WallpapersService.files[wallpaperList.currentIndex];
+            var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
+            Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
+            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath]);
+        }
+        pill.toggleWallpaper();
+    }
+    focus: true
 
     ListView {
         id: wallpaperList
