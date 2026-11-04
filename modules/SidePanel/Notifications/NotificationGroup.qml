@@ -42,33 +42,34 @@ Item {
                 color: Colors.layer(Colors.md3.inverse_on_surface, 2)
                 radius: 15
 
-                Text {
-                    id: header
-
+                Column {
+                    spacing: 5
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.topMargin: 10
                     anchors.leftMargin: 10
-                    text: modelData.summary
-                    color: Colors.md3.primary
-                    font.family: "Rubik"
-                }
 
-                Text {
-                    id: msg
+                    Text {
+                        id: header
 
-                    width: 270
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.topMargin: 27
-                    anchors.leftMargin: 10
-                    text: modelData.body
-                    color: Colors.md3.on_surface
-                    font.family: "Rubik"
-                    wrapMode: Text.Wrap
-                    elide: Text.ElideRight
-                    maximumLineCount: 3
-                    textFormat: Text.PlainText
+                        text: modelData.summary
+                        color: Colors.md3.primary
+                        font: Typography.titleMedium
+                    }
+
+                    Text {
+                        id: msg
+
+                        width: 300
+                        text: modelData.body
+                        color: Colors.md3.on_surface
+                        wrapMode: Text.Wrap
+                        elide: Text.ElideRight
+                        maximumLineCount: 2
+                        textFormat: Text.PlainText
+                        font: Typography.bodyMedium
+                    }
+
                 }
 
                 ClippingRectangle {

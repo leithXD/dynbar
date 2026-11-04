@@ -32,16 +32,16 @@ Item {
 
                 text: NotificationService.summary
                 color: Colors.md3.primary
-                font.family: "Rubik"
+                font: Typography.titleMedium
             }
 
             Text {
                 id: msg
 
-                width: bigMessage ? 370 : 270
+                width: bigMessage ? 440 : 270
                 text: NotificationService.body
                 color: Colors.md3.on_surface
-                font.family: "Rubik"
+                font: Typography.bodyMedium
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
                 maximumLineCount: root.maxBodyLines

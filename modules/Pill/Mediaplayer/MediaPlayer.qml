@@ -45,7 +45,7 @@ Item {
         anchors.topMargin: 35
 
         Text {
-            width: 320
+            width: 450
             text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
             color: Colors.md3.on_surface
             wrapMode: Text.Wrap
