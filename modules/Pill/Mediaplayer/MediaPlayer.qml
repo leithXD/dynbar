@@ -46,20 +46,18 @@ Item {
 
         Text {
             width: 320
-            font.weight: Font.DemiBold
             text: MediaplayerService.activePlayer === null ? "Nothing is playing" : Format.cleanTitle(MediaplayerService.trackTitle, MediaplayerService.trackArtist)
             color: Colors.md3.on_surface
             wrapMode: Text.Wrap
             elide: Text.ElideRight
             maximumLineCount: 1
-            font.pointSize: 18
+            font: Typography.headlineMedium
         }
 
         Text {
-            font.weight: Font.DemiBold
             text: MediaplayerService.activePlayer === null ? "" : MediaplayerService.trackArtist
             color: Colors.md3.inverse_on_surface
-            font.pointSize: 12
+            font: Typography.bodyLarge
         }
 
     }

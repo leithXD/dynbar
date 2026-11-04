@@ -1,6 +1,8 @@
+import M3Shapes
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Widgets
 import qs.Core
 
 Variants {
@@ -24,6 +26,9 @@ Variants {
                 bottom: true
                 right: true
                 left: true
+            }
+
+            MaterialShape {
             }
 
         }
