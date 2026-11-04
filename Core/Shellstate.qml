@@ -6,8 +6,8 @@ pragma Singleton
 Singleton {
     id: root
 
+    property string persistentWallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
     property string wallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
-    property string wallpaperOld: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
     property string avatar: Quickshell.env("HOME") + "/.face"
 
     property int sidePanelListHeight: 85

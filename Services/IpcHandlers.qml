@@ -2,6 +2,7 @@ import Quickshell
 import QtQuick
 import Quickshell.Io
 import qs.Core
+import qs.Services
 
 Scope {
     IpcHandler {
@@ -19,6 +20,7 @@ Scope {
 
         function toggle(): void {
             if (!Shellstate.focused()?.isFullscreen) {
+                Quickshell.execDetached(["dynbar", "wallpaper", "cache", WallpapersService.dir, WallpapersService.cache]);
                 Shellstate.focused()?.toggleWallpaper()
             }
         }
