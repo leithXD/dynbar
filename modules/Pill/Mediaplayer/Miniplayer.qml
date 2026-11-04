@@ -47,6 +47,7 @@ Item {
         maximumLineCount: 1
         font: Typography.titleMedium
         color: Colors.md3.on_surface
+        anchors.verticalCenterOffset: 1 // i should make a styled text component
 
         Spring on anchors.leftMargin {
         }
