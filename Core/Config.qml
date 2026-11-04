@@ -61,6 +61,7 @@ Singleton {
 
     component Bar: JsonObject {
         property bool alwaysShowRam: false
+        property bool alwaysShowTemp: false
     }
 
     component Pill: JsonObject {

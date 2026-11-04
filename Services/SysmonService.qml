@@ -8,6 +8,7 @@ Singleton {
     id: root
 
     property int cpuUsage: 0
+    property int cpuTemp: 0
     property int ramUsage: 0
     property double totalRam: 0
     property double usedRam: 0
@@ -19,6 +20,10 @@ Singleton {
 
     function parse(text) {
         const lines = text.trim().split("\n");
+        const tempVal = parseInt(lines[0]) || 0;
+        if (tempVal > 0)
+            cpuTemp = Math.round(tempVal > 1000 ? tempVal / 1000 : tempVal);
+
         const cpuLine = lines.find((l) => {
             return l.startsWith("cpu ");
         });
@@ -59,7 +64,7 @@ Singleton {
     Process {
         id: proc
 
-        command: ["sh", "-c", "head -n1 /proc/stat; grep -E 'MemTotal|MemAvailable' /proc/meminfo"]
+        command: ["sh", "-c", "cat /sys/class/thermal/thermal_zone*/temp 2>/dev/null | head -n 1; head -n1 /proc/stat; grep -E 'MemTotal|MemAvailable' /proc/meminfo"]
 
         stdout: StdioCollector {
             onStreamFinished: root.parse(text)
