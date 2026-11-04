@@ -26,10 +26,11 @@ Item {
         Text {
             id: usage
 
-            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            anchors.top: parent.top
             anchors.leftMargin: 10
-            font.pointSize: 14
+            anchors.topMargin: 5
+            font: Typography.titleMedium
             color: Colors.md3.on_surface
             text: root.text
         }

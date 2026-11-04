@@ -4,6 +4,7 @@ import Quickshell.Io
 pragma Singleton
 
 Singleton {
+    readonly property color surfaceColor: surface(md3.surface)
     property alias md3: jsonAdapter.md3
     property alias base16: jsonAdapter.base16
     property alias palette: jsonAdapter.palette

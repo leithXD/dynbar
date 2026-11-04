@@ -23,28 +23,24 @@ Item {
         anchors.centerIn: parent
         spacing: 8
 
-        // evt bald "Google Sans Flex" als font?
         Text {
             // Qt.formatDateTime(clock.date, "ddd") aber bin deutscher
 
-            font.family: "Rubik"
             color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "ddd").replace(".", "")
-            font.pointSize: 12
+            font: Typography.bodyMedium
         }
 
         Text {
-            font.family: "Rubik"
             color: Colors.md3.primary
             text: Qt.locale("de_DE").toString(clock.date, "dd")
-            font.pointSize: 12
+            font: Typography.bodyMedium
         }
 
         Text {
-            font.family: "Rubik"
             color: Colors.md3.on_surface
             text: Qt.locale("de_DE").toString(clock.date, "hh:mm")
-            font.pointSize: 12
+            font: Typography.bodyMedium
         }
 
     }
