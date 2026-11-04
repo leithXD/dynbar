@@ -47,6 +47,10 @@ Item {
         maximumLineCount: 1
         font: Typography.titleMedium
         color: Colors.md3.on_surface
+
+        Spring on anchors.leftMargin {
+        }
+
     }
 
     ClippingRectangle {

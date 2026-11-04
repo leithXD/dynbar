@@ -13,7 +13,7 @@ Item {
     property string color: "white"
     property int padding: 20
 
-    implicitWidth: padding + usage.width + materialIcon.width
+    implicitWidth: padding + textMetric.width + materialIcon.width
     implicitHeight: 30
 
     Rectangle {
@@ -23,16 +23,30 @@ Item {
         radius: 15
         color: Colors.layer(root.rectColor, 2)
 
-        Text {
-            id: usage
-
-            anchors.left: parent.left
+        Item {
             anchors.top: parent.top
-            anchors.leftMargin: 10
-            anchors.topMargin: 5
+            anchors.left: parent.left
+            anchors.topMargin: 3
+            anchors.leftMargin: 5
+            width: textMetric.width + 10
+            height: textMetric.height + 5
+
+            Text {
+                id: usage
+
+                anchors.centerIn: parent
+                font: Typography.titleMedium
+                color: Colors.md3.on_surface
+                text: root.text
+            }
+
+        }
+
+        TextMetrics {
+            id: textMetric
+
+            text: "100"
             font: Typography.titleMedium
-            color: Colors.md3.on_surface
-            text: root.text
         }
 
         MaterialIcon {
