@@ -37,10 +37,6 @@ Item {
             onClicked: root.clicked()
         }
 
-        // i should prob change this so it doesnt change width so often, maybe static is better for cpu and ram
-        Spring on width {
-        }
-
     }
 
 }
