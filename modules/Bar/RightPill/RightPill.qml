@@ -22,6 +22,38 @@ RowLayout {
     }
 
     Loader {
+        id: temp
+
+        property real slot: wanted && item ? item.implicitWidth : 0
+        readonly property bool wanted: Config.bar.alwaysShowTemp || SysmonService.cpuTemp > 80
+
+        active: wanted || slot > 0.5
+        visible: active
+        Layout.preferredHeight: 38
+        Layout.preferredWidth: Math.max(0, slot)
+
+        sourceComponent: StatChip {
+            icon: "device_thermostat"
+            text: SysmonService.cpuTemp
+            color: Colors.md3.tertiary
+            padding: 20
+            opacity: temp.wanted ? 1 : 0
+            scale: temp.wanted ? 1 : 0.1
+
+            Spring on scale {
+            }
+
+            Spring on opacity {
+            }
+
+        }
+
+        Spring on slot {
+        }
+
+    }
+
+    Loader {
         id: ram
 
         property real slot: wanted && item ? item.implicitWidth : 0
