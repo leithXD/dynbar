@@ -33,7 +33,7 @@ Item {
             Shellstate.wallpaper = WallpapersService.files[wallpaperList.currentIndex];
             var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
             Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
-            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath]);
+            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath, Shellstate.persistentWallpaper]);
         }
         pill.toggleWallpaper();
     }
@@ -82,7 +82,7 @@ Item {
                 loading: wall.status !== Image.Ready
                 width: 100
                 height: 100
-                duration: 200
+                duration: 600
                 spacing: 40
                 anchors.centerIn: parent
             }

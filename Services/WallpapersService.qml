@@ -8,6 +8,7 @@ Singleton {
     id: root
 
     readonly property string dir: Quickshell.env("HOME") + Config.paths.wallpaperPath
+    readonly property string cache: Quickshell.env("HOME") + "/.cache/dynbar/wallpapers/"
     property var files: []
 
     function update() {
@@ -17,7 +18,7 @@ Singleton {
     }
 
     function getCachedPath(path) {
-        return Quickshell.env("HOME") + "/.cache/dynbar/wallpapers/" + path.substring(root.dir.length + 1).replace(/\.(png|jpeg|webp)$/i, ".jpg");
+        return root.cache + path.substring(root.dir.length + 1).replace(/\.(png|jpeg|webp)$/i, ".jpg");
     }
 
     FolderListModel {
