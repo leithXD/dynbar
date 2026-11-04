@@ -79,8 +79,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: "No results found"
-                font.family: "Rubik"
-                font.pointSize: 28
+                font: Typography.displaySmall
                 color: Colors.layer(Colors.md3.inverse_on_surface, 2)
                 opacity: list.count === 0 ? 1 : 0
                 Spring on opacity{}
@@ -142,26 +141,34 @@ Item {
                         }
                     }
 
-                    Text {
-                        text: modelData.name
-                        color: Colors.md3.on_surface
-                        font.bold: true
+                    Column {
                         anchors.left: parent.left
                         anchors.top: parent.top
-                        anchors.topMargin: 10
-                        anchors.leftMargin: 80
-                        Keys.onEnterPressed: {
-                            root.activate()
+                        anchors.topMargin: 15
+                        anchors.leftMargin: 85
+                        spacing: 3
+
+                        Text {
+                            text: modelData.name
+                            color: Colors.md3.on_surface
+                            font: Typography.titleMedium
+                            Keys.onEnterPressed: {
+                                root.activate()
+                            }
                         }
+                        Text {
+                            text: modelData.comment
+                            color: Colors.md3.on_surface
+                            font: Typography.bodyMedium
+                            width: rect.width - parent.anchors.leftMargin - 15
+                            wrapMode: Text.Wrap
+                            elide: Text.ElideRight
+                            maximumLineCount: 1
+
+                        }
+
                     }
-                    Text {
-                        text: modelData.comment
-                        color: Colors.md3.on_surface
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        anchors.topMargin: 35
-                        anchors.leftMargin: 80
-                    }
+
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
