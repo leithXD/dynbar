@@ -29,6 +29,7 @@ Item {
             anchors.centerIn: parent
             name: root.icon
             color: root.color
+            size: 20
         }
 
         MouseArea {
