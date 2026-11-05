@@ -229,6 +229,10 @@ Scope {
                         id: notifModule
 
                         pill: pillState
+                        onNotification: {
+                            notifPopup.start()
+
+                        }
                     }
 
                     VolumeSliderModule {
@@ -246,6 +250,26 @@ Scope {
                         id: wallpaperModule
 
                         pill: pillState
+                    }
+
+                    SequentialAnimation {
+                        id: notifPopup
+                        NumberAnimation {
+                            target: pillRect
+                            properties: "scale"
+                            to: 1.02
+                            easing.type: Easing.OutBack
+                            duration: 200
+                        }
+
+                        NumberAnimation {
+                            target: pillRect
+                            properties: "scale"
+                            to: 1
+                            easing.type: Easing.OutBack
+                            duration: 200
+                        }
+
                     }
 
 
