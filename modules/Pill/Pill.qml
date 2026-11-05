@@ -41,7 +41,7 @@ Scope {
                 Loader {
                     id: launcherBg
                     anchors.fill: parent
-                    active: false // make configurable ig
+                    active: Config.launcher.launcherBgBlur
                     sourceComponent: Component {
                         Item {
                             anchors.fill: parent
@@ -116,13 +116,27 @@ Scope {
 
                     width: current && current.targetWidth > 0 ? current.targetWidth : 230
                     height: current && current.targetHeight > 0 ? current.targetHeight : 38
-                    scale: pillArea.pressed ? 1.05 : pillRect.hovered || pillState.componentHover ? 1.02 : 1
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    anchors.topMargin: pillState.isFullscreen ? -50 : (pillState.activePill === "launcher" ? (root.height / 2) - 100 - pillState.launcherCount * 30 : 6)
+                    anchors.topMargin: pillState.isFullscreen ? -50 : (pillState.activePill === "launcher" && Config.pill.floating ? (root.height / 2) - 100 - pillState.launcherCount * 30 : 6 - displacement)
+                    property int displacement: Config.pill.floating ? 0 : 6
+                    scale: pillArea.pressed ? 1.05 : 
+       (pillRect.hovered || pillState.componentHover) ? 1.02 : 1.0
                     color: Colors.surface(Colors.md3.surface)
                     clip: true
                     radius: 20
+
+                    states: [
+                        State {
+                            name: "docked"
+                            when: !Config.pill.floating
+                            PropertyChanges {
+                                target: pillRect
+                                topLeftRadius: 0
+                                topRightRadius: 0
+                            }
+                        }   
+                    ]
 
                     transform: Translate {
                         id: t
