@@ -38,15 +38,62 @@ Variants {
                 id: leftPill
 
                 anchors.left: parent.left
-                y: root.pill.isFullscreen ? -50 : 6
-                anchors.leftMargin: root.pill.isFullscreen ? -20 : 30
+                anchors.top: parent.top
                 property int padding: 10
                 width: workspaces.implicitWidth + padding
                 height: 38
                 radius: 30
                 color: Colors.surface(Colors.md3.surface)
-                Spring on y{}
                 Spring on anchors.leftMargin {}
+                Spring on anchors.topMargin {}
+
+                states: [
+                    State {
+                        name: "fullscreen_docked"
+                        when: root.pill.isFullscreen && !Config.bar.floating
+                        PropertyChanges {
+                            target: leftPill
+                            anchors.leftMargin: -100
+                            anchors.topMargin: -50
+                            topLeftRadius: 0
+                            topRightRadius: 0 
+                            bottomLeftRadius: 0
+                        }
+                    },
+
+                    State {
+                        name: "fullscreen_floating"
+                        when: root.pill.isFullscreen && Config.bar.floating
+                        PropertyChanges {
+                            target: leftPill
+                            anchors.leftMargin: -100
+                            anchors.topMargin: -50
+                        }
+                    },
+
+                    State {
+                        name: "docked"
+                        when: !Config.bar.floating
+                        PropertyChanges {
+                            target: leftPill
+                            topRightRadius: 0
+                            topLeftRadius: 0 
+                            bottomLeftRadius: 0
+                            anchors.leftMargin: 0
+                            anchors.topMargin: 0
+                        }
+                    },
+                    State {
+                        name: "floating"
+                        when: Config.bar.floating
+                        PropertyChanges {
+                            target: leftPill
+                            anchors.leftMargin: 30
+                            anchors.topMargin: 6
+                        }
+                    }
+                ]
+
                 Workspaces {
                     id: workspaces
 
@@ -57,8 +104,7 @@ Variants {
                 id: rightPill
 
                 anchors.right: parent.right
-                y: root.pill.isFullscreen ? -50 : 6
-                anchors.rightMargin:  root.pill.isFullscreen ? -20 : 30
+                anchors.top: parent.top
                 width: row.implicitWidth
                 height: 38
                 radius: 30
@@ -66,8 +112,55 @@ Variants {
                 Spring on width {
                     duration: 100
                 }
-                Spring on y {}
                 Spring on anchors.rightMargin {}
+                Spring on anchors.topMargin {} 
+                states: [
+                    State {
+                        name: "fullscreen_docked"
+                        when: root.pill.isFullscreen && !Config.bar.floating
+                        PropertyChanges {
+                            target: rightPill
+                            anchors.rightMargin: -100
+                            anchors.topMargin: -50
+                            topRightRadius: 0
+                            topLeftRadius: 0 
+                            bottomRightRadius: 0
+                        }
+                    },
+
+                    State {
+                        name: "fullscreen_floating"
+                        when: root.pill.isFullscreen && Config.bar.floating
+                        PropertyChanges {
+                            target: rightPill
+                            anchors.rightMargin: -100
+                            anchors.topMargin: -50
+                        }
+                    },
+
+                    State {
+                        name: "docked"
+                        when: !Config.bar.floating
+                        PropertyChanges {
+                            target: rightPill
+                            topRightRadius: 0
+                            topLeftRadius: 0 
+                            bottomRightRadius: 0
+                            anchors.rightMargin: 0
+                            anchors.topMargin: 0
+                        }
+                    },
+                    State {
+                        name: "floating"
+                        when: Config.bar.floating
+                        PropertyChanges {
+                            target: rightPill
+                            anchors.rightMargin: 30
+                            anchors.topMargin: 6
+                        }
+                    }
+                ]
+
 
                 Loader {
                     active: true

@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
+import "Widgets"
 import qs.Core
 
 Variants {
@@ -28,7 +29,17 @@ Variants {
                 left: true
             }
 
-            MaterialShape {
+            ClippingRectangle {
+                visible: false
+                width: 100
+                height: 50
+                radius: 10
+                anchors.centerIn: parent
+                color: Colors.surfaceColor
+
+                AtAGlance {
+                }
+
             }
 
         }

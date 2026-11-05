@@ -62,12 +62,15 @@ Singleton {
     component Bar: JsonObject {
         property bool alwaysShowRam: false
         property bool alwaysShowTemp: false
+        property bool floating: true
     }
 
     component Pill: JsonObject {
+        property bool floating: true
     }
 
     component Launcher: JsonObject {
+        property bool launcherBgBlur: false
     }
 
     component Lock: JsonObject {
