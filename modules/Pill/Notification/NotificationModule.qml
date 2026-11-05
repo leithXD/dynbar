@@ -7,6 +7,8 @@ import qs.Services
 PillModule {
     id: module
 
+    signal notification()
+
     name: "notification"
     standalone: true
 
@@ -26,9 +28,10 @@ PillModule {
             if (Shellstate.focused() !== module.pill)
                 return ;
 
-            if (module.pill.canGrabAttention)
+            if (module.pill.canGrabAttention) {
+                module.notification();
                 module.pill.showTransient("notification");
-
+            }
             dismiss.restart();
         }
 

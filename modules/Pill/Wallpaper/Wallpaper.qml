@@ -12,6 +12,16 @@ Item {
 
     required property var pill
 
+    function activateWallpaper(index) {
+        if (Shellstate.wallpaper !== WallpapersService.files[index]) {
+            Shellstate.wallpaper = WallpapersService.files[index];
+            var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
+            Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
+            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath, Shellstate.persistentWallpaper]);
+        }
+        pill.toggleWallpaper();
+    }
+
     implicitWidth: 1200
     implicitHeight: 330
     Component.onCompleted: root.forceActiveFocus()
@@ -29,13 +39,7 @@ Item {
     }
     Keys.onEscapePressed: pill.toggleWallpaper()
     Keys.onReturnPressed: {
-        if (Shellstate.wallpaper !== WallpapersService.files[wallpaperList.currentIndex]) {
-            Shellstate.wallpaper = WallpapersService.files[wallpaperList.currentIndex];
-            var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
-            Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
-            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath, Shellstate.persistentWallpaper]);
-        }
-        pill.toggleWallpaper();
+        activateWallpaper(wallpaperList.currentIndex);
     }
     focus: true
 
@@ -58,12 +62,25 @@ Item {
             id: container
 
             required property var modelData
+            required property int index
 
             width: 450
             height: width * 9 / 16
-            scale: ListView.isCurrentItem ? 1 : 0.8
+            scale: 0.8
             color: Colors.layer(Colors.md3.inverse_on_surface, 2)
             radius: 20
+            states: [
+                State {
+                    name: "selected"
+                    when: container.ListView.isCurrentItem
+
+                    PropertyChanges {
+                        target: container
+                        scale: 1.1
+                    }
+
+                }
+            ]
 
             Image {
                 id: wall
@@ -85,6 +102,13 @@ Item {
                 duration: 600
                 spacing: 40
                 anchors.centerIn: parent
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.activateWallpaper(container.index);
+                }
             }
 
             Spring on scale {
