@@ -14,7 +14,11 @@ PillModule {
         id: dismiss
 
         interval: 1000
-        onTriggered: module.pill.dismissTransient()
+        onTriggered: {
+            if (module.pill.activePill === "volume")
+                module.pill.dismissTransient();
+
+        }
     }
 
     Connections {
