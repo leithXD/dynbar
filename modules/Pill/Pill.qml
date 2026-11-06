@@ -220,10 +220,13 @@ Scope {
                         }
                         onWheel: (wheel) => {
                             if (!AudioService.sink?.ready || !AudioService.sink.audio)
-                                return
-                            const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05
-                            AudioService.sink.audio.volume = Math.max(0, Math.min(1, AudioService.sink.audio.volume + step))
-                            wheel.accepted = true
+                            return
+                            if (!pillState.maximized){
+                                const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05
+                                AudioService.sink.audio.volume = Math.max(0, Math.min(1, AudioService.sink.audio.volume + step))
+                                wheel.accepted = true
+
+                            }
                         }
                     }
 
