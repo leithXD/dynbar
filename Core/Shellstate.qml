@@ -37,6 +37,14 @@ Singleton {
         pills.forEach(p => p.maximized = false)
     }
 
+    function createToast(name, desc, icon) {
+        ToastsModel.append({
+            "name": name,
+            "description": desc,
+            "icon": icon
+        })
+    }
+
     function debug() {
         printStatement && console.log(printStatement);
     }
