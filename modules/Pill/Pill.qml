@@ -91,8 +91,12 @@ Scope {
                 WlrLayershell.keyboardFocus: needsFocus ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
                 WlrLayershell.exclusiveZone: -1
                 color: "transparent"
-                implicitHeight: 1080
-                implicitWidth: 1920
+                anchors {
+                    top: true
+                    bottom: true
+                    left: true
+                    right: true
+                }
 
                 mask: Region {
                     item: pillRect

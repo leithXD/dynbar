@@ -67,6 +67,7 @@ Singleton {
 
     component Pill: JsonObject {
         property bool floating: true
+        property bool blurArtwork: false
     }
 
     component Launcher: JsonObject {

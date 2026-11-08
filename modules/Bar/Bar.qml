@@ -50,7 +50,7 @@ Variants {
                 states: [
                     State {
                         name: "fullscreen_docked"
-                        when: root.pill.isFullscreen && !Config.bar.floating
+                        when: root.pill && root.pill.isFullscreen && !Config.bar.floating
                         PropertyChanges {
                             target: leftPill
                             anchors.leftMargin: -100
@@ -63,7 +63,7 @@ Variants {
 
                     State {
                         name: "fullscreen_floating"
-                        when: root.pill.isFullscreen && Config.bar.floating
+                        when: root.pill && root.pill.isFullscreen && Config.bar.floating
                         PropertyChanges {
                             target: leftPill
                             anchors.leftMargin: -100
@@ -117,7 +117,7 @@ Variants {
                 states: [
                     State {
                         name: "fullscreen_docked"
-                        when: root.pill.isFullscreen && !Config.bar.floating
+                        when: root.pill && root.pill.isFullscreen && !Config.bar.floating
                         PropertyChanges {
                             target: rightPill
                             anchors.rightMargin: -100
@@ -130,7 +130,7 @@ Variants {
 
                     State {
                         name: "fullscreen_floating"
-                        when: root.pill.isFullscreen && Config.bar.floating
+                        when: root.pill && root.pill.isFullscreen && Config.bar.floating
                         PropertyChanges {
                             target: rightPill
                             anchors.rightMargin: -100

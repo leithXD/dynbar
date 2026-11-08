@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
@@ -13,6 +14,15 @@ Item {
 
     implicitWidth: items.width + 10
     implicitHeight: 40
+
+    Loader {
+        active: Config.pill.blurArtwork
+        anchors.fill: parent
+
+        sourceComponent: BlurredArtwork {
+        }
+
+    }
 
     Loader {
         active: true
