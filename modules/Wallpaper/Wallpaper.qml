@@ -73,8 +73,8 @@ Variants {
                         id: animationWallpaper
 
                         anchors.centerIn: parent
-                        width: 1920
-                        height: 1080
+                        width: root.screen.width
+                        height: root.screen.height
                         source: Shellstate.wallpaper
                         sourceSize.width: width
                         sourceSize.height: height
@@ -97,7 +97,7 @@ Variants {
                         NumberAnimation {
                             target: overlay
                             properties: "width"
-                            to: 1920
+                            to: root.screen.width
                             duration: 400
                             easing.type: Easing.OutCubic
                         }
@@ -105,7 +105,7 @@ Variants {
                         NumberAnimation {
                             target: overlay
                             properties: "height"
-                            to: 1080
+                            to: root.screen.height
                             duration: 400
                             easing.type: Easing.OutCubic
                         }

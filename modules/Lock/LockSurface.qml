@@ -59,8 +59,8 @@ WlSessionLockSurface {
         id: mainCard
 
         color: Colors.surface(Colors.md3.surface)
-        x: (1920 - width) / 2
-        y: (1080 - height) / 2
+        x: (screen.width - width) / 2
+        y: (screen.height - height) / 2
         opacity: surface.bgReady ? 1 : 0
         scale: surface.bgReady ? 1 : 0.2
         width: 1000
