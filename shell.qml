@@ -4,7 +4,6 @@ import Quickshell.Wayland
 import "modules/Bar"
 import "modules/Lock"
 import "modules/Pill"
-import "modules/Popouts"
 import "modules/SidePanel"
 import "modules/Wallpaper"
 import "modules/Widgets"
@@ -25,9 +24,6 @@ ShellRoot {
     }
 
     SidePanel {
-    }
-
-    Popouts {
     }
 
     Lock {
