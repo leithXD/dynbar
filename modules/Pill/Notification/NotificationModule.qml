@@ -28,6 +28,10 @@ PillModule {
             if (Shellstate.focused() !== module.pill)
                 return ;
 
+            if (module.pill.isFullscreen) {
+                Shellstate.createToast(NotificationService.summary, NotificationService.body, "notifications");
+                return ;
+            }
             if (module.pill.canGrabAttention) {
                 module.notification();
                 module.pill.showTransient("notification");
