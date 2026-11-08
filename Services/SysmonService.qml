@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
+import qs.Core
 pragma Singleton
 
 Singleton {
@@ -14,9 +15,7 @@ Singleton {
     property double usedRam: 0
     property double lastCpuIdle: 0
     property double lastCpuTotal: 0
-    property real percentage: UPower.displayDevice ? UPower.displayDevice.percentage * 100 : 0
-    property int state: UPower.displayDevice ? UPower.displayDevice.state : UPowerDeviceState.Unknown
-    property bool criticalPercentage: percentage < 15
+    property bool criticalTemperature: cpuTemp > Config.settings.tempWarning
 
     function parse(text) {
         const lines = text.trim().split("\n");
@@ -59,6 +58,12 @@ Singleton {
             usedRam = Math.round(memUsed / 1024);
             ramUsage = Math.round(100 * memUsed / memTotal);
         }
+    }
+
+    onCriticalTemperatureChanged: {
+        if (criticalTemperature)
+            Shellstate.createToast("Warning!", "Cpu Temperature is dangerously hot", "emergency_heat");
+
     }
 
     Process {

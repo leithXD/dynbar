@@ -15,8 +15,8 @@ Item {
     ClippingRectangle {
         id: rect
 
-        property bool criticalBattery: SysmonService.criticalPercentage
-        property bool charging: SysmonService.state === 1
+        property bool criticalBattery: BatteryService.criticalPercentage
+        property bool charging: BatteryService.state === 1
 
         anchors.centerIn: parent
         width: 70
@@ -27,7 +27,7 @@ Item {
         Rectangle {
             anchors.left: parent.left
             height: rect.height
-            width: rect.width / 100 * SysmonService.percentage
+            width: rect.width / 100 * BatteryService.percentage
             color: rect.criticalBattery ? Colors.md3.error : Colors.md3.primary
 
             Behavior on color {

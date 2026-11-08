@@ -92,6 +92,7 @@ Singleton {
 
     component Settings: JsonObject {
         property bool toastsFullscreen: true
+        property int tempWarning: 90
     }
 
 }

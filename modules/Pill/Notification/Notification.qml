@@ -30,7 +30,7 @@ Item {
             Text {
                 id: header
 
-                text: NotificationService.summary
+                text: NotificationService.summary // id remove this with pill overlay switch so it just shows up in the overlay, this is a bit too hacky
                 color: Colors.md3.primary
                 font: Typography.titleMedium
             }
