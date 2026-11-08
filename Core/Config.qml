@@ -78,6 +78,7 @@ Singleton {
     }
 
     component Services: JsonObject {
+        property string weatherLocation: "Berlin"
     }
 
     component Paths: JsonObject {
