@@ -11,6 +11,7 @@ Singleton {
     property alias lock: jsonAdapter.lock
     property alias services: jsonAdapter.services
     property alias paths: jsonAdapter.paths
+    property alias settings: jsonAdapter.settings
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/dynbar/shell.json"
@@ -49,6 +50,10 @@ Singleton {
             paths: Paths {
             }
 
+            readonly property Settings
+            settings: Settings {
+            }
+
         }
 
     }
@@ -83,6 +88,10 @@ Singleton {
 
     component Paths: JsonObject {
         property string wallpaperPath: "/Pictures/Wallpapers"
+    }
+
+    component Settings: JsonObject {
+        property bool toastsFullscreen: true
     }
 
 }
