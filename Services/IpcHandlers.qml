@@ -47,4 +47,11 @@ Scope {
             Shellstate.focused()?.peek(name)
         }
     }
+
+    IpcHandler {
+        target: "toasts"
+        function create(name: string, desc: string, icon: string): void {
+            Shellstate.createToast(name, desc, icon)
+        }
+    }
 }
