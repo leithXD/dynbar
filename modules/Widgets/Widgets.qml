@@ -29,15 +29,19 @@ Variants {
                 left: true
             }
 
-            ClippingRectangle {
-                visible: false
-                width: 100
-                height: 50
-                radius: 10
-                anchors.centerIn: parent
-                color: Colors.surfaceColor
+            WidgetModule {
+                id: weather
 
-                AtAGlance {
+                width: 200
+                height: 70
+                radius: 70
+                shapeEnabled: false
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.margins: 20
+
+                widget: WeatherWidget {
+                    id: weather
                 }
 
             }
