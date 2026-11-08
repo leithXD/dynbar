@@ -32,4 +32,14 @@ Item {
 
     }
 
+    Text {
+        text: WeatherService.cityName
+        font: Typography.bodySmall
+        color: Colors.md3.inverse_on_surface
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 3
+        opacity: 0.5
+    }
+
 }
