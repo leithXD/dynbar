@@ -7,6 +7,7 @@ Item {
 
     property int shape: MaterialShape.Cookie6Sided
     property color color: "transparent"
+    property real maskRotation: 0
     default property alias content: container.data
 
     implicitWidth: 56
@@ -18,14 +19,22 @@ Item {
         anchors.fill: parent
     }
 
-    MaterialShape {
-        id: mask
+    Item {
+        id: maskLayer
 
         anchors.fill: parent
-        shape: root.shape
-        color: "#ffff0000"
-        layer.enabled: true
         visible: false
+        layer.enabled: true
+
+        MaterialShape {
+            id: mask
+
+            anchors.fill: parent
+            shape: root.shape
+            color: "#ffff0000"
+            rotation: root.maskRotation
+        }
+
     }
 
     ShaderEffectSource {
@@ -36,7 +45,7 @@ Item {
     }
 
     ShaderEffect {
-        property var rect: mask
+        property var rect: maskLayer
         property color backgroundColor: root.color
         property color borderColor: "transparent"
         property var content: contentSource
