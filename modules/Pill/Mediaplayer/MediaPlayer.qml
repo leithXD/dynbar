@@ -1,3 +1,4 @@
+import M3Shapes
 import QtQuick
 import QtQuick.Effects
 import Quickshell
@@ -82,6 +83,7 @@ Item {
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter
         color: "transparent"
+        shape: MediaplayerService.isPlaying ? MaterialShape.Clover8Leaf : MaterialShape.Circle
 
         Image {
             id: coverImage
@@ -112,6 +114,14 @@ Item {
             height: coverImage.height - 5
             spacing: 40
             visible: coverImage.status !== Image.Ready && !(MediaplayerService.activePlayer === null)
+        }
+
+        NumberAnimation on maskRotation {
+            from: 0
+            to: 360
+            duration: 32000
+            loops: Animation.Infinite
+            running: MediaplayerService.isPlaying
         }
 
     }
