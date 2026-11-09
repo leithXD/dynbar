@@ -1,3 +1,4 @@
+import M3Shapes
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
@@ -53,19 +54,18 @@ Item {
         anchors.centerIn: parent
         spacing: 5
 
-        ClippingRectangle {
+        ClippingShape {
             id: cover
 
-            width: 28
-            height: 28
-            radius: width / 2
-            color: "transparent"
+            Layout.preferredWidth: 28
+            Layout.preferredHeight: 28
+            shape: MediaplayerService.isPlaying ? MaterialShape.Clover8Leaf : MaterialShape.Circle
 
             Image {
                 id: coverImage
 
-                width: 28
-                height: 28
+                anchors.fill: parent
+                anchors.centerIn: parent
                 source: MediaplayerService.trackArtUrl
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
@@ -74,15 +74,6 @@ Item {
                 sourceSize: Qt.size(192, 192)
                 antialiasing: true
                 visible: status === Image.Ready
-
-                NumberAnimation on rotation {
-                    from: 0
-                    to: 360
-                    duration: 32000
-                    loops: Animation.Infinite
-                    running: MediaplayerService.isPlaying
-                }
-
             }
 
             MaterialIcon {
@@ -105,20 +96,12 @@ Item {
 
             }
 
-            Behavior on width {
-                NumberAnimation {
-                    duration: 200
-                    easing: Easing.OutBack
-                }
-
-            }
-
-            Behavior on height {
-                NumberAnimation {
-                    duration: 200
-                    easing: Easing.OutBack
-                }
-
+            NumberAnimation on maskRotation {
+                from: 0
+                to: 360
+                duration: 32000
+                loops: Animation.Infinite
+                running: MediaplayerService.isPlaying
             }
 
         }
