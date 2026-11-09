@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
 import "Widgets"
+import qs.Components
 import qs.Core
 
 Variants {
@@ -42,6 +43,23 @@ Variants {
 
                 widget: WeatherWidget {
                     id: weather
+                }
+
+            }
+
+            WidgetModule {
+                id: cpu
+
+                width: 200
+                height: 200
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 100
+                shapeEnabled: true
+                color: Colors.surfaceColor
+
+                widget: CpuWidget {
                 }
 
             }

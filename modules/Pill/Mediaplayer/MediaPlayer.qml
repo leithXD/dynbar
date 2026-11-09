@@ -73,12 +73,11 @@ Item {
 
     }
 
-    ClippingRectangle {
+    ClippingShape {
         id: cover
 
         width: 128
         height: 128
-        radius: width / 2
         anchors.left: parent.left
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter

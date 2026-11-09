@@ -90,23 +90,7 @@ WlSessionLockSurface {
                 radius: 30
                 color: "transparent"
 
-                ClippingRectangle {
-                    // MaterialShape {
-                    //    id: shape
-                    //  width: img.width
-                    //  height: img.height
-                    //  shape: MaterialShape.Cookie6Sided
-                    //  color: Colors.md3.primary
-                    //  layer.enabled: true
-                    // layer.smooth: true
-                    // }
-                    // MultiEffect {
-                    //  anchors.fill: img
-                    //  source: img
-                    //  maskEnabled: true
-                    //  maskSource: shape
-                    // } looks janky i need smth else
-
+                ClippingShape {
                     id: avatar
 
                     anchors.top: parent.top
@@ -114,7 +98,6 @@ WlSessionLockSurface {
                     anchors.topMargin: 70
                     width: img.width
                     height: img.height
-                    radius: width / 2
                     color: Colors.surface(Colors.md3.inverse_on_surface)
 
                     MaterialIcon {
@@ -130,8 +113,8 @@ WlSessionLockSurface {
 
                         anchors.centerIn: parent
                         source: Shellstate.avatar
-                        width: 230
-                        height: 230
+                        width: 300
+                        height: 300
                         fillMode: Image.PreserveAspectCrop
                         antialiasing: true
                         mipmap: true

@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Widgets
+import qs.Components
 import qs.Core
 
 Item {
@@ -11,21 +12,23 @@ Item {
     property int radius: 30
     property string color: Colors.surfaceColor
     property bool shapeEnabled: false
+    property int shape: MaterialShape.Cookie6Sided
     required property Component widget
 
     Loader {
         active: root.shapeEnabled
 
         sourceComponent: Item {
-            MaterialShape {
+            ClippingShape {
+                // layer.enabled: true
+                // layer.smooth: true
+
                 id: shape
 
                 width: root.width
                 height: root.height
-                shape: MaterialShape.Cookie6Sided
+                shape: root.shape
                 color: root.color
-                layer.enabled: true
-                layer.smooth: true
 
                 Loader {
                     anchors.fill: parent
