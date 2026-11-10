@@ -9,7 +9,7 @@ Item {
     id: root
 
     property string cleanPath: {
-        return Shellstate.wallpaper.toString().replace("file://", "");
+        return Shellstate.wallpaperPath.toString().replace("file://", "");
     }
 
     function resetMasks() {

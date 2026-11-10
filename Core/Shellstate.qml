@@ -6,11 +6,12 @@ pragma Singleton
 Singleton {
     id: root
 
-    property string persistentWallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
-    property string wallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
+    property string home: Quickshell.env("HOME") 
+    property string wallpaper: home + "/.local/state/dynbar/wallpaper/current"
+    property string wallpaperPath
     property bool wallpaperLoaderEnabled: false
     property bool initialWallpaper: true
-    property string avatar: Quickshell.env("HOME") + "/.face"
+    property string avatar: home + "/.face"
 
     onWallpaperChanged: {
         if (initialWallpaper) {

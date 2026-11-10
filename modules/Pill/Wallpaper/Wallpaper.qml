@@ -8,15 +8,22 @@ import qs.Core
 import qs.Services
 
 Item {
-    // Quickshell.execDetached(["skwd-paper-v2", "apply", "*", cleanPath]);
-
     id: root
 
     required property var pill
 
     function activateWallpaper(index) {
-        if (Shellstate.wallpaper !== WallpapersService.files[index]) {
-            Shellstate.wallpaper = WallpapersService.files[index];
+        Shellstate.wallpaperPath = WallpapersService.files[index];
+        let path = WallpapersService.files[index];
+        if (Shellstate.wallpaper !== path) {
+            if (path.endsWith(".mp4")) {
+                var cleanOriginal = path.toString().replace("file://", "");
+                var fileName = cleanOriginal.split("/").pop().replace(/\.[^/.]+$/, "");
+                var cachedPath = Shellstate.home + "/.cache/dynbar/liveWallpapers/" + fileName + ".jpg";
+                Shellstate.wallpaper = cachedPath;
+            } else {
+                Shellstate.wallpaper = path;
+            }
             var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
             Quickshell.execDetached(["matugen", "image", WallpapersService.getCachedPath(cleanPath), "--source-color-index", "0"]);
         }
