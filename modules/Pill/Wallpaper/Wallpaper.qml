@@ -21,11 +21,12 @@ Item {
                 var fileName = cleanOriginal.split("/").pop().replace(/\.[^/.]+$/, "");
                 var cachedPath = Shellstate.home + "/.cache/dynbar/liveWallpapers/" + fileName + ".jpg";
                 Shellstate.wallpaper = cachedPath;
+                Quickshell.execDetached(["matugen", "image", Shellstate.wallpaper, "--source-color-index", "0"]);
             } else {
                 Shellstate.wallpaper = path;
+                var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
+                Quickshell.execDetached(["matugen", "image", WallpapersService.getCachedPath(cleanPath), "--source-color-index", "0"]);
             }
-            var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
-            Quickshell.execDetached(["matugen", "image", WallpapersService.getCachedPath(cleanPath), "--source-color-index", "0"]);
         }
         pill.toggleWallpaper();
     }
