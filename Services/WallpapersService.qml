@@ -8,7 +8,8 @@ Singleton {
     id: root
 
     readonly property string dir: Quickshell.env("HOME") + Config.paths.wallpaperPath
-    readonly property string cache: Quickshell.env("HOME") + "/.cache/dynbar/wallpapers/"
+    readonly property string cache: Quickshell.env("HOME") + "/.cache/skwd-wall-v2/thumbs/"
+    readonly property string vidCache: Quickshell.env("HOME") + "/.cache/skwd-wall-v2/video-thumbs/"
     property var files: []
 
     function update() {
@@ -18,6 +19,10 @@ Singleton {
     }
 
     function getCachedPath(path) {
+        if (path.endsWith(".mp4")) {
+            console.log("Mp4!");
+            return root.vidCache + path.substring(root.dir.length + 1).replace(/\.(mp4)$/i, ".webp");
+        }
         return root.cache + path.substring(root.dir.length + 1).replace(/\.(png|jpeg|webp)$/i, ".jpg");
     }
 
@@ -25,7 +30,7 @@ Singleton {
         id: folder
 
         folder: "file://" + root.dir
-        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp"]
+        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp", "*.mp4"]
         caseSensitive: false
         showDirs: false
         sortField: FolderListModel.Name

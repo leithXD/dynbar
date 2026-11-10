@@ -13,11 +13,12 @@ Item {
     required property var pill
 
     function activateWallpaper(index) {
+        // Quickshell.execDetached(["skwd-paper-v2", "apply", "*", cleanPath]);
+
         if (Shellstate.wallpaper !== WallpapersService.files[index]) {
             Shellstate.wallpaper = WallpapersService.files[index];
             var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
             Quickshell.execDetached(["matugen", "image", cleanPath, "--source-color-index", "0"]);
-            Quickshell.execDetached(["dynbar", "wallpaper", "move", cleanPath, Shellstate.persistentWallpaper]);
         }
         pill.toggleWallpaper();
     }
@@ -86,9 +87,8 @@ Item {
                 id: wall
 
                 anchors.fill: parent
-                sourceSize.width: width
-                sourceSize.height: height
-                asynchronous: true
+                sourceSize.width: 450
+                sourceSize.height: 253
                 cache: true
                 fillMode: Image.PreserveAspectCrop
                 mipmap: true
