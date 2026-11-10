@@ -19,7 +19,7 @@ Variants {
             WlrLayershell.namespace: "widgets"
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
             screen: modelData
-            WlrLayershell.layer: WlrLayer.Background
+            WlrLayershell.layer: WlrLayer.Bottom
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
 

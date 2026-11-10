@@ -8,7 +8,17 @@ Singleton {
 
     property string persistentWallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
     property string wallpaper: Quickshell.env("HOME") + "/.local/state/dynbar/wallpaper/current"
+    property bool wallpaperLoaderEnabled: false
+    property bool initialWallpaper: true
     property string avatar: Quickshell.env("HOME") + "/.face"
+
+    onWallpaperChanged: {
+        if (initialWallpaper) {
+            initialWallpaper = false
+        } else {
+            wallpaperLoaderEnabled = true
+        }
+    }
 
     property int sidePanelListHeight: 85
     property var printStatement: ""

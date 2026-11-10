@@ -1,151 +1,95 @@
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
+import Quickshell.Io
 import Quickshell.Widgets
 import qs.Components
 import qs.Core
 
-Variants {
-    model: Quickshell.screens
+Item {
+    id: root
 
-    delegate: Component {
-        PanelWindow {
-            id: root
+    property string cleanPath: {
+        return Shellstate.wallpaper.toString().replace("file://", "");
+    }
 
-            required property var modelData
+    function resetMasks() {
+        shapeMask.maskScale = 0.2;
+        shapeMask.maskX = 0;
+        shapeMask.maskY = 0;
+        shapeMask.opacity = 0;
+        shapeMask2.maskScale = 0.2;
+        shapeMask2.maskX = 0;
+        shapeMask2.maskY = 0;
+        shapeMask2.opacity = 0;
+    }
 
-            WlrLayershell.namespace: "wallpaper"
-            WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-            screen: modelData
-            WlrLayershell.layer: WlrLayer.Background
-            exclusionMode: ExclusionMode.Ignore
-            color: "black"
+    function endOfAnimation() {
+        callWallpaper.running = true;
+    }
 
-            anchors {
-                top: true
-                bottom: true
-                right: true
-                left: true
+    anchors.fill: parent
+    Component.onCompleted: {
+        circleAnim.restart();
+    }
+
+    Process {
+        id: callWallpaper
+
+        command: ["sh", "-c", "skwd-paper-v2 apply '*' " + root.cleanPath]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                Shellstate.wallpaperLoaderEnabled = false;
+            }
+        }
+
+    }
+
+    WallpaperShape {
+        id: shapeMask
+    }
+
+    WallpaperShape {
+        id: shapeMask2
+    }
+
+    SequentialAnimation {
+        id: circleAnim
+
+        ScriptAction {
+            script: {
+                root.resetMasks();
+                shapeMask.maskY = Math.random() < 0.5 ? 500 : -500;
+                shapeMask.maskX = Math.random() < 0.5 ? 500 : -500;
+                shapeMask.shape = Shapes.circle;
+            }
+        }
+
+        ParallelAnimation {
+            NumberAnimation {
+                target: shapeMask
+                properties: "opacity"
+                from: 0
+                to: 1
+                easing.type: Easing.OutCubic
+                duration: 400
             }
 
-            Item {
-                id: wallpaperItem
-
-                property string currentWallpaper
-                property bool pendingAnimation: false
-
-                anchors.fill: parent
-                clip: true
-                Component.onCompleted: {
-                    currentWallpaper = Shellstate.wallpaper;
-                }
-
-                Connections {
-                    function onWallpaperChanged() {
-                        wallpaperItem.pendingAnimation = true;
-                    }
-
-                    target: Shellstate
-                }
-
-                Image {
-                    id: wallpaper
-
-                    anchors.fill: parent
-                    source: parent.currentWallpaper
-                    sourceSize.width: width
-                    sourceSize.height: height
-                    fillMode: Image.PreserveAspectCrop
-                    asynchronous: true
-                }
-
-                ClippingRectangle {
-                    id: overlay
-
-                    anchors.centerIn: parent
-                    width: 100
-                    height: 100
-                    radius: 20
-                    color: "transparent"
-                    opacity: width === 100 ? 0 : 1
-
-                    Image {
-                        id: animationWallpaper
-
-                        anchors.centerIn: parent
-                        width: root.screen.width
-                        height: root.screen.height
-                        source: Shellstate.wallpaper
-                        sourceSize.width: width
-                        sourceSize.height: height
-                        asynchronous: true
-                        fillMode: Image.PreserveAspectCrop
-                        onStatusChanged: {
-                            if (status === Image.Ready && wallpaperItem.pendingAnimation) {
-                                animation.start();
-                                wallpaperItem.pendingAnimation = false;
-                            }
-                        }
-                    }
-
-                }
-
-                SequentialAnimation {
-                    id: animation
-
-                    ParallelAnimation {
-                        NumberAnimation {
-                            target: overlay
-                            properties: "width"
-                            to: root.screen.width
-                            duration: 400
-                            easing.type: Easing.OutCubic
-                        }
-
-                        NumberAnimation {
-                            target: overlay
-                            properties: "height"
-                            to: root.screen.height
-                            duration: 400
-                            easing.type: Easing.OutCubic
-                        }
-
-                    }
-
-                    ScriptAction {
-                        script: {
-                            wallpaperItem.currentWallpaper = Shellstate.wallpaper;
-                        }
-                    }
-
-                    NumberAnimation {
-                        target: overlay
-                        properties: "opacity"
-                        to: 0
-                        duration: 0
-                    }
-
-                    ParallelAnimation {
-                        NumberAnimation {
-                            target: overlay
-                            properties: "width"
-                            to: 100
-                            duration: 0
-                        }
-
-                        NumberAnimation {
-                            target: overlay
-                            properties: "height"
-                            to: 100
-                            duration: 0
-                        }
-
-                    }
-
-                }
-
+            NumberAnimation {
+                target: shapeMask
+                properties: "maskScale"
+                from: 0.2
+                to: 3.5
+                easing.type: Easing.InOutCubic
+                duration: 800
             }
 
+        }
+
+        ScriptAction {
+            script: {
+                root.endOfAnimation();
+            }
         }
 
     }

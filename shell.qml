@@ -12,7 +12,7 @@ import qs.Core
 import qs.Services
 
 ShellRoot {
-    Wallpaper {
+    WallpaperLayer {
     }
 
     Widgets {
