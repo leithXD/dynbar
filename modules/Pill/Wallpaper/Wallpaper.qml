@@ -16,6 +16,7 @@ Item {
         Shellstate.wallpaperPath = WallpapersService.files[index];
         let path = WallpapersService.files[index];
         if (Shellstate.wallpaper !== path) {
+            Quickshell.execDetached(["dynbar", "wallpaper", "move", Shellstate.wallpaperPath, WallpapersService.wallpaperSymlink]);
             if (path.endsWith(".mp4")) {
                 var cleanOriginal = path.toString().replace("file://", "");
                 var fileName = cleanOriginal.split("/").pop().replace(/\.[^/.]+$/, "");
