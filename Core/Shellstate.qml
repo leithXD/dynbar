@@ -11,6 +11,7 @@ Singleton {
     property string wallpaperPath
     property bool wallpaperLoaderEnabled: false
     property bool initialWallpaper: true
+    property int currentWallpaperIndex // hardcoded rn ill do it later
     property string avatar: home + "/.face"
 
     onWallpaperChanged: {
