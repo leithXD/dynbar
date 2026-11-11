@@ -20,7 +20,7 @@ Scope {
 
         function toggle(): void {
             if (!Shellstate.focused()?.isFullscreen) {
-                Quickshell.execDetached(["dynbar", "wallpaper", "cache", WallpapersService.dir, WallpapersService.cacheLive]);
+                Quickshell.execDetached(["dynbar", "wallpaper", "cache", WallpapersService.dir, WallpapersService.cache]);
                 Shellstate.focused()?.toggleWallpaper()
             }
         }
