@@ -7,9 +7,10 @@ pragma Singleton
 Singleton {
     id: root
 
-    readonly property string dir: Quickshell.env("HOME") + Config.paths.wallpaperPath
-    readonly property string cacheLive: Quickshell.env("HOME") + "/.cache/dynbar/liveWallpapers/"
-    readonly property string cache: Quickshell.env("HOME") + "/.cache/dynbar/thumbnails/"
+    readonly property string dir: Shellstate.home + Config.paths.wallpaperPath
+    readonly property string cacheLive: Shellstate.home + "/.cache/dynbar/liveWallpapers/"
+    readonly property string cache: Shellstate.home + "/.cache/dynbar/thumbnails/"
+    readonly property string wallpaperSymlink: Shellstate.home + "/.cache/dynbar/current"
     property var files: []
 
     function update() {
