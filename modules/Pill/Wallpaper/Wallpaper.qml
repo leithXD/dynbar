@@ -16,6 +16,7 @@ Item {
         Shellstate.wallpaperPath = WallpapersService.files[index];
         let path = WallpapersService.files[index];
         if (Shellstate.wallpaper !== path) {
+            Shellstate.currentWallpaperIndex = index;
             Quickshell.execDetached(["dynbar", "wallpaper", "move", Shellstate.wallpaperPath, WallpapersService.wallpaperSymlink]);
             if (path.endsWith(".mp4")) {
                 var cleanOriginal = path.toString().replace("file://", "");
@@ -66,7 +67,7 @@ Item {
         preferredHighlightBegin: width / 2 - 225
         preferredHighlightEnd: width / 2 + 225
         highlightMoveDuration: 300
-        currentIndex: Math.floor(wallpaperList.count / 2) // start roughly in the middle
+        currentIndex: Shellstate.currentWallpaperIndex
 
         delegate: ClippingRectangle {
             id: container
