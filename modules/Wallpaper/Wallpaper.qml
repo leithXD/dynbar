@@ -35,10 +35,11 @@ Item {
     Process {
         id: callWallpaper
 
-        command: ["sh", "-c", "skwd-paper-v2 apply '*' " + root.cleanPath]
+        command: ["skwd-paper-v2", "apply", "*", root.cleanPath]
 
         stdout: StdioCollector {
             onStreamFinished: {
+                // console.log(text);
                 Shellstate.wallpaperLoaderEnabled = false;
             }
         }
