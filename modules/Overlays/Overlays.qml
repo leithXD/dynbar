@@ -1,3 +1,4 @@
+import "Components"
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -28,174 +29,40 @@ Variants {
                 left: true
             }
 
-            Item {
+            Toasts {
                 id: toastMask
+            }
 
-                width: 450
-                height: ToastsModel.count * 88
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                anchors.margins: 10
+            ClippingRectangle {
+                id: mainOverlay
 
-                ListView {
-                    id: list
+                property bool active: false
 
-                    width: 450
-                    height: 500
-                    anchors.bottom: parent.bottom
-                    anchors.right: parent.right
-                    spacing: 8
-                    model: ToastsModel
-                    verticalLayoutDirection: ListView.BottomToTop
-                    ListView.onRemove: console.log("remove", index)
+                width: clipboard.implicitWidth
+                height: clipboard.implicitHeight
+                radius: 30
+                color: Colors.surfaceColor
+                y: active ? (screen.height - height) / 2 : screen.height - 50
+                x: (screen.width - width) / 2
 
-                    remove: Transition {
-                        NumberAnimation {
-                            property: "scale"
-                            from: 1
-                            to: 0.2
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
+                Clipboard {
+                    id: clipboard
 
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 1
-                            to: 0
-                            duration: 200
-                            easing.type: Easing.OutBack
-                        }
+                    anchors.centerIn: parent
+                }
 
-                    }
-
-                    removeDisplaced: Transition {
-                        NumberAnimation {
-                            properties: "y"
-                            duration: 300
-                            easing.type: Easing.OutQuad
-                        }
-
-                    }
-
-                    populate: Transition {
-                        NumberAnimation {
-                            property: "scale"
-                            from: 0.2
-                            to: 1
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0
-                            to: 1
-                            duration: 200
-                            easing.type: Easing.OutBack
-                        }
-
-                    }
-
-                    add: Transition {
-                        NumberAnimation {
-                            property: "scale"
-                            from: 0.2
-                            to: 1
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
-
-                        NumberAnimation {
-                            property: "opacity"
-                            from: 0
-                            to: 1
-                            duration: 200
-                            easing.type: Easing.OutBack
-                        }
-
-                    }
-
-                    delegate: Rectangle {
-                        id: rect
-
-                        width: 450
-                        height: 80
-                        radius: 30
-                        color: Colors.surfaceColor
-                        Component.onCompleted: {
-                            dismissToast.running = true;
-                        }
-
-                        Timer {
-                            id: dismissToast
-
-                            running: false
-                            repeat: false
-                            interval: 5000
-                            onTriggered: {
-                                ToastsModel.remove(index);
-                            }
-                        }
-
-                        Rectangle {
-                            width: 65
-                            height: 65
-                            radius: 20
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: parent.right
-                            anchors.rightMargin: 7
-                            color: Colors.layer(Colors.md3.inverse_on_surface, 2)
-
-                            MaterialIcon {
-                                name: icon
-                                anchors.centerIn: parent
-                                color: Colors.md3.primary_container
-                                size: 42
-                            }
-
-                        }
-
-                        Column {
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.leftMargin: 25
-                            spacing: 5
-
-                            Text {
-                                id: head
-
-                                text: name
-                                font: Typography.titleMedium
-                                color: Colors.md3.secondary
-                            }
-
-                            Text {
-                                id: desc
-
-                                text: description
-                                font: Typography.bodyMedium
-                                color: Colors.md3.on_surface
-                                width: 360
-                                wrapMode: Text.Wrap
-                            }
-
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                ToastsModel.remove(index);
-                            }
-                        }
-
-                    }
-
+                Spring on y {
                 }
 
             }
 
             mask: Region {
                 item: toastMask
+
+                Region {
+                    item: mainOverlay
+                }
+
             }
 
         }
