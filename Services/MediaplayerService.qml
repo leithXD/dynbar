@@ -23,7 +23,15 @@ Singleton {
     readonly property string desktopEntry: activePlayer?.desktopEntry ?? ""
 
     onTrackTitleChanged: {
-        Shellstate.createToast("Now Playing", trackTitle + " by " + trackArtist, "music_note")
+        debounce.restart()
+    }
+
+    Timer{
+        id: debounce // trackartist and tracktitle race condition fix T_T
+        running: false
+        repeat: false
+        interval: 100
+        onTriggered: Shellstate.createToast("Now Playing", trackTitle + " by " + trackArtist, "music_note")
     }
 
     function seekTo(fraction) { if (activePlayer?.canSeek && length > 0) activePlayer.position = Math.max(0, Math.min(1, fraction)) * length; }
