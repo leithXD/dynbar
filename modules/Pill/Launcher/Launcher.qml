@@ -4,10 +4,17 @@ import QtQuick.Controls
 import QtQuick
 import qs.Core
 import qs.Components
+import "ActionModels"
 
 Item {
     id: root
     required property var pill
+    property string currentAction: "launcher"
+    onCurrentActionChanged: {
+        Qt.callLater(() => {
+            list.currentIndex = 0
+        })
+    }
     implicitWidth: 600
     implicitHeight: {
         if (list.count < 8) {
@@ -29,13 +36,30 @@ Item {
         ScriptModel {
             id: results
             values: {
-                const q = search.text.toLowerCase();
-                return DesktopEntries.applications.values
-                    .filter(e => !e.noDisplay && (
-                        e.name.toLowerCase().includes(q) ||
-                        e.genericName.toLowerCase().includes(q) ||
-                        e.keywords.some(k => k.toLowerCase().includes(q))))
-                    .sort((a, b) => a.name.localeCompare(b.name));
+                switch (root.currentAction) {
+                    case "launcher":
+                        const q = search.text.toLowerCase();
+                        return DesktopEntries.applications.values
+                            .filter(e => !e.noDisplay && (
+                                e.name.toLowerCase().includes(q) ||
+                                e.genericName.toLowerCase().includes(q) ||
+                                e.keywords.some(k => k.toLowerCase().includes(q))))
+                            .sort((a, b) => a.name.localeCompare(b.name));
+
+                    case "actions":
+                        return [
+                            { name: "Clipboard", comment: "The bridge between Stack Overflow and production.", icon: "content_copy" },
+                            { name: "Settings", comment: "Change me to your liking!", icon: "settings" }
+                        ];
+
+                    case "clipboard":
+                        const clip = search.text.toLowerCase();
+                        if (clip === "") return cliphist.entries;
+                        return cliphist.entries.filter(e => e.comment.toLowerCase().includes(clip));
+
+                    default:
+                        return [];
+                }
             }
         }
         Column {
@@ -64,6 +88,17 @@ Item {
                 Keys.onDownPressed: list.incrementCurrentIndex()
                 Keys.onUpPressed: list.decrementCurrentIndex()
                 Keys.onEscapePressed: pill.toggleLauncher()
+                Keys.onPressed: (event) => {
+                    if (event.key === Qt.Key_Alt) {
+                        if (root.currentAction === "actions") {
+                            root.currentAction = "launcher";
+                            return;
+                        }
+                        root.currentAction = "actions"
+                        event.accepted = true
+                    }
+                }
+
                 onAccepted: root.activate()
             }
         }
@@ -98,6 +133,7 @@ Item {
                 onCountChanged: {
                     pill.launcherCount = Math.min(list.count, 8)
                 }
+
                 delegate: Rectangle {
                     id: rect
                     required property var modelData
@@ -120,24 +156,33 @@ Item {
                         anchors.top: parent.top
                         width: 40
                         height: 40
-                        Image {
+                        Loader {
                             id: icon
                             anchors.centerIn: parent
                             width: parent.width
                             height: parent.height
-                            source:  rect.iconSrc
-                            fillMode: Image.PreserveAspectFit
-                            smooth: true
-                            mipmap: true
-                            asynchronous: true
-                            visible: rect.iconSrc !== ""
-                        }
+
+                            active: root.currentAction === "launcher"
+                            sourceComponent: Image {
+                                anchors.centerIn: parent
+                                width: parent.width
+                                height: parent.height
+                                source:  rect.iconSrc
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                                mipmap: true
+                                asynchronous: true
+                                visible: rect.iconSrc !== ""
+                            }
+
+                        }                        
+
                         MaterialIcon {
                             anchors.centerIn: icon
                             size: 32
-                            name: "error"
-                            color: Colors.md3.surface_variant
-                            visible: rect.iconSrc === ""
+                            name: root.currentAction === "launcher" ? "error" : modelData.icon
+                            color: modelData.icon === "image" ? Colors.md3.primary_container : Colors.md3.surface_variant
+                            visible: rect.iconSrc === "" || root.currentAction !== "launcher" 
                         }
                     }
 
@@ -200,10 +245,31 @@ Item {
             }
         }
     }
+
+
     function activate() {
-        const entry = results.values[list.currentIndex]
-        if (!entry) return
-        entry.execute()
-        pill.toggleLauncher()
+        switch (root.currentAction) {
+            case "launcher":
+                const entry = results.values[list.currentIndex]
+                if (!entry) return
+                entry.execute()
+                pill.toggleLauncher()
+                break;
+            case "actions":
+                const action = results.values[list.currentIndex]
+                if (action.name === "Clipboard") {
+                    root.currentAction = "clipboard"
+                }
+                break;
+            case "clipboard":
+                const clip = results.values[list.currentIndex]
+                Quickshell.execDetached(["sh", "-c", "cliphist decode \"$0\" | wl-copy", clip.name]);
+                pill.toggleLauncher();
+                break;
+        }
+    }
+
+    CliphistModel {
+        id: cliphist
     }
 }
