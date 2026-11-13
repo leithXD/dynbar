@@ -8,10 +8,6 @@ import qs.Core
 Item {
     id: root
 
-    property string cleanPath: {
-        return Shellstate.wallpaperPath.toString().replace("file://", "");
-    }
-
     function resetMasks() {
         shapeMask.maskScale = 0.2;
         shapeMask.maskX = 0;
@@ -24,26 +20,12 @@ Item {
     }
 
     function endOfAnimation() {
-        callWallpaper.running = true;
+        Shellstate.triggerWallpaper();
     }
 
     anchors.fill: parent
     Component.onCompleted: {
         circleAnim.restart();
-    }
-
-    Process {
-        id: callWallpaper
-
-        command: ["skwd-paper-v2", "apply", "*", root.cleanPath]
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                // console.log(text);
-                Shellstate.wallpaperLoaderEnabled = false;
-            }
-        }
-
     }
 
     WallpaperShape {
