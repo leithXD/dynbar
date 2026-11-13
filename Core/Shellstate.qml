@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Hyprland
 pragma Singleton
 
@@ -12,6 +13,35 @@ Singleton {
     property bool wallpaperLoaderEnabled: false
     property bool initialWallpaper: true
     property int currentWallpaperIndex // hardcoded rn ill do it later
+    property string cleanPath: {
+        return wallpaperPath.toString().replace("file://", "");
+    }
+
+    signal triggerWallpaper()
+    onTriggerWallpaper: {
+        debounceWallpaper.restart()
+    }
+    Timer {
+        id: debounceWallpaper
+        interval: 50
+        repeat: false 
+        running: false
+        onTriggered: callWallpaper.running = true
+    }
+
+    Process {
+        id: callWallpaper
+
+        command: ["skwd-paper-v2", "apply", "*", root.cleanPath]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.wallpaperLoaderEnabled = false;
+            }
+        }
+
+    }
+
     property string avatar: home + "/.face"
 
     onWallpaperChanged: {
