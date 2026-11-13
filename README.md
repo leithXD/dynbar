@@ -3,3 +3,9 @@ A dynamic desktop shell for Hyprland built with Quickshell. It is very much a wo
 
 https://github.com/user-attachments/assets/c5589a7f-047d-44f4-a7ae-62a31e672b53
 
+Requirements:
+
+skwd-wall-v2
+cava
+cliphist
+
