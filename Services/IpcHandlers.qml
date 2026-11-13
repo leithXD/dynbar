@@ -16,6 +16,14 @@ Scope {
     }
 
     IpcHandler {
+        target: "file"
+
+        function received(file: string): void {
+            Shellstate.fileReceived(file);
+        }
+    }
+
+    IpcHandler {
         target: "wallpaperSelection"
 
         function toggle(): void {

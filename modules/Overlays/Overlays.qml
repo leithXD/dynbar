@@ -13,6 +13,22 @@ Variants {
             id: root
 
             required property var modelData
+            property int index: 0
+
+            function createImagePopup(file) {
+                let imagePopup = Qt.createComponent("Popups/ImagePopup.qml");
+                root.index++;
+                if (imagePopup.status === Component.Ready) {
+                    let obj = imagePopup.createObject(imagePopupContainer, {
+                        "imagePath": file,
+                        "screenHeight": screen.height,
+                        "index": root.index
+                    });
+                    if (obj === null)
+                        console.log("Error while loading component");
+
+                }
+            }
 
             screen: modelData
             color: "transparent"
@@ -20,6 +36,20 @@ Variants {
             exclusiveZone: 50
             WlrLayershell.layer: Config.settings.toastsFullscreen ? WlrLayer.Overlay : WlrLayer.Top
             WlrLayershell.namespace: "overlays"
+
+            Connections {
+                function onFileReceived(file) {
+                    createImagePopup(file);
+                }
+
+                target: Shellstate
+            }
+
+            Item {
+                id: imagePopupContainer
+
+                anchors.fill: parent
+            }
 
             anchors {
                 top: true

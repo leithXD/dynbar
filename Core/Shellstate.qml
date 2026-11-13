@@ -25,6 +25,8 @@ Singleton {
     property int sidePanelListHeight: 85
     property var printStatement: ""
 
+    signal fileReceived(string file)
+
     property var pills: []
 
     function register(p) {

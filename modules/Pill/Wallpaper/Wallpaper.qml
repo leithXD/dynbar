@@ -23,7 +23,7 @@ Item {
                 var fileName = cleanOriginal.split("/").pop().replace(/\.[^/.]+$/, "");
                 var cachedPath = Shellstate.home + "/.cache/dynbar/liveWallpapers/" + fileName + ".jpg";
                 Shellstate.wallpaper = cachedPath;
-                Quickshell.execDetached(["matugen", "image", WallpapersService.getCachedPath(cleanOriginal), "--source-color-index", "0"]);
+                Quickshell.execDetached(["matugen", "image", WallpapersService.getCachedPath(cleanOriginal), "--source-color-index", "0", "--mode", "smart"]);
             } else {
                 Shellstate.wallpaper = path;
                 var cleanPath = Shellstate.wallpaper.toString().replace("file://", "");
