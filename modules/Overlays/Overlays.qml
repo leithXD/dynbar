@@ -1,3 +1,4 @@
+import "Popups"
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -13,22 +14,6 @@ Variants {
             id: root
 
             required property var modelData
-            property int index: 0
-
-            function createImagePopup(file) {
-                let imagePopup = Qt.createComponent("Popups/ImagePopup.qml");
-                root.index++;
-                if (imagePopup.status === Component.Ready) {
-                    let obj = imagePopup.createObject(imagePopupContainer, {
-                        "imagePath": file,
-                        "screenHeight": screen.height,
-                        "index": root.index
-                    });
-                    if (obj === null)
-                        console.log("Error while loading component");
-
-                }
-            }
 
             screen: modelData
             color: "transparent"
@@ -37,25 +22,40 @@ Variants {
             WlrLayershell.layer: Config.settings.toastsFullscreen ? WlrLayer.Overlay : WlrLayer.Top
             WlrLayershell.namespace: "overlays"
 
-            Connections {
-                function onFileReceived(file) {
-                    createImagePopup(file);
-                }
-
-                target: Shellstate
-            }
-
-            Item {
-                id: imagePopupContainer
-
-                anchors.fill: parent
-            }
-
             anchors {
                 top: true
                 right: true
                 bottom: true
                 left: true
+            }
+
+            Repeater {
+                id: stack
+
+                model: Shellstate.localsendImages
+
+                delegate: ImagePopup {
+                }
+
+            }
+
+            Rectangle {
+                width: 10
+                height: 100
+                radius: 15
+                color: Colors.surfaceColor
+                anchors.right: parent.right
+                anchors.rightMargin: Shellstate.localsendImages.count === 0 ? -width : -width / 2
+                scale: Shellstate.localsendImages.count === 0 ? 1 : 2
+                visible: anchors.rightMargin !== -width
+                y: 175
+
+                Spring on anchors.rightMargin {
+                }
+
+                Spring on scale {
+                }
+
             }
 
             Item {

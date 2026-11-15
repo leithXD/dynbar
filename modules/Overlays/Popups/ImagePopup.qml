@@ -1,62 +1,136 @@
 import QtQuick
+import Quickshell
 import Quickshell.Widgets
 import qs.Components
 import qs.Core
 
 ClippingRectangle {
-    id: imagePopup
+    id: rect
 
-    property string imagePath: ""
-    property int screenHeight: 100
-    property int index: 0
-    property int rotationIndex: (index % 3) + 1
+    property string fileType: model.fileType
 
+    width: 100
+    height: 140
+    anchors.right: parent.right
+    anchors.rightMargin: -width - 100
+    y: 150
     radius: 20
-    rotation: {
-        switch (imagePopup.rotationIndex) {
-        case 1:
-            return -30;
+    opacity: 0
+    color: Colors.md3.surface
+    Component.onCompleted: {
+        anchors.rightMargin = width / 2 + (index * 6);
+        opacity = 1;
+        let val = index % 3 + 1;
+        switch (val) {
         case 2:
-            return 0;
+            rotation = 30;
+            break;
         case 3:
-            return 30;
+            rotation = -30;
+            break;
         }
     }
-    width: 100
-    height: width * (16 / 12)
-    color: Colors.surfaceColor
-    anchors.horizontalCenter: parent.horizontalCenter
-    y: 1080
-    Component.onCompleted: {
-        y = 1080 - 100 - height;
-    }
 
-    Image {
+    Loader {
+        active: rect.fileType === "image"
         anchors.fill: parent
-        source: imagePath
-        fillMode: Image.PreserveAspectCrop
-        mipmap: true
+
+        sourceComponent: AnimatedImage {
+            source: model.file
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectCrop
+            mipmap: true
+        }
+
+    }
+
+    Loader {
+        active: rect.fileType !== "image"
+        anchors.centerIn: parent
+
+        sourceComponent: ClippingRectangle {
+            radius: 15
+            width: rect.width / 1.5
+            height: rect.height / 1.5
+            color: "transparent"
+            anchors.centerIn: rect
+
+            Image {
+                source: {
+                    switch (model.fileType) {
+                    case "archive":
+                        return Quickshell.iconPath("application-x-archive");
+                    case "video":
+                        return Quickshell.iconPath("video-x-generic");
+                    case "audio":
+                        return Quickshell.iconPath("audio-x-generic");
+                    case "document":
+                        return Quickshell.iconPath("application-pdf");
+                    case "unkown":
+                        return Quickshell.iconPath("application-octet-stream");
+                    default:
+                        return Quickshell.iconPath("unkown");
+                    }
+                }
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+                mipmap: true
+                scale: 1.2 // dont ask me
+            }
+
+        }
+
     }
 
     Timer {
-        id: delay
-
         interval: 3000
-        running: true
         repeat: false
-        onTriggered: imagePopup.destroy()
+        running: true
+        onTriggered: {
+            anchors.rightMargin = -width;
+            rotation = 0;
+            opacity = 0;
+        }
     }
 
     Timer {
-        id: outAnim
-
-        interval: 2500
-        running: true
+        interval: 3500
         repeat: false
-        onTriggered: y = 1080
+        running: true
+        onTriggered: Shellstate.localsendImages.remove(0)
     }
 
-    Spring on y {
+    SequentialAnimation {
+        loops: Animation.Infinite
+        running: true
+
+        NumberAnimation {
+            target: rect
+            property: "y"
+            to: 152
+            duration: 1000
+            easing.type: Easing.InOutQuad
+        }
+
+        NumberAnimation {
+            target: rect
+            property: "y"
+            to: 148
+            duration: 1000
+            easing.type: Easing.InOutQuad
+        }
+
+    }
+
+    Spring on opacity {
+        duration: 200
+    }
+
+    Spring on anchors.rightMargin {
+    }
+
+    Spring on rotation {
+        duration: 800
     }
 
 }
