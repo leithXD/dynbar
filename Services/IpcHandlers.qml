@@ -18,8 +18,11 @@ Scope {
     IpcHandler {
         target: "file"
 
-        function received(file: string): void {
-            Shellstate.fileReceived(file);
+        function received(file: string, fileType: string): void {
+            Shellstate.localsendImages.append({
+                file: file,
+                fileType: fileType
+            })
         }
     }
 
