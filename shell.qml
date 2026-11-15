@@ -12,10 +12,13 @@ import qs.Core
 import qs.Services
 
 ShellRoot {
-    WallpaperLayer {
-    }
+    Loader {
+        active: Shellstate.wallpaperLoaderEnabled
+        anchors.fill: parent
 
-    Widgets {
+        sourceComponent: WallpaperLayer {
+        }
+
     }
 
     Bar {

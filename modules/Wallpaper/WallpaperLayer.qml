@@ -28,13 +28,7 @@ Variants {
                 left: true
             }
 
-            Loader {
-                active: Shellstate.wallpaperLoaderEnabled
-                anchors.fill: parent
-
-                sourceComponent: Wallpaper {
-                }
-
+            Wallpaper {
             }
 
         }
