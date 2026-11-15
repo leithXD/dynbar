@@ -9,7 +9,7 @@ import "ActionModels"
 Item {
     id: root
     required property var pill
-    property string currentAction: "launcher"
+    property string currentAction: pill.launcherMode
     onCurrentActionChanged: {
         Qt.callLater(() => {
             list.currentIndex = 0
