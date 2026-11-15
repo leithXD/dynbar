@@ -30,60 +30,6 @@ Scope {
                 required property var modelData
                 readonly property bool needsFocus: pillState.activePill === "launcher" || pillState.activePill === "wallpaper"
                 readonly property bool wantsGrab: pillState.wantsGrab
-                readonly property bool blurActive: pillState.activePill === "launcher"
-                readonly property int screenIndex: {
-                    for (let i = 0; i < Quickshell.screens.length; i++) {
-                        if (Quickshell.screens[i] === modelData) return i;
-                    }
-                    return 0;
-                }
-
-                Loader {
-                    id: launcherBg
-                    anchors.fill: parent
-                    active: Config.launcher.launcherBgBlur
-                    sourceComponent: Component {
-                        Item {
-                            anchors.fill: parent
-                            ScreencopyView {
-                                id: screenCopy
-                                anchors.fill: parent
-                                captureSource: (root.blurActive || blurredBg.opacity > 0) ? (Quickshell.screens.length > 0 ? Quickshell.screens[root.screenIndex] : null) : null
-                                visible: false
-                            }
-
-                            MultiEffect {
-                                id: blurredBg
-
-                                anchors.fill: screenCopy
-                                source: screenCopy
-                                blurEnabled: true
-                                blur: root.blurActive ? 1 : 0.2
-                                opacity: root.blurActive ? 1 : 0
-                                blurMax: 64
-                                blurMultiplier: 1
-                                autoPaddingEnabled: false
-                                visible: blur > 0.3
-
-                                Behavior on blur {
-                                    NumberAnimation {
-                                        duration: 600
-                                        easing.type: Easing.OutCubic
-                                    }
-
-                                }
-
-                                Smooth on opacity {
-                                    duration: 200
-                                }
-
-                            }
-
-                        }
-                    }
-
-                }
-
 
                 screen: modelData
                 anchors.top: true
