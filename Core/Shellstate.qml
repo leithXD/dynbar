@@ -55,7 +55,7 @@ Singleton {
     property int sidePanelListHeight: 85
     property var printStatement: ""
 
-    signal fileReceived(string file)
+    property ListModel localsendImages: ListModel {}
 
     property var pills: []
 
