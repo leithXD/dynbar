@@ -17,7 +17,7 @@ Variants {
             WlrLayershell.namespace: "wallpaper"
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
             screen: modelData
-            WlrLayershell.layer: WlrLayer.Bottom
+            WlrLayershell.layer: WlrLayer.Background
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
 

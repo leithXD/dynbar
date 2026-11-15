@@ -21,6 +21,9 @@ ShellRoot {
 
     }
 
+    Widgets {
+    }
+
     Bar {
     }
 
