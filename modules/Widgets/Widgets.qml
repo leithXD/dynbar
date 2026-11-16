@@ -59,7 +59,7 @@ Variants {
                 shapeEnabled: true
                 color: Colors.surfaceColor
 
-                widget: CpuWidget {
+                widget: CpuUsage {
                 }
 
             }

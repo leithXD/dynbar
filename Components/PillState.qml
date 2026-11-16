@@ -22,6 +22,7 @@ Scope {
     readonly property bool wantsGrab: (maximized && returnPill === "") || activePill === "launcher"
     readonly property var hyprMonitor: Hyprland.monitorFor(screen)
     readonly property bool isFullscreen: hyprMonitor?.activeWorkspace?.hasFullscreen ?? false
+    property string launcherMode: "launcher"
 
     function toggleMaximized() {
         maximized = !maximized;
@@ -62,14 +63,16 @@ Scope {
         returnPill = "";
     }
 
-    function toggleLauncher() {
+    function toggleLauncher(mode) {
         if (activePill === "launcher") {
             outLauncher = true;
             dismissTransient();
             dismissAnim.running = false;
             dismissAnim.running = true;
+            launcherMode = "launcher"
         } else {
             outLauncher = false;
+            launcherMode = mode
             showTransient("launcher");
         }
     }

@@ -8,9 +8,9 @@ Scope {
     IpcHandler {
         target: "launcher"
 
-        function toggle(): void {
+        function toggle(mode: string): void {
             if (!Shellstate.focused()?.isFullscreen) {
-                Shellstate.focused()?.toggleLauncher()
+                Shellstate.focused()?.toggleLauncher(mode)
             }
         }
     }
