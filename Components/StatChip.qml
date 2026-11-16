@@ -59,7 +59,7 @@ Item {
             color: root.color
         }
 
-        Spring on width {
+        Anim on width {
         }
 
     }

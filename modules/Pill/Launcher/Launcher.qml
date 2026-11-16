@@ -29,7 +29,7 @@ Item {
     ClippingRectangle {
         width: 580
         height: root.implicitHeight - 22
-        Spring on height{}
+        Anim on height{}
         radius: 10
         anchors.centerIn: parent
         color: "transparent"
@@ -56,7 +56,7 @@ Item {
                         const clip = search.text.toLowerCase();
                         if (clip === "") return cliphist.entries;
                         return cliphist.entries.filter(e => e.comment.toLowerCase().includes(clip));
-
+    
                     default:
                         return [];
                 }
@@ -117,7 +117,7 @@ Item {
                 font: Typography.displaySmall
                 color: Colors.layer(Colors.md3.inverse_on_surface, 2)
                 opacity: list.count === 0 ? 1 : 0
-                Spring on opacity{}
+                Anim on opacity{}
             }
             ListView {
                 id: list
@@ -259,6 +259,10 @@ Item {
                 const action = results.values[list.currentIndex]
                 if (action.name === "Clipboard") {
                     root.currentAction = "clipboard"
+                } else if (action.name === "Settings") {
+                    Shellstate.settingsOpened = !Shellstate.settingsOpened
+                    pill.toggleLauncher()
+
                 }
                 break;
             case "clipboard":

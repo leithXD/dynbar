@@ -47,11 +47,13 @@ Item {
         opacity: shown ? 1 : 0
         scale: shown ? 1 : hiddenScale
 
-        Spring on opacity {
+        Anim on opacity {
+            state: ""
+            curve: Animations.anim.spring
             duration: pill.outLauncher ? 400 : 200
         }
 
-        Spring on scale {
+        Anim on scale {
         }
 
     }

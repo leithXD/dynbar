@@ -225,7 +225,8 @@ WlSessionLockSurface {
                         opacity: surface.buffer === "" ? 1 : 0
                         visible: opacity > 0.1
 
-                        Smooth on opacity {
+                        Anim on opacity {
+                            state: "smooth"
                         }
 
                     }
@@ -338,7 +339,7 @@ WlSessionLockSurface {
 
                     }
 
-                    Spring on width {
+                    Anim on width {
                     }
 
                 }
@@ -356,14 +357,17 @@ WlSessionLockSurface {
 
         }
 
-        Spring on scale {
+        Anim on scale {
+            state: ""
+            curve: Animations.anim.spring
             duration: 600
         }
 
-        Spring on width {
+        Anim on width {
         }
 
-        Smooth on opacity {
+        Anim on opacity {
+            state: "smooth"
         }
 
     }

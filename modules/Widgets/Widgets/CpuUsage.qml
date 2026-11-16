@@ -13,7 +13,8 @@ Item {
         height: SysmonService.cpuUsage * 2
         color: Colors.md3.primary
 
-        Smooth on height {
+        Anim on height {
+            state: "smooth"
         }
 
     }

@@ -28,7 +28,8 @@ Item {
             color: Colors.layer(Qt.lighter(Colors.md3.on_surface, 1.3), 1)
         }
 
-        Smooth on width {
+        Anim on width {
+            state: "smooth"
         }
 
     }

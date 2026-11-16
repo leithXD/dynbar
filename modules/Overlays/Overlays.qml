@@ -50,10 +50,10 @@ Variants {
                 visible: anchors.rightMargin !== -width
                 y: 175
 
-                Spring on anchors.rightMargin {
+                Anim on anchors.rightMargin {
                 }
 
-                Spring on scale {
+                Anim on scale {
                 }
 
             }
