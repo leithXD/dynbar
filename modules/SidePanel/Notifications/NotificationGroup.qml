@@ -187,8 +187,10 @@ Item {
             color: Colors.md3.on_surface
             opacity: listView.count === 0 ? 1 : 0
 
-            Smooth on opacity {
+            Anim on opacity {
+                state: ""
                 duration: 100
+                curve: Animations.anim.smooth
             }
 
         }

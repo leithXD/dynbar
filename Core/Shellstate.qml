@@ -16,6 +16,7 @@ Singleton {
     property string cleanPath: {
         return wallpaperPath.toString().replace("file://", "");
     }
+    property bool settingsOpened: true
 
     signal triggerWallpaper()
     onTriggerWallpaper: {

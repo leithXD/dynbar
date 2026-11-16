@@ -113,17 +113,19 @@ Scope {
 
                     }
 
-                    Spring on anchors.topMargin {
+                    Anim on anchors.topMargin {
                     }
 
-                    Spring on scale {
+                    Anim on scale {
+                        state: ""
                         duration: 200
+                        curve: Animations.anim.spring
                     }
 
-                    Spring on height {
+                    Anim on height {
                     }
 
-                    Spring on width {
+                    Anim on width {
                     }
 
                     MouseArea {

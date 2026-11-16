@@ -16,7 +16,7 @@ RowLayout {
     Item {
         Layout.fillWidth: true
 
-        Spring on Layout.preferredWidth {
+        Anim on Layout.preferredWidth {
         }
 
     }
@@ -40,15 +40,15 @@ RowLayout {
             opacity: temp.wanted ? 1 : 0
             scale: temp.wanted ? 1 : 0.1
 
-            Spring on scale {
+            Anim on scale {
             }
 
-            Spring on opacity {
+            Anim on opacity {
             }
 
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -72,15 +72,15 @@ RowLayout {
             opacity: ram.wanted ? 1 : 0
             scale: ram.wanted ? 1 : 0.1
 
-            Spring on scale {
+            Anim on scale {
             }
 
-            Spring on opacity {
+            Anim on opacity {
             }
 
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -101,7 +101,7 @@ RowLayout {
             color: Colors.md3.tertiary
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -119,7 +119,7 @@ RowLayout {
         sourceComponent: BatteryChip {
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -144,10 +144,10 @@ RowLayout {
                 ConnectionService.toggleBluetooth();
             }
 
-            Spring on scale {
+            Anim on scale {
             }
 
-            Spring on opacity {
+            Anim on opacity {
             }
 
             Behavior on color {
@@ -159,7 +159,7 @@ RowLayout {
 
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -185,15 +185,15 @@ RowLayout {
             onClicked: {
             }
 
-            Spring on scale {
+            Anim on scale {
             }
 
-            Spring on opacity {
+            Anim on opacity {
             }
 
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
@@ -213,15 +213,15 @@ RowLayout {
             opacity: wanted ? 1 : 0
             scale: wanted ? 1 : 0.1
 
-            Spring on scale {
+            Anim on scale {
             }
 
-            Spring on opacity {
+            Anim on opacity {
             }
 
         }
 
-        Spring on slot {
+        Anim on slot {
         }
 
     }
