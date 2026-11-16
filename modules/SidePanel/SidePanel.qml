@@ -100,13 +100,15 @@ Variants {
                     radius: 20
                     color: Colors.layer(Colors.md3.inverse_on_surface, 2)
 
-                    Spring on height {
+                    Anim on height {
+                        state: ""
                         duration: 500
+                        curve: Animations.anim.spring
                     }
 
                 }
 
-                Spring on x {
+                Anim on x {
                 }
 
             }

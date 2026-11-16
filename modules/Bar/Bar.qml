@@ -44,8 +44,8 @@ Variants {
                 height: 38
                 radius: 30
                 color: Colors.surface(Colors.md3.surface)
-                Spring on anchors.leftMargin {}
-                Spring on anchors.topMargin {}
+                Anim on anchors.leftMargin {}
+                Anim on anchors.topMargin {}
 
                 states: [
                     State {
@@ -109,11 +109,13 @@ Variants {
                 height: 38
                 radius: 30
                 color: Colors.surface(Colors.md3.surface)
-                Spring on width {
+                Anim on width {
+                    state: ""
                     duration: 100
+                    curve: Animations.anim.spring
                 }
-                Spring on anchors.rightMargin {}
-                Spring on anchors.topMargin {} 
+                Anim on anchors.rightMargin {}
+                Anim on anchors.topMargin {} 
                 states: [
                     State {
                         name: "fullscreen_docked"
@@ -172,7 +174,8 @@ Variants {
                         height: 40
                         barCount: 80
 
-                        Smooth on opacity {
+                        Anim on opacity {
+                            state: "smooth"
                         }
 
                     }

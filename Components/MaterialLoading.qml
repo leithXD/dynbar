@@ -29,10 +29,10 @@ ClippingRectangle {
         shape: MaterialShape.Circle
         color: root.primaryColor
 
-        Spring on scale {
+        Anim on scale {
         }
 
-        Spring on rotation {
+        Anim on rotation {
         }
 
     }

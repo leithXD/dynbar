@@ -121,7 +121,7 @@ Item {
                 }
             }
 
-            Spring on scale {
+            Anim on scale {
             }
 
         }
