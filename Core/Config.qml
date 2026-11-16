@@ -18,6 +18,11 @@ Singleton {
         watchChanges: true
         blockLoading: true
         onFileChanged: reload()
+        onLoadFailed: (error) => {
+            if (error === FileViewError.FileNotFound)
+                writeAdapter();
+
+        }
 
         JsonAdapter {
             id: jsonAdapter
