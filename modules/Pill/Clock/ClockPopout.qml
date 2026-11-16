@@ -45,10 +45,10 @@ Item {
 
     }
 
-    Spring on scale {
+    Anim on scale {
     }
 
-    Spring on opacity {
+    Anim on opacity {
     }
 
 }

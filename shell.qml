@@ -5,6 +5,7 @@ import "modules/Bar"
 import "modules/Lock"
 import "modules/Overlays"
 import "modules/Pill"
+import "modules/Settings"
 import "modules/SidePanel"
 import "modules/Wallpaper"
 import "modules/Widgets"
@@ -12,11 +13,18 @@ import qs.Core
 import qs.Services
 
 ShellRoot {
-    Loader {
-        active: Shellstate.wallpaperLoaderEnabled
-        anchors.fill: parent
+    LazyLoader {
+        activeAsync: Shellstate.wallpaperLoaderEnabled
 
-        sourceComponent: WallpaperLayer {
+        WallpaperLayer {
+        }
+
+    }
+
+    Loader {
+        active: Shellstate.settingsOpened
+
+        sourceComponent: Settings {
         }
 
     }

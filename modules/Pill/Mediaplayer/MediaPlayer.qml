@@ -227,7 +227,7 @@ Item {
 
             }
 
-            Spring on width {
+            Anim on width {
             }
 
         }
@@ -269,7 +269,7 @@ Item {
                 }
             }
 
-            Spring on width {
+            Anim on width {
             }
 
             Behavior on color {

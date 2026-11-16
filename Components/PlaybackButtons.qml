@@ -57,7 +57,7 @@ Row {
 
         }
 
-        Spring on width {
+        Anim on width {
         }
 
     }
@@ -97,7 +97,7 @@ Row {
             }
         }
 
-        Spring on width {
+        Anim on width {
         }
 
         Behavior on color {

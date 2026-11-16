@@ -122,14 +122,18 @@ ClippingRectangle {
 
     }
 
-    Spring on opacity {
+    Anim on opacity {
+        state: ""
         duration: 200
+        curve: Animations.anim.spring
     }
 
-    Spring on anchors.rightMargin {
+    Anim on anchors.rightMargin {
     }
 
-    Spring on rotation {
+    Anim on rotation {
+        state: ""
+        curve: Animations.anim.spring
         duration: 800
     }
 

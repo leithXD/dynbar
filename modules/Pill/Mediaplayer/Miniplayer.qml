@@ -91,7 +91,7 @@ Item {
                 height: coverImage.height - 5
                 opacity: MediaplayerService.hasPlayer && coverImage.status !== Image.Ready ? 1 : 0
 
-                Spring on opacity {
+                Anim on opacity {
                 }
 
             }
@@ -118,7 +118,7 @@ Item {
             Layout.preferredWidth: Math.min(implicitWidth + 30, 400)
             horizontalAlignment: Text.AlignHCenter
 
-            Spring on anchors.leftMargin {
+            Anim on anchors.leftMargin {
             }
 
         }
@@ -181,7 +181,7 @@ Item {
 
                 }
 
-                Spring on width {
+                Anim on width {
                 }
 
             }
@@ -223,7 +223,7 @@ Item {
                     }
                 }
 
-                Spring on width {
+                Anim on width {
                 }
 
                 Behavior on color {

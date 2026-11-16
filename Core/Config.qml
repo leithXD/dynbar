@@ -13,7 +13,13 @@ Singleton {
     property alias paths: jsonAdapter.paths
     property alias settings: jsonAdapter.settings
 
+    function saveSettings() {
+        config.writeAdapter();
+    }
+
     FileView {
+        id: config
+
         path: Quickshell.env("HOME") + "/.config/dynbar/shell.json"
         watchChanges: true
         blockLoading: true
