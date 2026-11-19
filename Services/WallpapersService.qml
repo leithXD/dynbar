@@ -10,7 +10,7 @@ Singleton {
     readonly property string dir: Shellstate.home + Config.paths.wallpaperPath
     readonly property string cacheLive: Shellstate.home + "/.cache/dynbar/liveWallpapers/"
     readonly property string cache: Shellstate.home + "/.cache/dynbar/thumbnails/"
-    readonly property string wallpaperSymlink: Shellstate.home + "/.cache/dynbar/current"
+    readonly property string wallpaperSymlink: Shellstate.home + "/.local/state/dynbar/wallpaper/current"
     property var files: []
 
     function update() {

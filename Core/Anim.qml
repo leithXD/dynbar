@@ -84,8 +84,8 @@ Behavior {
                 name: "smooth"
 
                 PropertyChanges {
-                    root.duration: Animations.anim.smooth
-                    root.curve: Animations.anim.long1
+                    root.duration: Animations.anim.long1
+                    root.curve: Animations.anim.smooth
                 }
 
             }
