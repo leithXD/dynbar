@@ -128,6 +128,13 @@ Scope {
                     Anim on width {
                     }
 
+                    Anim on topLeftRadius {
+                        state: "emphasized"
+                    }
+                    Anim on topRightRadius {
+                        state: "emphasized"
+                    }
+
                     MouseArea {
                         id: pillArea
 

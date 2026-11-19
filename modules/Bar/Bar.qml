@@ -46,6 +46,15 @@ Variants {
                 color: Colors.surface(Colors.md3.surface)
                 Anim on anchors.leftMargin {}
                 Anim on anchors.topMargin {}
+                Anim on topLeftRadius {
+                    state: "emphasized"
+                }
+                Anim on topRightRadius {
+                    state: "emphasized"
+                }
+                Anim on bottomLeftRadius {
+                    state: "emphasized"
+                }
 
                 states: [
                     State {
@@ -115,7 +124,17 @@ Variants {
                     curve: Animations.anim.spring
                 }
                 Anim on anchors.rightMargin {}
-                Anim on anchors.topMargin {} 
+                Anim on anchors.topMargin {}
+                Anim on topLeftRadius {
+                    state: "emphasized"
+                }
+                Anim on topRightRadius {
+                    state: "emphasized"
+                }
+                Anim on bottomRightRadius {
+                    state: "emphasized"
+                }
+
                 states: [
                     State {
                         name: "fullscreen_docked"
