@@ -1,4 +1,6 @@
+import "Pages"
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import qs.Components
@@ -12,51 +14,161 @@ FloatingWindow {
     implicitHeight: 700
     visible: true
     onClosed: Shellstate.settingsOpened = false
-    color: Colors.md3.surface
+    color: "transparent"
 
-    ClippingRectangle {
-        height: parent.height - parent.height / 30
-        width: 650
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        anchors.rightMargin: parent.height / 30 / 2
-        radius: 20
-        color: Colors.layer(Colors.md3.inverse_on_surface, 2)
+    Rectangle {
+        anchors.fill: parent
+        color: Colors.md3.surface
+        radius: 30
+    }
 
-        Rectangle {
-            height: 50
-            width: parent.width - 30
-            radius: 20
-            color: Colors.md3.surface
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.horizontalCenter: parent.horizontalCenter
+    Item {
+        id: container
 
-            ToggleRow {
-                anchors.centerIn: parent
-                title: "Bar floating"
-                desc: "Should the bar be floating?"
-                targetObject: Config.bar
-                targetProperty: "floating"
+        property int page: 0
+
+        anchors.fill: parent
+        anchors.margins: 10
+
+        RowLayout {
+            anchors.fill: parent
+            spacing: 10
+
+            ClippingRectangle {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                radius: 30
+                color: Colors.layer(Colors.md3.inverse_on_surface, 2)
+
+                Column {
+                    anchors.margins: 10
+                    anchors.fill: parent
+                    spacing: 5
+
+                    Rectangle {
+                        width: parent.width
+                        height: 65
+                        radius: 30 - parent.anchors.margins
+                        color: Colors.md3.surface
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                container.page = 0;
+                            }
+                        }
+
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 65
+                        radius: 30 - parent.anchors.margins
+                        color: Colors.md3.surface
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                container.page = 1;
+                            }
+                        }
+
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 65
+                        radius: 30 - parent.anchors.margins
+                        color: Colors.md3.surface
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                container.page = 2;
+                            }
+                        }
+
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 65
+                        radius: 30 - parent.anchors.margins
+                        color: Colors.md3.surface
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                container.page = 3;
+                            }
+                        }
+
+                    }
+
+                }
+
             }
 
-        }
+            ClippingRectangle {
+                // here you can make new pages, give them a model, an object and an index so they can show up
 
-        Rectangle {
-            height: 50
-            width: parent.width - 30
-            radius: 20
-            color: Colors.md3.surface
-            anchors.top: parent.top
-            anchors.topMargin: 65
-            anchors.horizontalCenter: parent.horizontalCenter
+                Layout.fillHeight: true
+                Layout.preferredWidth: 750
+                radius: 30
+                color: Colors.layer(Colors.md3.inverse_on_surface, 2)
 
-            ToggleRow {
-                anchors.centerIn: parent
-                title: "Pill floating"
-                desc: "Should the Pill be floating?"
-                targetObject: Config.pill
-                targetProperty: "floating"
+                PageLoader {
+                    id: barSettings
+
+                    page: container.page
+                    index: 0
+
+                    sourceComponent: SettingsPage {
+                        model: Config.pillModel
+                        targetObject: Config.pill
+                    }
+
+                }
+
+                PageLoader {
+                    id: pillSettings
+
+                    page: container.page
+                    index: 1
+
+                    sourceComponent: SettingsPage {
+                        model: Config.barModel
+                        targetObject: Config.bar
+                    }
+
+                }
+
+                PageLoader {
+                    id: servicesSettings
+
+                    page: container.page
+                    index: 2
+
+                    sourceComponent: SettingsPage {
+                        model: Config.servicesModel
+                        targetObject: Config.services
+                    }
+
+                }
+
+                PageLoader {
+                    id: appearanceSettings
+
+                    page: container.page
+                    index: 3
+
+                    sourceComponent: SettingsPage {
+                        model: Config.appearanceModel
+                        targetObject: Config.appearance
+                    }
+
+                }
+
             }
 
         }

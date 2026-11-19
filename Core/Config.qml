@@ -12,6 +12,60 @@ Singleton {
     property alias services: jsonAdapter.services
     property alias paths: jsonAdapter.paths
     property alias settings: jsonAdapter.settings
+    // models here
+    // bar model
+    readonly property var barModel: [{
+        "title": "Bar floating",
+        "desc": "Should the bar be floating?",
+        "targetProperty": "floating",
+        "type": "toggle"
+    }, {
+        "title": "Show temperature",
+        "desc": "Always show Cpu temperature on Bar?",
+        "targetProperty": "alwaysShowTemp",
+        "type": "toggle"
+    }, {
+        "title": "Show ram",
+        "desc": "ALways show ram usage on bar?",
+        "targetProperty": "alwaysShowRam",
+        "type": "toggle"
+    }]
+    // pill model
+    readonly property var pillModel: [{
+        "title": "Pill floating",
+        "desc": "Should the pill be floating?",
+        "targetProperty": "floating",
+        "type": "toggle"
+    }, {
+        "title": "Cover Art",
+        "desc": "Show blurred artwork on Pill?",
+        "targetProperty": "blurArtwork",
+        "type": "toggle"
+    }]
+    // services model
+    readonly property var servicesModel: [{
+        "title": "Weather location",
+        "desc": "Where are you located?",
+        "targetProperty": "weatherLocation",
+        "type": "input"
+    }]
+    // appearance model
+    readonly property var appearanceModel: [{
+        "title": "Transparency",
+        "desc": "Should the shell be transparent?",
+        "targetProperty": "transparency",
+        "type": "toggle"
+    }, {
+        "title": "Transparency layer",
+        "desc": "How transparent should the layers be?",
+        "targetProperty": "layerOpacity",
+        "type": "slider"
+    }, {
+        "title": "Transparency surface",
+        "desc": "How transparent should the surface be?",
+        "targetProperty": "surfaceOpacity",
+        "type": "slider"
+    }]
 
     function saveSettings() {
         config.writeAdapter();
