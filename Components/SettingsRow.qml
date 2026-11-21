@@ -12,6 +12,9 @@ Rectangle {
     required property string title
     required property string desc
     required property string type
+    property real from
+    property real to
+    property real stepSize
 
     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -67,8 +70,6 @@ Rectangle {
         }
 
         Loader {
-            // i should prob just pass modelData lol
-
             active: root.type === "slider"
 
             sourceComponent: SettingsSlider {
@@ -76,6 +77,9 @@ Rectangle {
 
                 targetProperty: root.targetProperty
                 targetObject: root.targetObject
+                from: root.from
+                to: root.to
+                stepSize: root.stepSize
             }
 
         }

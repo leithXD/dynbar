@@ -45,62 +45,100 @@ FloatingWindow {
                     anchors.fill: parent
                     spacing: 5
 
-                    Rectangle {
-                        width: parent.width
-                        height: 65
-                        radius: 30 - parent.anchors.margins
-                        color: Colors.md3.surface
+                    Column {
+                        anchors.fill: parent
+                        spacing: 8
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                container.page = 0;
+                        Repeater {
+                            model: Config.settingsPages
+
+                            delegate: ClippingRectangle {
+                                id: rect
+
+                                required property var modelData
+                                required property int index
+                                property bool selected: container.page === index
+
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                width: parent.width - 10
+                                height: 65
+                                radius: height / 2
+                                color: Colors.md3.surface
+                                states: [
+                                    State {
+                                        name: "pressed"
+                                        when: mouseArea.pressed
+
+                                        PropertyChanges {
+                                            target: rect
+                                            width: parent.width
+                                            radius: 10
+                                            color: rect.selected ? Colors.md3.primary : Colors.md3.surface
+                                        }
+
+                                    },
+                                    State {
+                                        name: "selected"
+                                        when: rect.selected
+
+                                        PropertyChanges {
+                                            target: rect
+                                            width: parent.width - 10
+                                            radius: height / 2
+                                            color: Colors.md3.primary
+                                        }
+
+                                    }
+                                ]
+
+                                Column {
+                                    id: column
+
+                                    property color useColor: rect.selected ? Colors.md3.on_primary : Colors.md3.on_surface
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 25
+                                    spacing: 5
+
+                                    Text {
+                                        text: modelData.title
+                                        font: Typography.titleMedium
+                                        color: column.useColor
+                                    }
+
+                                    Text {
+                                        text: modelData.desc
+                                        font: Typography.bodyMedium
+                                        color: Qt.darker(column.useColor, 1.5)
+                                    }
+
+                                }
+
+                                MouseArea {
+                                    id: mouseArea
+
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        container.page = index;
+                                    }
+                                }
+
+                                Anim on radius {
+                                }
+
+                                Anim on width {
+                                }
+
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 150
+                                    }
+
+                                }
+
                             }
-                        }
 
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 65
-                        radius: 30 - parent.anchors.margins
-                        color: Colors.md3.surface
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                container.page = 1;
-                            }
-                        }
-
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 65
-                        radius: 30 - parent.anchors.margins
-                        color: Colors.md3.surface
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                container.page = 2;
-                            }
-                        }
-
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 65
-                        radius: 30 - parent.anchors.margins
-                        color: Colors.md3.surface
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                container.page = 3;
-                            }
                         }
 
                     }
@@ -165,6 +203,19 @@ FloatingWindow {
                     sourceComponent: SettingsPage {
                         model: Config.appearanceModel
                         targetObject: Config.appearance
+                    }
+
+                }
+
+                PageLoader {
+                    id: generalSettings
+
+                    page: container.page
+                    index: 4
+
+                    sourceComponent: SettingsPage {
+                        model: Config.generalModel
+                        targetObject: Config.settings
                     }
 
                 }

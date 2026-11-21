@@ -59,12 +59,49 @@ Singleton {
         "title": "Transparency layer",
         "desc": "How transparent should the layers be?",
         "targetProperty": "layerOpacity",
+        "from": 0.05,
+        "to": 1,
+        "stepSize": 0.05,
         "type": "slider"
     }, {
         "title": "Transparency surface",
         "desc": "How transparent should the surface be?",
         "targetProperty": "surfaceOpacity",
+        "from": 0.05,
+        "to": 1,
+        "stepSize": 0.05,
         "type": "slider"
+    }]
+    // general
+    readonly property var generalModel: [{
+        "title": "Toasts fullscreen",
+        "desc": "Should the toasts show up in fullscreen?",
+        "targetProperty": "toastsFullscreen",
+        "type": "toggle"
+    }, {
+        "title": "Temperature warning",
+        "desc": "When should i warn you about your hot cpu?",
+        "targetProperty": "tempWarning",
+        "from": 0,
+        "to": 100,
+        "stepSize": 1,
+        "type": "slider"
+    }]
+    property var settingsPages: [{
+        "title": "Pill",
+        "desc": "Settings regarding the dynamic island"
+    }, {
+        "title": "Bar",
+        "desc": "Settings for the top bar"
+    }, {
+        "title": "Services",
+        "desc": "The settings for the internal services of the shell"
+    }, {
+        "title": "Appearance",
+        "desc": "Adjust the appearance of the shell here"
+    }, {
+        "title": "General",
+        "desc": "General settings, i didnt know where to put"
     }]
 
     function saveSettings() {

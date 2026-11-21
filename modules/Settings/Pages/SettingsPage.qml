@@ -29,6 +29,9 @@ Item {
             targetProperty: modelData.targetProperty
             targetObject: root.targetObject
             type: modelData.type
+            from: modelData.from
+            to: modelData.to
+            stepSize: modelData.stepSize
             color: Colors.md3.surface
         }
 
