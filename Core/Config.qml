@@ -114,17 +114,22 @@ Singleton {
     }
 
     FileView {
+        // this is annoying Shellstate.createToast("Config reloaded!", "Your shell.json changed", "refresh");
+
         id: config
 
         path: Quickshell.env("HOME") + "/.config/dynbar/shell.json"
         watchChanges: true
         blockLoading: true
         // make toasts
-        onFileChanged: reload()
+        onFileChanged: {
+            reload();
+        }
         onLoadFailed: (error) => {
-            if (error === FileViewError.FileNotFound)
+            if (error === FileViewError.FileNotFound) {
                 writeAdapter();
-
+                Shellstate.createToast("Config created", "shell.json not found, new one created", "add");
+            }
         }
 
         JsonAdapter {

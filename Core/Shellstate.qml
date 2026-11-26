@@ -63,9 +63,8 @@ Singleton {
         .concat(files)
         .concat(["--to", Config.services.localsendDevice]);
 
-        console.log("Starte Befehl:", JSON.stringify(args));
+        // console.log(JSON.stringify(args));
         Quickshell.execDetached(args);
-        console.log()
     }
 
     property var pills: []
