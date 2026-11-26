@@ -48,6 +48,11 @@ Singleton {
         "desc": "Where are you located?",
         "targetProperty": "weatherLocation",
         "type": "input"
+    }, {
+        "title": "Localsend Device",
+        "desc": "Whats the alias of your preffered localsend device?",
+        "targetProperty": "localsendDevice",
+        "type": "input"
     }]
     // appearance model
     readonly property var appearanceModel: [{
@@ -114,6 +119,7 @@ Singleton {
         path: Quickshell.env("HOME") + "/.config/dynbar/shell.json"
         watchChanges: true
         blockLoading: true
+        // make toasts
         onFileChanged: reload()
         onLoadFailed: (error) => {
             if (error === FileViewError.FileNotFound)
@@ -162,8 +168,8 @@ Singleton {
 
     component Appearance: JsonObject {
         property bool transparency: true
-        property real surfaceOpacity: 0.8
-        property real layerOpacity: 0.3
+        property real surfaceOpacity: 0.9
+        property real layerOpacity: 0.75
     }
 
     component Bar: JsonObject {
@@ -186,6 +192,7 @@ Singleton {
 
     component Services: JsonObject {
         property string weatherLocation: "Berlin"
+        property string localsendDevice: "undefined"
     }
 
     component Paths: JsonObject {

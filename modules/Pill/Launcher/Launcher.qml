@@ -81,7 +81,7 @@ Item {
                     }
                     anchors.centerIn: parent
                     radius: 15
-                    color: Colors.layer(Colors.md3.inverse_on_surface, 1)
+                    color: Colors.layer(Colors.md3.surface_container, 1)
                     width: search.width + 80
                 }
                 color: Colors.md3.on_surface
@@ -141,7 +141,7 @@ Item {
                     width: list.width
                     height: 70
                     radius: 15
-                    color: ListView.isCurrentItem ? Colors.layer(Colors.md3.primary_container, 2) : Colors.layer(Colors.md3.inverse_on_surface, 2)
+                    color: ListView.isCurrentItem ? Colors.layer(Colors.md3.primary_container, 2) : Colors.layer(Colors.md3.surface_container_low, 2)
                     clip: true
                     Behavior on color {
                         ColorAnimation {

@@ -85,6 +85,15 @@ Scope {
         }
     }
 
+    function toggleSettings() {
+        if (activePill === "settings") {
+            dismissTransient();
+        } else {
+            showTransient("settings");
+        }
+    }
+
+
     Component.onCompleted: Shellstate.register(root)
     Component.onDestruction: Shellstate.unregister(root)
 

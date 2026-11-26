@@ -14,6 +14,8 @@ Variants {
             id: root
 
             required property var modelData
+            property bool dragAndDrop: false
+            property bool portalWanted: Shellstate.localsendImages.count != 0 || dragAndDrop
 
             screen: modelData
             color: "transparent"
@@ -39,16 +41,59 @@ Variants {
 
             }
 
+            Item {
+                id: dropContainer
+
+                width: 20
+                height: 300
+                anchors.right: parent.right
+                y: 90
+
+                DropArea {
+                    anchors.fill: parent
+                    onEntered: (drag) => {
+                        root.dragAndDrop = true;
+                        if (drag.hasUrls)
+                            drag.accept(Qt.CopyAction);
+
+                    }
+                    onExited: {
+                        root.dragAndDrop = false;
+                    }
+                    onDropped: function(drop) {
+                        const files = [];
+                        if (!drop.hasUrls)
+                            return ;
+
+                        for (let i = 0; i < drop.urls.length; ++i) {
+                            const url = drop.urls[i];
+                            const localPath = url.toString().replace("file://", "");
+                            files.push(localPath);
+                        }
+                        Shellstate.sendFiles(files);
+                        root.dragAndDrop = false;
+                    }
+                }
+
+            }
+
             Rectangle {
                 width: 10
                 height: 100
                 radius: 15
-                color: Colors.surfaceColor
+                color: dragAndDrop ? Colors.md3.primary_container : Colors.surfaceColor
                 anchors.right: parent.right
-                anchors.rightMargin: Shellstate.localsendImages.count === 0 ? -width : -width / 2
-                scale: Shellstate.localsendImages.count === 0 ? 1 : 2
+                anchors.rightMargin: root.portalWanted ? -width / 2 : -width
+                scale: root.portalWanted ? 2 : 1
                 visible: anchors.rightMargin !== -width
                 y: 175
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 300
+                    }
+
+                }
 
                 Anim on anchors.rightMargin {
                 }
@@ -226,6 +271,11 @@ Variants {
 
             mask: Region {
                 item: toastMask
+
+                Region {
+                    item: dropContainer
+                }
+
             }
 
         }

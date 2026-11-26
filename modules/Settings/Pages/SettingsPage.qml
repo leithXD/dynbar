@@ -32,7 +32,7 @@ Item {
             from: modelData.from ?? 0
             to: modelData.to ?? 0
             stepSize: modelData.stepSize ?? 0
-            color: Colors.md3.surface
+            color: Colors.layer(Colors.md3.surface_container_high)
         }
 
     }

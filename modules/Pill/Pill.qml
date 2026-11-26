@@ -14,6 +14,7 @@ import "Mediaplayer"
 import "Launcher"
 import "VolumeSlider"
 import "Wallpaper"
+import "Settings"
 
 Scope {
     readonly property var grabWindows: pills.instances.filter(w => w.wantsGrab)
@@ -57,7 +58,7 @@ Scope {
                 ClippingRectangle {
                     id: pillRect
 
-                    readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule, wallpaperModule]
+                    readonly property var modules: [clockModule, mediaModule, notifModule, volumeModule, launcherModule, wallpaperModule, settingsModule]
                     readonly property var current: modules.find(m => m.name === pillState.activePill)
                     property bool hovered: false
                     property bool activated: false
@@ -74,7 +75,9 @@ Scope {
        (pillRect.hovered || pillState.componentHover) ? 1.02 : 1.0
                     color: Colors.surface(Colors.md3.surface)
                     clip: true
-                    radius: 20
+                    radius: pillState.activePill === "settings" ? 30 : 20
+
+                    Anim on radius {}
 
                     states: [
                         State {
@@ -227,6 +230,12 @@ Scope {
 
                         pill: pillState
                     }
+                    SettingsModule {
+                        id: settingsModule
+
+                        pill: pillState
+                    }
+
 
                     SequentialAnimation {
                         id: notifPopup

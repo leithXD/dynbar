@@ -58,6 +58,16 @@ Singleton {
 
     property ListModel localsendImages: ListModel {}
 
+    function sendFiles(files) {
+        const args = ["localgo", "send", "--file"]
+        .concat(files)
+        .concat(["--to", Config.services.localsendDevice]);
+
+        console.log("Starte Befehl:", JSON.stringify(args));
+        Quickshell.execDetached(args);
+        console.log()
+    }
+
     property var pills: []
 
     function register(p) {

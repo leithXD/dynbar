@@ -18,16 +18,11 @@ Singleton {
         return transparency(color, Config.appearance.transparency ? Config.appearance.surfaceOpacity : 1);
     }
 
-    function layer(color, level) {
+    function layer(color) {
         if (!Config.appearance.transparency)
-            return transparency(color, 1);
+            return color;
 
-        if (level === 1)
-            return transparency(color, Config.appearance.layerOpacity);
-        else if (level === 2)
-            return transparency(color, Config.appearance.layerOpacity * 2);
-        else
-            return transparency(color, 1);
+        return transparency(color, Config.appearance.layerOpacity);
     }
 
     FileView {

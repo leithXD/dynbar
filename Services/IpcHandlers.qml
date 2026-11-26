@@ -38,6 +38,17 @@ Scope {
     }
 
     IpcHandler {
+        target: "settings"
+
+        function toggle(): void {
+            if (!Shellstate.focused()?.isFullscreen) {
+                Shellstate.focused()?.toggleSettings()
+            }
+        }
+    }
+
+
+    IpcHandler {
         target: "pill"
 
         function cycle(): void {

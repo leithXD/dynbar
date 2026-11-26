@@ -18,7 +18,7 @@ Item {
         height: root.height - 12
         radius: 15
         anchors.centerIn: parent
-        color: Colors.layer(Colors.md3.inverse_on_surface, 1)
+        color: Colors.layer(Colors.md3.surface_container_low, 1)
 
         Column {
             spacing: 8
