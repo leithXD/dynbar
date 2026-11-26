@@ -78,7 +78,7 @@ Variants {
             }
 
             Rectangle {
-                width: 10
+                width: 25
                 height: 100
                 radius: 15
                 color: dragAndDrop ? Colors.md3.primary_container : Colors.surfaceColor
