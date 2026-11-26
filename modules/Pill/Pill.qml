@@ -144,7 +144,7 @@ Scope {
                         property point start
 
                         anchors.fill: parent
-                        hoverEnabled: true
+                        hoverEnabled: pillState.allPills.includes(pillState.activePill)
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onEntered: {
                             pillRect.hovered = true

@@ -16,7 +16,7 @@ Scope {
     property bool outLauncher: false
     property string returnPill: ""
     property bool returnMaximized: false
-    property bool componentHover: !allPills.includes(activePill)
+    property bool componentHover: false
     property int launcherCount: 0
     readonly property bool canGrabAttention: activePill !== "launcher" && activePill !== "wallpaper" && activePill !== "settings" && !maximized
     readonly property bool wantsGrab: (maximized && returnPill === "") || activePill === "launcher"
