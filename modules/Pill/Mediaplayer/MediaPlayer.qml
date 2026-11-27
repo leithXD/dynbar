@@ -108,14 +108,6 @@ Item {
             visible: MediaplayerService.activePlayer === null
         }
 
-        MaterialLoading {
-            loading: coverImage.status !== Image.Ready
-            width: coverImage.width - 5
-            height: coverImage.height - 5
-            spacing: 40
-            visible: coverImage.status !== Image.Ready && !(MediaplayerService.activePlayer === null)
-        }
-
         NumberAnimation on maskRotation {
             from: 0
             to: 360

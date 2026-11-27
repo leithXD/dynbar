@@ -84,18 +84,6 @@ Item {
                 visible: MediaplayerService.activePlayer === null
             }
 
-            MaterialLoading {
-                anchors.centerIn: parent
-                loading: coverImage.status !== Image.Ready
-                width: coverImage.width - 5
-                height: coverImage.height - 5
-                opacity: MediaplayerService.hasPlayer && coverImage.status !== Image.Ready ? 1 : 0
-
-                Anim on opacity {
-                }
-
-            }
-
             NumberAnimation on maskRotation {
                 from: 0
                 to: 360
