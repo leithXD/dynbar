@@ -6,6 +6,7 @@ import Quickshell.Widgets
 import "Widgets"
 import qs.Components
 import qs.Core
+import qs.Services
 
 Variants {
     model: Quickshell.screens
@@ -60,6 +61,37 @@ Variants {
                 color: Colors.surfaceColor
 
                 widget: CpuUsage {
+                }
+
+            }
+
+            Loader {
+                property bool wanted: MediaplayerService.isPlaying
+
+                opacity: wanted ? 1 : 0.5
+                active: anchors.bottomMargin !== -280
+                anchors.left: parent.left
+                anchors.leftMargin: 250
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: wanted ? 20 : -280
+
+                Anim on opacity {
+                    state: "smooth"
+                }
+
+                Anim on anchors.bottomMargin {
+                }
+
+                sourceComponent: WidgetModule {
+                    id: lyrics
+
+                    width: 400
+                    height: 280
+                    color: Colors.surfaceColor
+
+                    widget: Lyrics {
+                    }
+
                 }
 
             }
