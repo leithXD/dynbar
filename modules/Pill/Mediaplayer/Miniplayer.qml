@@ -84,14 +84,6 @@ Item {
                 visible: MediaplayerService.activePlayer === null
             }
 
-            NumberAnimation on maskRotation {
-                from: 0
-                to: 360
-                duration: 32000
-                loops: Animation.Infinite
-                running: MediaplayerService.isPlaying
-            }
-
         }
 
         Text {

@@ -119,20 +119,20 @@ Item {
     }
 
     Item {
+        // WavyProgress {
+        //     anchors.centerIn: parent
+        //    scale: 3
+        //    progress: seekArea.pressed ? seekArea.dragProgress : MediaplayerService.progress
+        //   animated: MediaplayerService.isPlaying
+        //  smoothProgress: !seekArea.pressed
+        // }
+
         height: 20
         width: 300
         anchors.left: parent.left
         anchors.leftMargin: 170
         anchors.top: parent.top
         anchors.topMargin: 130
-
-        WavyProgress {
-            anchors.centerIn: parent
-            scale: 3
-            progress: seekArea.pressed ? seekArea.dragProgress : MediaplayerService.progress
-            animated: MediaplayerService.isPlaying
-            smoothProgress: !seekArea.pressed
-        }
 
         MouseArea {
             id: seekArea

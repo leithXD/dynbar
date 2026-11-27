@@ -22,6 +22,7 @@ Scope {
     readonly property bool wantsGrab: (maximized && returnPill === "") || activePill === "launcher"
     readonly property var hyprMonitor: Hyprland.monitorFor(screen)
     readonly property bool isFullscreen: hyprMonitor?.activeWorkspace?.hasFullscreen ?? false
+    readonly property bool noWindows: (hyprMonitor?.activeWorkspace?.toplevels?.values?.length ?? 0) === 0
     property string launcherMode: "launcher"
 
     function toggleMaximized() {
