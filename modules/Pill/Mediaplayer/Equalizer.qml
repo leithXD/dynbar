@@ -7,28 +7,35 @@ Item {
 
     property int barCount: 50
     property int barSpacing: 3
-    property var levels: []
-
-    function mix(colorA, colorB, t) {
-        const a = Qt.color(colorA);
-        const b = Qt.color(colorB);
-        return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, 1);
-    }
+    property int framerate: 30
+    property color barColor: Colors.md3.primary
+    property bool active: root.visible
+    property var levels: new Array(50).fill(0)
 
     implicitWidth: 380
     implicitHeight: 300
 
     Process {
-        running: true
-        command: ["bash", "-c", "cava -p <(printf '[general]\\nbars=" + root.barCount + "\\nframerate=60\\n[output]\\nmethod=raw\\nraw_target=/dev/stdout" + "\\ndata_format=ascii\\nascii_max_range=100\\n')"]
+        running: root.active
+        command: ["bash", "-c", "cava -p <(printf '[general]\\nbars=" + root.barCount + "\\nframerate=" + root.framerate + "\\n[output]\\nmethod=raw\\nraw_target=/dev/stdout\\ndata_format=ascii\\nascii_max_range=100\\n')"]
 
         stdout: SplitParser {
             onRead: (data) => {
-                const v = data.split(";").filter((s) => {
-                    return s.length;
-                }).map(Number);
-                if (v.length >= root.barCount)
-                    root.levels = v.slice(0, root.barCount);
+                const raw = data.split(";");
+                const next = new Array(root.barCount);
+                let count = 0;
+                for (let i = 0; i < raw.length && count < root.barCount; i++) {
+                    const s = raw[i].trim();
+                    if (s.length === 0)
+                        continue;
+
+                    const n = Number(s);
+                    if (!Number.isNaN(n))
+                        next[count++] = n;
+
+                }
+                if (count === root.barCount)
+                    root.levels = next;
 
             }
         }
@@ -44,23 +51,14 @@ Item {
 
             Rectangle {
                 required property int index
-                readonly property real level: (root.levels[index] ?? 0) / 100
+                readonly property real level: Math.min(1, Math.max(0, (root.levels[index] ?? 0) / 100))
+                readonly property real barWidth: Math.max(1, (root.width - root.barSpacing * (root.barCount - 1)) / root.barCount)
 
-                width: (root.width - root.barSpacing * (root.barCount - 1)) / root.barCount
-                height: Math.max(width, level * root.height)
+                width: barWidth
+                height: Math.max(barWidth, level * root.height)
                 anchors.verticalCenter: parent.verticalCenter
-                radius: width / 2
-                opacity: 0.55 + 0.45 * level
-                color: root.mix(Colors.md3.primary, Colors.md3.tertiary, index / (root.barCount - 1))
-
-                Behavior on height {
-                    NumberAnimation {
-                        duration: 90
-                        easing.type: Easing.OutCubic
-                    }
-
-                }
-
+                radius: barWidth * 0.5
+                color: root.barColor
             }
 
         }

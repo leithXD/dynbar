@@ -69,7 +69,7 @@ Variants {
                 property bool wanted: MediaplayerService.isPlaying
 
                 opacity: wanted ? 1 : 0.5
-                active: anchors.bottomMargin !== -280
+                active: false
                 anchors.left: parent.left
                 anchors.leftMargin: 250
                 anchors.bottom: parent.bottom
