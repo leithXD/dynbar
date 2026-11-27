@@ -8,4 +8,8 @@ Requirements:
 skwd-wall-v2
 cava
 cliphist
-
+matugen
+mpd
+mpc
+mpd-mpris
+rescrobbled
