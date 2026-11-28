@@ -119,14 +119,6 @@ Item {
     }
 
     Item {
-        // WavyProgress {
-        //     anchors.centerIn: parent
-        //    scale: 3
-        //    progress: seekArea.pressed ? seekArea.dragProgress : MediaplayerService.progress
-        //   animated: MediaplayerService.isPlaying
-        //  smoothProgress: !seekArea.pressed
-        // }
-
         height: 20
         width: 300
         anchors.left: parent.left
@@ -134,27 +126,8 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 130
 
-        MouseArea {
-            id: seekArea
-
-            property real dragProgress: 0
-
-            function update(x) {
-                dragProgress = Math.max(0, Math.min(1, x / width));
-            }
-
+        WavyProgress {
             anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onPressed: (mouse) => {
-                return update(mouse.x);
-            }
-            onPositionChanged: (mouse) => {
-                return update(mouse.x);
-            }
-            onReleased: MediaplayerService.seekTo(dragProgress)
-            onClicked: {
-                console.log(MediaplayerService.desktopEntry);
-            }
         }
 
     }

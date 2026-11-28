@@ -113,11 +113,12 @@ Singleton {
     }
 
     Timer {
-        running: root.activePlayer !== null && root.isPlaying
-        interval: 100
+        interval: 400
         repeat: true
+        running: activePlayer.playbackState == MprisPlaybackState.Playing
         onTriggered: {
             root.activePlayer.positionChanged()
+            // console.log("Progress: " + root.progress + " Length: " + root.length + " Position: " + root.position) the fucking position just keeps incrementing
         }
     }
 }
